@@ -1,6 +1,6 @@
 # Beginners-Point-Ureck-A-Thon
 
-### Hello there! Greeting from Team - UMANG!
+### Hello there! Greetings from Team - UMANG!
 
 This is our e-Learning website project that we have created for the Ureck-A-thon competition. we have included all the basic chapters of C Programming language, which will definitely help users to gain in depth knowledge, through high quality content, collected and provided by us in the website. 
 
