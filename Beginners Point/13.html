@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<link href="css/style.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/utils.css">
+	<title>Chapter 13</title>
+</head>
+<header class="main-header">
+	<img src="images/Logo.png" class="logo-img"/>
+	<h1>Reading the Command Line</h1>
+</header>
+<body>
+    <main>
+        <div class="body">
+            <br> <br>
+            <p>We've mentioned several times that a program is rarely useful
+                if it does exactly the same thing every time you run it.
+                Another way
+                of giving a program some variable input to work on
+                is by invoking it with <dfn>command line arguments</dfn>.
+            </p>
+            <p>(We should probably admit that command line user interfaces
+                are a bit old-fashioned,
+                and currently somewhat out of favor.
+                If you've used Unix or MS-DOS, you know what a command line is,
+                but if your experience is confined to
+                the Macintosh or Microsoft Windows or some other Graphical User Interface,
+                you may never have seen a command line.
+                In fact, if you're learning C on a Mac or under Windows,
+                it can be tricky to give your program a command line at all.
+                Think C for the Macintosh provides a way;
+                I'm not sure about other compilers.
+                If your compilation environment doesn't provide an easy way
+                of simulating an old-fashioned command line, you may skip this chapter.)
+            </p>
+            <p>C's model of the command line
+                is that it consists of a sequence of words,
+                typically separated by whitespace.
+                Your main program can receive these words as an array of strings,
+                one word per string.
+                In fact,
+                the C run-time startup code is always willing to pass you this array,
+                and all you have to do to receive it
+                is to declare <tt>main</tt> as accepting two parameters,
+                like this:</p>
+            <div class="code">
+                <code>  
+                        int main(int argc, char *argv[]) <br>
+                    { <br>
+                    ... <br>
+                    }<br>
+                </code><br>
+            </div>
+            When <tt>main</tt> is called,
+            <tt>argc</tt> will be a count of the number of command-line arguments,
+            and <tt>argv</tt> will be
+            an array (``vector'') of the arguments themselves.
+            Since each word is a string which is represented
+            as a pointer-to-<tt>char</tt>,
+            <tt>argv</tt> is an array-of-pointers-to-<tt>char</tt>.
+            Since we are not <dfn>defining</dfn> the <tt>argv</tt> array,
+            but merely declaring a parameter which references an array somewhere else
+            (namely, in <tt>main</tt>'s caller, the run-time startup code),
+            we do not have to supply an array dimension for <tt>argv</tt>.
+            (Actually, since functions never receive arrays as parameters in C,
+            <tt>argv</tt> can also be thought of
+            as a pointer-to-pointer-to-<tt>char</tt>,
+            or <tt>char **</tt>.
+            But multidimensional arrays and pointers to pointers can be confusing,
+            and we haven't covered them,
+            so we'll talk about <tt>argv</tt> as if it were an array.)
+
+            (Also, there's nothing magic about the names <tt>argc</tt> and <tt>argv</tt>.
+            You can give <tt>main</tt>'s two parameters any names you like,
+            as long as they have the appropriate types.
+            The names <tt>argc</tt> and <tt>argv</tt> are traditional.)
+            <p></p>
+            <p>The first program to write when playing with <tt>argc</tt> and <tt>argv</tt>
+                is one which simply prints its arguments:
+            </p>
+            <div class="code">
+                <code>
+                        #include &lt;stdio.h&gt;
+                        main(int argc, char *argv[]) <br>
+                        &emsp;{ <br>
+                        &emsp;&emsp;int i; <br> <br>
+                        &emsp;for(i = 0; i &lt; argc; i++) <br>
+                        &emsp;&emsp;printf("arg %d: %s\n", i, argv[i]); <br>
+                        return 0; <br>
+                        } <br>
+                        </code>
+            </div>
+            (This program is essentially the Unix or MS-DOS <tt>echo</tt> command.)
+            <p></p>
+            <p>If you run this program,
+                you'll discover that the set of ``words''
+                making up the command line
+                includes the command you typed to invoke your program
+                (that is, the name of your program).
+                In other words,
+                <tt>argv[0]</tt> typically points to the name of your program,
+
+                and <tt>argv[1]</tt> is the first argument.
+            </p>
+            <p>There are no hard-and-fast rules
+                for how a program should interpret its command line.
+                There is one set of conventions for Unix,
+                another for MS-DOS,
+                another for VMS.
+                Typically you'll loop over the arguments,
+                perhaps treating some as option flags and others as actual arguments
+                (input files, etc.),
+                interpreting or acting on each one.
+                Since each argument is a string,
+                you'll have to use <tt>strcmp</tt> or the like
+                to match arguments against any patterns you might be looking for.
+                Remember that <tt>argc</tt> contains
+                the number of words on the command line,
+                and that <tt>argv[0]</tt> is the command name,
+                so if <tt>argc</tt> is 1,
+                there are no arguments to inspect.
+                (You'll never want to look at <tt>argv[i]</tt>,
+                for <tt>i &gt;= argc</tt>,
+                because it will be a null or invalid pointer.)
+            </p>
+            <p>As another example,
+                also illustrating <tt>fopen</tt>
+                and the file I/O techniques of the previous chapter,
+                here is a program which copies one or more input files
+                to its standard output.
+                Since ``standard output'' is usually the screen by default,
+                this is therefore a useful program for displaying files.
+                (It's analogous to the obscurely-named Unix <tt>cat</tt> command,
+                and to the MS-DOS <tt>type</tt> command.)
+                You might also want to compare this program
+                to the character-copying program of section
+
+                6.2.
+            </p>
+            <div class="code">
+                <code>
+                        #include &lt;stdio.h&gt; <br>
+                        main(int argc, char *argv[]) <br>
+                        { <br>
+                        int i; <br>
+                        FILE *fp; <br>
+                        int c; <br>
+                         <br>
+                        for(i = 1; i &lt; argc; i++) <br>
+                        &emsp;    { <br>
+                            &emsp;&emsp;    fp = fopen(argv[i], "r"); <br>
+                            &emsp;&emsp;    if(fp == NULL) <br>
+                            &emsp;&emsp;&emsp;      { <br>
+                            &emsp;&emsp;&emsp;&emsp;   fprintf(stderr, "cat: can't open %s\n", argv[i]); <br>
+                            &emsp;&emsp;&emsp;&emsp;  continue; <br>
+                            &emsp;&emsp;&emsp; } <br>
+                         <br>
+                         &emsp; while((c = getc(fp)) != EOF) <br>
+                         &emsp;&emsp;    putchar(c); <br>
+                         <br>
+                         &emsp;fclose(fp); <br>
+                         &emsp;&emsp; } <br>
+                         <br>
+                        return 0; <br>
+                        } <br>
+                        </code>
+            </div>
+            As a historical note, the Unix <tt>cat</tt> program is so named
+            because it can be used to con<b>cat</b>enate two files together,
+            like this:
+            <code>	cat a b &gt; c
+                </code>
+            This illustrates why it's a good idea
+            to print error messages to <tt>stderr</tt>,
+            so that they don't get redirected.
+            The ``can't open file'' message
+            in this example
+            also includes the name of the program
+            as well as the name of the file.
+            <p></p>
+            <p>Yet another piece of information
+                which it's usually appropriate to include in error messages
+                is the reason why the operation failed, if known.
+                For operating system problems,
+                such as inability to open a file,
+                a code indicating the error is often stored
+                in the global variable <tt>errno</tt>.
+                The standard library function <tt>strerror</tt>
+                will convert an <tt>errno</tt> value
+                to a human-readable error message string.
+                Therefore,
+                an even more informative error message printout would be
+            </p>
+            <div class="code">
+                <code>
+                    fp = fopen(argv[i], "r");<br>
+                    &emsp;if(fp == NULL)<br>
+                    &emsp;&emsp;fprintf(stderr, "cat: can't open %s: %s\n",<br>
+                    &emsp;&emsp;argv[i], strerror(errno));<br>
+                    </code>
+            </div>
+            If you use code like this,
+            you can <tt>#include &lt;errno.h&gt;</tt>
+            to get the declaration for <tt>errno</tt>,
+            and <tt>&lt;string.h&gt;</tt>
+            to get the declaration for <tt>strerror()</tt>. <br> <br>
+            <div class="end">
+                <p><b>Did you find this article helpful?</b></p> <br>
+                <input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+              </div>
+              <br>
+              <h2>Check these also:</h2>
+              <a href="12.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 12 <<"></a>
+              <br>
+              <br>
+              <a href="14.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 14 <<"></a>
+              <br>
+              <br>
+              <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+              <br>
+              <br>
+        </div>
+    </main>
+    <footer class="flex-all-center">
+        <p>CopyRight &copy Beginners Point</p>
+    </footer>
+</body>
+</html>

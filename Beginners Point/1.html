@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="css/1.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <title>Chapter 1</title>
+  </head>
+  <header class="main-header">
+    <img src="images/Logo.png" class="logo-img"/>
+    <h1 class="head">C Data Types</h1>
+</header>
+  <body>
+    <main class="body"> <br> 
+      <p>We will learn about basic data types such as int, float, char etc. in C programming.  In C programming, data types are declarations for variables. This determines the type and size of data associated with variables.</p> <br>
+    <h3><u>Basic Types</u></h3> 
+    <p>Here's a table containing commonly used types in C programming for quick access.</p>
+    <br> <table rules="all">
+      <tr>
+        <th>Type</th>
+        <th>Size(bytes)</th>
+        <th>Format  Specifier</th>
+      </tr>
+      <tr>
+        <td id="t">int</td>
+        <td>at least 2, usually 4</td>
+        <td>%d,%i</td>
+      </tr>
+      <tr>
+        <td id="t">char</td>
+        <td>1</td>
+        <td>%c</td>
+      </tr>
+      <tr>
+        <td id="t">float</td>
+        <td>4</td>
+        <td>%f</td>
+      </tr>
+      <tr>
+        <td id="t">double</td>
+        <td>8</td>
+        <td>%lf</td>
+      </tr>
+      <tr>
+        <td id="t">short int</td>
+        <td>2 usually</td>
+        <td>%hd</td>
+      </tr>
+      <tr>
+        <td id="t">usigned int</td>
+        <td>at least 2, usually 4</td>
+        <td>%u</td>
+      </tr>
+      <tr>
+        <td id="t">long int</td>
+        <td>at least 4, usually 8</td>
+        <td>%ld,%li</td>
+      </tr>
+      <tr>
+        <td id="t">long long int</td>
+        <td>at least 8</td>
+        <td>%lld,%lli</td>
+      </tr>
+      <tr>
+        <td id="t">unsigned long int</td>
+        <td>at least 4</td>
+        <td>%lu</td>
+      </tr>
+      <tr>
+        <td id="t">signed char</td>
+        <td>1</td>
+        <td>%c</td>
+      </tr>
+      <tr>
+        <td id="t">unsigned char</td>
+        <td>1</td>
+        <td>%c</td>
+      </tr>
+      <tr>
+        <td id="t">long double</td>
+        <td>at least 10, usually 12 or 16</td>
+        <td>%Lf</td>
+      </tr>
+    </table>
+    <br> <br>
+    <h3>int</h3>
+    <p>Integers are whole numbers that can have both zero, positive and negative values but no decimal values. <br> <br>For example, 0, -5, 10.<br>  We can use int for declaring an integer variable. </p>
+    <div> <br> 
+      <div class="code1">
+      <code>
+        int id;<br> 
+    </code> 
+  </div> <br><br>
+    <p>We can also declare multiple variables at once in C programming.</p>
+    <br> <br>
+    <h3>float and double</h3>
+    <p>float and double are used to hold real numbers.</p>
+    <div> <br>
+      <div class="code1">
+      <code>
+        "float DailyWage = 260.50;" <br>
+    </code> 
+  </div><br>
+  <div> <br>
+    <div class="code1">
+    <code>
+      double price;
+  </code> 
+</div><br><br>
+    <p><b><i>What's the difference between float and double?</i></b><br> <br>=> The size of float (single precision float data type) is 4 bytes. And the size of double (double precision float data type) is 8 bytes.</p>
+    <br> <br>
+    <h3>char</h3>
+    <p>Keyword char is used for declaring character type variables. For example,</p>
+    <div> <br>
+      <div class="code1">
+      <code>
+        char test = 'h';
+    </code> 
+  </div><br>
+    <h3>void</h3>
+    <p>void is an incomplete type. It means "nothing" or "no type". You can think of void as absent.For example, if a function is not returning anything, its return type should be void.Note that, you cannot create variables of void type.</p>
+    <br> <br>
+    <h3>short and long</h3>
+    <p>If you need to use a large number, you can use a type specifier long. Here's how:</p>
+    <div> <br>
+      <div class="code1">
+      <code>
+      long a   <br> 
+      long long b <br>   
+      long long long c   <br>    
+            
+    </code> 
+  </div><br> <br>
+    <p>Here variables a and b can store integer values. And, c can store a floating-point number.If you are sure, only a small integer (-32,767, +32,767] range) will be used, you can use short.</p>
+    <p>You can always check the size of a variable using the sizeof() operator.</p>
+    <div> <br>
+      <div class="code1">
+      <code>
+      &emsp;#include <x>stdio.h>  <br> 
+              &emsp;&emsp;int main() { <br>   
+              &emsp;&emsp;long b;   <br>    
+              &emsp;&emsp;long long c;<br>      
+              &emsp;&emsp;long double d; <br> <br>   
+              &emsp;&emsp;printf("size of short = %d bytes\n", sizeof(a)  <br> 
+              &emsp;&emsp;printf("size of long = %d bytes\n", sizeof(b)   <br>
+              &emsp;&emsp;printf("size of long long = %d bytes\n", sizeof(c) <br>
+              &emsp;&emsp;printf("size of long double= %d bytes\n", sizeof(d) <br>
+              &emsp;return 0; <br>
+              &emsp;}<br> 
+    </code> 
+  </div><br>
+    <h3>signed and unsigned</h3>
+    <p>In C, signed and unsigned are type modifiers. You can alter the data storage of a data type by using them. For example,</p>
+    <div> <br>
+      <div class="code1">
+      <code>
+        &emsp;unsigned int x; <br>
+        &emsp;int y;<br> 
+    </code>
+  </div><br> <br>
+    <p>Here, the variable x can hold only zero and positive values because we have used the unsigned modifier.Considering the size of int is 4 bytes, variable y can hold values from -2^31 to 2^31-1, whereas variable x can hold values from 0 to 2^32-1.</p>
+    <br> <br>
+    <p>Other data types defined in C programming are:</p>
+    <ul>
+      <li>Bool type</li>
+      <li>Enumerated type</li>
+      <li>Complex types</li>
+    </ul>
+    <br> <br>
+    <div class="end">
+      <p><b>Did you find this article helpful?</b></p> <br>
+      <input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+      </div> <br>
+      <h2>Check these also:</h2>
+      <a href="intro.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Introduction <<"></a>
+        <br>
+        <br>
+      <a href="2.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 2 <<"></a>
+      <br>
+      <br>
+      <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+      <br>
+      <br>
+        </main>    
+  </body>
+  <footer class="flex-all-center">
+    <p>CopyRight &copy Beginners Point</p>
+</footer>
+</html>

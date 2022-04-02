@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<link href="css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/utils.css">
+	<title>Chapter 14</title>
+</head>
+<header class="main-header">
+    <img src="images/Logo.png" class="logo-img"/>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <h1 class="head">Important Topics in C</h1>
+</header>
+<body>
+    <main>
+        <div class="body">
+            <h2>14.1 Types and Declarations</h2>
+            <p>We have not talked about the <tt>void</tt>,
+                <tt>short int</tt>, and <tt>long double</tt> types.
+                <tt>void</tt> is a type with no values,
+                used as a placeholder to indicate functions that do not return values
+                or that accept no arguments, and in the ``generic'' pointer type <tt>void *</tt> that can point to anything.
+                <tt>short int</tt> is an integer type
+                that might use less space than a plain <tt>int</tt>;
+                <tt>long double</tt> is a floating-point type
+                that might have even more range or precision than plain <tt>double</tt>.
+            </p> <br>
+            <p>The <tt>char</tt> type and the various sizes of <tt>int</tt>
+                also have ``unsigned'' versions,
+                which are declared using the keyword <tt>unsigned</tt>.
+                Unsigned types
+                cannot hold negative values but have guaranteed properties on overflow.
+                (Whether a plain <tt>char</tt> is signed or unsigned is
+                implementation-defined;
+                you can use the keyword <tt>signed</tt>
+                to force a character type to contain signed characters.)
+                Unsigned types are also useful when manipulating individual bits and bytes,
+                when ``sign extension'' might otherwise be a problem.
+            </p> <br>
+            <p>Two additional <dfn>type qualifiers</dfn>
+                <tt>const</tt> and <tt>volatile</tt> allow you to declare variables
+                (or pointers to data)
+                which you promise not to change,
+                or which might change in unexpected ways behind the program's back. <br>
+
+            </p> <br>
+            <p>There are user-defined <dfn>structure</dfn> and <dfn>union</dfn> types.
+                A structure or <tt>struct</tt> is a ``record''
+                consisting of one or more values of one or more types
+                concreted together into one entity
+                which can be manipulated as a whole.
+                A <tt>union</tt> is a type which,
+                at any one time,
+                can hold a value
+                from one of a
+                specified
+                set of types.
+            </p> <br>
+            <p>There are user-defined <dfn>enumeration</dfn> types
+                (``<tt>enum</tt>'')
+                which are like integers but
+                which always contain values from some fixed, predefined set,
+                and for which the values
+                are referred to by name instead of by number.
+            </p> <br>
+            <p>Pointers can point to functions as well as to data types.
+            </p> <br>
+            <p>Types can be arbitrarily complicated,
+                when you start using multiple levels of pointers, arrays,
+                functions, structures, and/or unions.
+                Eventually,
+                it's important to understand the concept of a <dfn>declarator</dfn>:
+                in the declaration
+            </p> <br>
+            <div class="code">
+                <code>  
+                    int i, *ip, *fpi();<br>
+            </code><br>
+             </div>
+            we have the <dfn>base type</dfn> <tt>int</tt>
+            and three declarators <tt>i</tt>, <tt>*ip</tt>, and <tt>*fpi()</tt>.
+            The declarator gives the name of a variable (or function) and also indicates whether it is a simple variable
+            or a pointer, array, function, or some more elaborate combination (array of pointers, function returning pointer, etc.).
+            In the example, <tt>i</tt> is declared to be a plain <tt>int</tt>, <tt>ip</tt> is declared to be a pointer to <tt>int</tt>,
+            and <tt>fpi</tt> is declared to be a function returning pointer to <tt>int</tt>.
+            (Complicated declarators may also contain parentheses for grouping, since there's a precedence hierarchy in declarators as well as expressions: <tt>[]</tt> for arrays and <tt>()</tt> for functions have higher precedence than <tt>*</tt> for pointers.)
+            <p></p> <br>
+            <p>We have not said much about pointers to pointers, or arrays of arrays (i.e. multidimensional arrays),
+                or the ramifications of array/pointer equivalence on multidimensional arrays. (In particular, a reference to an array of arrays
+                does <em>not</em> generate a pointer to a pointer; it generates a pointer to an array. You cannot pass a multidimensional array
+                to a function which accepts pointers to pointers.)
+            </p> <br>
+            <p>Variables can be declared with a hint that they be placed in high-speed CPU registers,
+                for efficiency. (These hints are rarely needed or used today,
+                because modern compilers do a good job of register allocation by themselves, without hints.)
+            </p> <br>
+            <p>A mechanism called <tt>typedef</tt> allows you to define
+                user-defined aliases (i.e. new and perhaps more-convenient names)
+                for other types.
+            </p> 
+            
+            <h2>14.2 Operators</h2>
+            <p>The <dfn>bitwise operators</dfn>
+                <tt>&amp;</tt>, <tt>|</tt>, <tt>^</tt>, and <tt>~</tt>
+                operate on integers thought of as binary numbers or strings of bits.
+                The <tt>&amp;</tt> operator is bitwise AND,
+                the <tt>|</tt> operator is bitwise OR,
+                the <tt>^</tt> operator is bitwise exclusive-OR (XOR),
+                and the <tt>~</tt> operator is a bitwise negation or complement.
+                (<tt>&amp;</tt>, <tt>|</tt>, and <tt>^</tt> are ``binary''
+                in that they take two operands;
+                <tt>~</tt> is unary.) <br>
+                These operators let you work with the individual bits of a variable;
+                one common use is to treat an integer as a set of single-bit
+                <dfn>flags</dfn>.
+                You might define the 3rd (2**2) bit as the ``verbose'' flag bit by defining </p> <br>
+                <div class="code">
+                    <code>  
+                        #define VERBOSE 4<br>
+                </code><br>
+                 </div>
+            Then you can ``turn the verbose bit on'' in an integer variable <tt>flags</tt> by executing
+            <div class="code">
+                <code>  
+                    flags = flags | VERBOSE; <br>
+                    or <br>
+                    flags |= VERBOSE;<br>
+            </code><br>
+             </div>
+            and turn it off with
+            <div class="code">
+                <code>  
+                    flags = flags &amp; ~VERBOSE; <br>
+                    or <br>
+                    flags &amp;= ~VERBOSE; <br>
+            </code><br>
+            </div>
+            and test whether it's set with
+            <div class="code">
+                <code>  
+                    if(flags &amp; VERBOSE)<br>
+            </code><br>
+            </div>
+            <p></p> <br>
+            <p>The left-shift and right-shift operators
+                <tt>&lt;&lt;</tt> and <tt>&gt;&gt;</tt>
+                let you shift an integer left or right by some number of bit positions;
+                for example,
+                <tt>value &lt;&lt; 2</tt>
+                shifts <tt>value</tt> left by two bits.
+            </p> <br>
+            <p>The <tt>?:</tt> or <dfn>conditional</dfn> operator
+                (also called the ``ternary operator'')
+                essentially lets you embed an <tt>if</tt>/<tt>then</tt> statement
+                in an expression.
+                The assignment
+            </p> <br>
+            <div class="code">
+                <code>  
+                    a = expr ? b : c;<br>
+            </code><br>
+            </div>
+            is roughly equivalent to
+            <div class="code">
+                <code>  
+                    if(expr) <br>
+                        a = b; <br>
+                    else	a = c;<br>
+            </code><br>
+            </div>
+            Since you can use <tt>?:</tt> anywhere in an expression,
+            it can do things that <tt>if</tt>/<tt>then</tt> can't,
+            or that would be cumbersome with <tt>if</tt>/<tt>then</tt>.
+            For example, the function call
+            <div class="code">
+                <code>  
+                    f(a, b, c ? d : e);<br>
+            </code><br>
+            </div>
+            is roughly equivalent to
+            <div class="code">
+                <code>  
+                    if(c) <br>
+                        f(a, b, d); <br>
+                    else	f(a, b, e);<br>
+            </code><br>
+            </div>
+            (Exercise: what would the call
+            <div class="code">
+                <code>  
+                    g(a, b, c ? d : e, h ? i : j, k);<br>
+            </code><br>
+            </div>
+            be equivalent to?)
+            <p></p> <br>
+            <p>The comma operator lets you put two separate expressions where
+                one is required;
+                the expressions are executed one after the other.
+                The most common use for comma operators is when you want
+                multiple variables controlling a <tt>for</tt> loop,
+                for example:
+            </p> <br>
+            <div class="code">
+                <code>  
+                    for(i = 0, j = 10; i &lt; j; i++, j--)<br>
+            </code><br>
+            </div>
+            <p></p> <br>
+            <p>A <dfn>cast operator</dfn> allows you to explicitly force
+                conversion of a value from one type to another.
+                A cast consists of a type name in parentheses.
+                For example, you could convert an <tt>int</tt> to a <tt>double</tt>
+                by typing
+            </p> <br>
+            <div class="code">
+                <code>  
+                    int i = 10; <br>
+                    double d; <br>
+                    d = (double)i;<br>
+            </code><br>
+            </div>
+            (In this case, though, the cast is redundant, since this is a
+            conversion that C would have performed for you automatically,
+            i.e. if you'd just said <tt>d = i</tt>
+            .)
+            You use explicit casts in those circumstances
+            where C does not do a needed conversion automatically.
+            One example is division:
+            if you're dividing two integers and you want a floating-point result,
+            you must explicitly force at least one of the operands to floating-point,
+            otherwise C will perform an integer division and will discard the remainder.
+            The code
+            <div class="code">
+                <code>  
+                    int i = 1, j = 2; <br>
+                    double d = i / j;<br>
+            </code><br>
+            </div>
+            will set <tt>d</tt> to 0,
+            but
+            <div class="code">
+                <code>  
+                    d = (double)i / j;<br>
+            </code><br>
+            </div>
+            will set <tt>d</tt> to 0.5.
+            You can also ``cast to <tt>void</tt>''
+            to explicitly indicate that you're ignoring a function's return value,
+            as in
+            <div class="code">
+                <code>  
+                    (void)fclose(fp);<br>
+            </code><br>
+            </div>
+            or
+            <div class="code">
+                <code>  
+                    (void)printf("Hello, world!\n");<br>
+            </code><br>
+            </div>
+            (Usually, it's a bad idea to ignore return values,
+            but in some cases it's essentially inevitable,
+            and the <tt>(void)</tt> cast keeps some compilers from
+            issuing warnings every time you ignore a value.)
+            <p></p> <br>
+            <p>There's a precise,
+                mildly elaborate
+                set of rules which C uses for converting values automatically,
+                in the absence of explicit casts.
+            </p> <br>
+            <p>The <tt>.</tt> and <tt>-&gt;</tt> operators
+                let you access the members (components) of structures and unions.
+            </p>
+            
+            <h2>14.3 Statements</h2>
+            <p>The <tt>switch</tt> statement allows you to jump to one of a
+                number of numeric <tt>case</tt> labels depending on the value of
+                an expression;
+                it's more convenient than a long <tt>if</tt>/<tt>else</tt> chain.
+                (However, you can use <tt>switch</tt>
+                only when the expression is integral
+                and all of the <tt>case</tt> labels are compile-time constants.)
+            </p> <br>
+            <p>The <tt>do</tt>/<tt>while</tt> loop
+                is a loop that tests its controlling expression
+                at the bottom of the loop,
+                so that the body of the loop always executes once
+                even if the condition is initially false.
+                (C's <tt>do</tt>/<tt>while</tt> loop is therefore like
+                Pascal's <tt>repeat</tt>/<tt>until</tt> loop,
+                while
+
+                C's <tt>while</tt> loop is like Pascal's <tt>while</tt>/<tt>do</tt> loop.)
+            </p> <br>
+            <p>Finally,
+                when you really need to write ``spaghetti code,''
+                C does have the all-purpose <tt>goto</tt> statement,
+                and labels to go to.
+            </p>
+            
+            <h2>14.4 Functions</h2>
+            <p>Functions can't return arrays,
+                and it's tricky to write a function as if it returns an array
+                (perhaps by simulating the array with a pointer)
+                because you have to be careful about allocating the memory that
+                the returned pointer points to.
+            </p> <br>
+            <p>The functions we've written have all accepted a well-defined,
+                fixed number of arguments.
+                <tt>printf</tt> accepts a variable number of arguments
+                (depending on how many <tt>%</tt> signs there are
+                in the format string)
+                but we haven't seen how to declare and write functions that do this.
+            </p> 
+            
+            <h2>14.5 C Preprocessor</h2>
+            <p>If you're careful,
+                it's possible
+                (and
+                can be
+                useful)
+                to use <tt>#include</tt> within a header file,
+                so that you end up with ``nested header files.''
+            </p> <br>
+            <p>It's possible to use <tt>#define</tt>
+                to define ``function-like'' macros
+                that accept arguments;
+                the expansion of the macro can therefore depend on the
+                arguments it's ``invoked'' with.
+            </p> <br>
+            <p>Two special preprocessing operators <tt>#</tt> and <tt>##</tt>
+                let you control the expansion of macro arguments
+                in fancier ways.
+            </p> <br>
+            <p>The preprocessor directive <tt>#if</tt> lets you conditionally
+                include (or, with <tt>#else</tt>, conditionally not include)
+                a section of code depending on some arbitrary compile-time expression.
+                (<tt>#if</tt> can also do the same macro-definedness tests
+                as <tt>#ifdef</tt> and <tt>#ifndef</tt>,
+                because the expression can
+                use
+                a <tt>defined()</tt> operator.)
+            </p> <br>
+            <p>Other preprocessing directives are
+                <tt>#elif</tt>, <tt>#error</tt>,
+                <tt>#line</tt>, and <tt>#pragma</tt>.
+            </p> <br>
+            <p>There are a few predefined preprocessor macros,
+                some required by the C standard,
+                others perhaps defined by
+                particular compilation environments.
+                These are useful for conditional compilation
+                (<tt>#ifdef</tt>, <tt>#ifndef</tt>).
+            </p> 
+            
+            <h2>14.6 Standard Library Functions</h2>
+            <p>C's standard library contains many features and functions
+                which we haven't seen.
+            </p> <br>
+            <p>We've seen many of <tt>printf</tt>'s formatting capabilities,
+                but not all.
+                Besides format specifier characters for a few types we haven't seen,
+
+                you can also control the width, precision,
+                justification (left or right) 
+                and a few other attributes of <tt>printf</tt>'s format conversions. <br> <br>
+                (In their full complexity,
+                <tt>printf</tt> formats are about as elaborate and powerful
+                as FORTRAN <tt>format</tt> statements.)
+            </p> <br>
+            <p>A <tt>scanf</tt> function lets you do ``formatted input''
+                analogous to <tt>printf</tt>'s formatted output.
+                <tt>scanf</tt> reads from the standard input;
+                a variant <tt>fscanf</tt> reads from a specified file pointer.
+            </p> <br>
+            <p>The
+                <tt>sprintf</tt> and <tt>sscanf</tt>
+                functions
+                let you
+                ``print'' and ``read''
+                to and from in-memory strings instead of files.
+                We've seen that <tt>atoi</tt> lets you convert a numeric
+                string into an integer;
+                the inverse operation can be performed with <tt>sprintf</tt>:
+            </p> <br>
+            <div class="code">
+                <code>  
+                    int i = 10; <br>
+                    char str[10]; <br>
+                    sprintf(str, "%d", i);<br>
+            </code><br>
+            </div>
+            <p></p> <br>
+            <p>We've used <tt>printf</tt> and <tt>fprintf</tt> to write formatted output,
+                and <tt>getchar</tt>, <tt>getc</tt>, <tt>putchar</tt>, and <tt>putc</tt>
+                to read and write characters. <br> <br>
+                There are also functions
+                <tt>gets</tt>, <tt>fgets</tt>, <tt>puts</tt>, and <tt>fputs</tt>
+                for reading and writing lines
+                (though we rarely need these,
+                especially if we're using our own <tt>getline</tt>
+                and maybe <tt>fgetline</tt>),
+                and also <tt>fread</tt> and <tt>fwrite</tt>
+                for reading or writing arbitrary numbers of characters.
+            </p> <br>
+            <p>It's possible to ``un-read'' a character,
+                that is,
+                to push it back on an input stream, with <tt>ungetc</tt>.
+                (This is useful if you accidentally read one character too far,
+                and would prefer that some other part of your program
+                read that character instead.)
+            </p> <br>
+            <p>You can use the
+                <tt>ftell</tt>, <tt>fseek</tt>, and <tt>rewind</tt> functions
+                to jump around in files,
+                performing random access (as opposed to sequential) I/O.
+            </p> <br>
+            <p>The <tt>feof</tt> and <tt>ferror</tt> functions will tell you
+                whether you got <tt>EOF</tt> due to an actual end-of-file
+                condition or due to a read error of some sort.
+                You can clear errors and end-of-file conditions with
+                <tt>clearerr</tt>.
+            </p> <br>
+            <p>You can open files in ``binary'' mode, or for
+                simultaneous
+
+                reading and writing.
+                (These options involve extra characters
+                appended to <tt>fopen</tt>'s mode string:
+                <tt>b</tt> for binary,
+                <tt>+</tt> for read/write.)
+            </p> <br>
+            <p>There are several more string functions in <tt>&lt;string.h&gt;</tt>.
+                A second set of string functions
+                <tt>strncpy</tt>, <tt>strncat</tt>, and <tt>strncmp</tt>
+                all
+                accept a third argument telling them to
+                stop after <tt>n</tt> characters
+                if they haven't found the <tt>\0</tt> marking the end of the string. <br> <br>
+                A third set of ``<tt>mem</tt>'' functions,
+                including <tt>memcpy</tt> and <tt>memcmp</tt>,
+                operate on blocks of memory
+                which aren't necessarily strings
+                and where <tt>\0</tt> is not treated as a terminator.
+                The <tt>strchr</tt> and <tt>strrchr</tt> functions
+                find characters in strings.
+                There is a motley collection
+                of ``span'' and ``scan'' functions,
+                <tt>strspn</tt>, <tt>strcspn</tt>, and <tt>strpbrk</tt>,
+                for searching out or skipping over sequences of characters all
+                drawn from a specified set of characters. <br>
+                The <tt>strtok</tt> function aids in breaking up a string
+                into words or ``tokens,''
+                much like our own <tt>getwords</tt> function.
+            </p> <br>
+            <p>The header file <tt>&lt;ctype.h&gt;</tt> contains several functions
+                which let you classify and manipulate characters:
+                check for letters or digits,
+                convert between upper- and lower-case,
+                etc.
+            </p> <br>
+            <p>A host of mathematical functions
+                are defined in the header file <tt>&lt;math.h&gt;</tt>.
+                (As we've mentioned, besides including <tt>&lt;math.h&gt;</tt>,
+                you may on some Unix systems
+                have to ask for a special library containing the math functions
+                while compiling/linking.)
+            </p> <br>
+            <p>There's a random-number generator, <tt>rand</tt>,
+                and a way to ``seed'' it, <tt>srand</tt>.
+                <tt>rand</tt> returns integers from 0 up to <tt>RAND_MAX</tt>
+                (where <tt>RAND_MAX</tt> is a constant
+                <tt>#define</tt>d in <tt>&lt;stdlib.h&gt;</tt>).
+                One way of getting random integers from 1 to <tt>n</tt> is to call
+            </p> <br>
+            <div class="code">
+                <code>  
+                    (int)(rand() / (RAND_MAX + 1.0) * n) + 1<br>
+            </code><br>
+            </div>
+            Another way is
+            <div class="code">
+                <code>  
+                    rand() / (RAND_MAX / n + 1) + 1<br>
+            </code><br>
+            </div>
+            It seems like it would be simpler to just say
+            <div class="code">
+                <code>  
+                    rand() % n + 1<br>
+            </code><br>
+            </div>
+            but this method is imperfect
+            (or rather, it's imperfect if
+            <tt>n</tt> is a power of two
+            and
+            your system's implementation of <tt>rand()</tt> is imperfect,
+            as all too many of them are).
+            <p></p> <br>
+            <p>Several functions let you interact with
+                the operating system under which your program is running.
+                The <tt>exit</tt> function
+                returns control to the operating system immediately,
+                terminating your program
+                and returning an ``exit status.'' <br><br>
+                The <tt>getenv</tt> function allows you to read
+                your operating system's
+                or process's
+                ``environment variables''
+                (if any).
+                The <tt>system</tt> function
+                allows you to invoke an operating-system command
+                (i.e. another program)
+                from within your program.
+            </p> <br>
+            <p>The <tt>qsort</tt> function allows you to sort an array
+                (of any type);
+                you supply a comparison function
+                (via a function pointer)
+                which knows how to compare two array elements,
+                and <tt>qsort</tt> does the rest.
+                The <tt>bsearch</tt> function allows you to
+                search for elements in sorted arrays;
+                it, too, operates in terms of a caller-supplied comparison function.
+            </p> <br>
+            <p>Several functions--<tt>time</tt>,
+                <tt>asctime</tt>,
+                <tt>gmtime</tt>,
+                <tt>localtime</tt>,
+                <tt>asctime</tt>,
+                <tt>mktime</tt>,
+                <tt>difftime</tt>,
+                and
+                <tt>strftime</tt>--allow
+                you to determine the current date and time,
+                print dates and times,
+                and perform other date/time manipulations.
+                For example, to print today's date in a program,
+                you can write
+            </p> <br>
+            <div class="code">
+                <code>  
+                    #include &lt;time.h&gt; <br>                
+                    time_t now; <br>
+                    now = time((time_t *)NULL); <br>
+                    printf("It's %.24s", ctime(&amp;now));<br>
+            </code><br>
+            </div>
+            <p>The header file <tt>&lt;stdarg.h&gt;</tt> lets you manipulate
+                variable-length function argument lists
+                (such as the ones <tt>printf</tt> is called with). <br> <br>
+                Additional members of the <tt>printf</tt> family of functions
+                let you write your own functions which accept
+                <tt>printf</tt>-like format specifiers and
+                variable numbers of arguments but call on the
+                standard <tt>printf</tt> to do most of the work.
+            </p> <br>
+            <p>There are facilities for dealing with
+                multibyte and ``wide'' characters and strings,
+                for use with multinational character sets.
+            </p> <br> <br> 
+            <div class="end">
+                <p><b>Did you find this article helpful?</b></p> <br> <br>
+                <input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+              </div>
+              <br>
+              <h2>Check these also:</h2>
+              <a href="13.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 13 <<"></a>
+              <br>
+              <br>
+              <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+              <br>
+              <br>
+        </div>
+    </main>
+    <footer class="flex-all-center">
+        <p>CopyRight &copy Beginners Point</p> <br>
+    </footer>
+</body>
+</html>

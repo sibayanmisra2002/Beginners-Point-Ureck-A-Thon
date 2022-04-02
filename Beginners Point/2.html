@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="css/1.css">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <title>Chapter 2</title>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=G-a2H1KmsG6rFhOlm3gDSLwOBP-VahkEGTj9S_M1J7eSy_ddXWme92DUsPWLwTlG61q9iMOz94DZeooF8NTczbAKE3L8GAg6qugL96Xnl6YMsBMJZ-UYRikYCKbuDbaglp8oA47VSfPpo5bDCIUhkzBmYo3LPQmVpZ4lXCrni9kY4MXXF9nqM0pZrIU4iIwLRo9q6LoFOWR3nQkmPlg2_P333j5WIkbt25GR1wwXsVX6AimAHd4sdfMnt6g82-y8dLZOlj8HiI5AQiZvrrr7DqKwBRqdgdQOC07vOf22FA7qTrom-CvitiIL0a90l0MFiwdytziZ3ZGtxSZXIRqvkYNI-67vYhpRvzJjkVUfMS08VMW5ZyK8Aebi-ivzGPJv9zt85UZzPO-UuulrbhzwV7FhBjHliVuoUOu_5HHKY1DcQkmRGV3t34Glt48E4SvqWqD7Gx7sYMg9WSVvBduVMQ" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9kb2MtMTAtYTQtZG9jcy5nb29nbGV1c2VyY29udGVudC5jb20vZG9jcy9zZWN1cmVzYy9kMGs2Y2M5bDlkNmk4dG5oM2EwcjYycnU0MmlwcjlybC8xMDQ3c3BsbDNkMGtpdGYyZHVmMWU5cXIwN29vb2syOS8xNjMyNzIxMzUwMDAwLzE3OTEzMjg2Mjk3NDcwMTAxMjg3LzE3NzcyNTE1NTg4MjQwNDk0NTczLzFJMDZhaTlsa21sTkxsa2ViWVJmYU03d0pzRkVqY200QT9lPWRvd25sb2FkJmF1dGh1c2VyPTEmbm9uY2U9b2xnbnFxMWg2NjFmayZ1c2VyPTE3NzcyNTE1NTg4MjQwNDk0NTczJmhhc2g9cXRvNG12dDlqNWVwa3M3cTJnbTVyYWZhamw1cThjb2M"/></head>
+  <body>
+      <header class="main-header">
+        <img src="images/Logo.png" class="logo-img"/>
+        <h1 class="head">C Programming Operators</h1>
+    </header>
+    <main class="body"> <br> <br>
+    <p>In this tutorial, you will learn about different operators in C programming with the help of examples.<br><br>An operator is a symbol that operates on a value or a variable. For example: + is an operator to perform addition.<br><br>C has a wide range of operators to perform various operations.</p> <br>
+    <h2>C Arithmetic Operators</h2> <br>
+    <p>An arithmetic operator performs mathematical operations such as addition, subtraction, multiplication, division etc on numerical values (constants and variables).</p>
+    <br> <br> <table rules="all">
+      <tr>
+        <th>Operator</th>
+        <th>Meaning of Operator</th>
+      </tr>
+      <tr>
+        <td>+</td>
+        <td>addition or unary plus</td>
+      </tr>
+      <tr>
+        <td>-</td>
+        <td>subtraction or unary minus</td>
+      </tr>
+      <tr>
+        <td>*</td>
+        <td>multiplication</td>
+      </tr>
+      <tr>
+        <td>/</td>
+        <td>division</td>
+      </tr>
+      <tr>
+        <td>%</td>
+        <td>remainder after division (modulo division)</td>
+      </tr>
+    </table> <br> <br>
+    <h3>Example 1: Arithmetic Operators</h3>
+    <div> <br>
+      <div class="code1">
+      <code>
+      &emsp;#include <<x>stdio.h>  <br>
+      &emsp;int main()<br>
+      &emsp;{ <br> 
+        &emsp;&emsp;int main() { <br>   
+              &emsp;&emsp;&emsp;int a = 9,b = 4, c;<br>    
+              &emsp;&emsp;&emsp;c = a+b; <br>      
+              &emsp;&emsp;&emsp;printf("a+b = %d \n",c);  <br>       
+              &emsp;&emsp;&emsp;c = a-b;  <br> 
+              &emsp;&emsp;&emsp;printf("a-b = %d \n",c);   <br>
+              &emsp;&emsp;&emsp;c = a*b; <br>
+              &emsp;&emsp;&emsp;printf("a*b = %d \n",c); <br>
+              &emsp;&emsp;&emsp;c = a/b; <br>
+              &emsp;&emsp;&emsp;printf("a/b = %d \n",c); <br>
+              &emsp;&emsp;&emsp;c = a%b; <br>
+              &emsp;&emsp;&emsp;printf("Remainder when a divided by b = %d \n",c); <br>
+              &emsp;return 0; <br>
+              &emsp;}<br> 
+    </code> <br>
+  </div><br>
+    <h3>Output</h3><div> 
+      <div class="output">
+        <code>
+                    &emsp;a+b = 13<br>
+                    &emsp;a-b = 5<br>
+                    &emsp;a*b = 36<br>
+                    &emsp;a/b = 2<br>
+                </code>	
+               </div> <br> <br>
+               <p>The operators +, - and * computes addition, subtraction, and multiplication respectively as you might have expected.<br><br>In normal calculation, 9/4 = 2.25. However, the output is 2 in the program.<br><br>It is because both the variables a and b are integers. Hence, the output is also an integer. The compiler neglects the term after the decimal point and shows answer 2 instead of 2.25.<br><br>The modulo operator % computes the remainder. When a=9 is divided by b=4, the remainder is 1. The % operator can only be used with integers.</p><br>    
+    <h2>C Increment and Decrement Operators</h2> <br>
+    <p>C programming has two operators increment ++ and decrement -- to change the value of an operand (constant or variable) by 1.<br><br>Increment ++ increases the value by 1 whereas decrement -- decreases the value by 1. These two operators are unary operators, meaning they only operate on a single operand.</p> <br> <br>
+    <h3>Example 2: Increment and Decrement Operators</h3>
+    <div> <br>
+      <div class="code1">
+      <code>
+      &emsp;#include <<x>stdio.h>  <br>
+      &emsp;int main()<br>
+      &emsp;{ <br> 
+              &emsp;int main() { <br>   
+              &emsp;&emsp;int a = 10, b = 100;<br>
+              &emsp;&emsp;float c = 10.5, d = 100.5;<br>
+              &emsp;&emsp;printf("++a = %d \n", ++a);<br>
+              &emsp;&emsp;printf("--b = %d \n", --b);<br>
+              &emsp;&emsp;printf("++c = %f \n", ++c);<br>
+              &emsp;&emsp;printf("--d = %f \n", --d);<br>     
+              &emsp;return 0;<br>
+              &emsp;}<br> 
+    </code> <br>
+  </div><br>
+    <h3>Output</h3>
+    <div class="output">
+      <code>
+                  &emsp;++a = 11 <br>
+                  &emsp;--b = 99 <br>
+                  &emsp;++c = 11.500000 <br>
+                  &emsp;--d = 99.500000 <br>
+              </code>		
+             </div><br>
+    <p>Here, the operators ++ and -- are used as prefixes. These two operators can also be used as postfixes like a++ and a--.</p>
+    <br>
+    <h2>C Assignment Operators</h2>
+    <p>An assignment operator is used for assigning a value to a variable. The most common assignment operator is =</p>
+    <br> <br> <table rules="all">
+      <tr>
+        <th>Operator</th>
+        <th>Example</th>
+        <th>Same as</th>
+      </tr>
+      <tr>
+        <td>=</td>
+        <td>a = b</td>
+        <td>a = b</td>
+      </tr>
+      <tr>
+        <td>+=</td>
+        <td>a += b</td>
+        <td>a = a+b</td>
+      </tr>
+      <tr>
+        <td>-=</td>
+        <td>a -= b</td>
+        <td>a = a-b</td>
+      </tr>
+      <tr>
+        <td>*=</td>
+        <td>a *= b</td>
+        <td>a = a*b</td>
+      </tr>
+      <tr>
+        <td>/=</td>
+        <td>a /= b</td>
+        <td>a = a/b</td>
+      </tr>
+      <tr>
+        <td>%=</td>
+        <td>a %= b</td>
+        <td>a = a%b</td>
+      </tr>
+    </table> <br> <br>
+    <h3>Example 3: Assignment Operators</h3>
+    <div> <br>
+      <div class="code1">
+      <code>
+      &emsp;#include <<x>stdio.h>  <br>
+      &emsp;int main()<br>
+      &emsp;{ <br> 
+
+              &emsp;int a = 5, c;<br>
+              &emsp;&emsp;c = a;      // c is 5<br>
+              &emsp;&emsp;printf("c = %d\n", c);<br>
+              &emsp;&emsp;c += a;     // c is 10 <br>
+              &emsp;&emsp;printf("c = %d\n", c);<br>
+              &emsp;&emsp;c -= a;     // c is 5<br>
+              &emsp;&emsp;printf("c = %d\n", c);<br>
+              &emsp;&emsp;c *= a;     // c is 25<br>
+              &emsp;&emsp;printf("c = %d\n", c);<br>
+              &emsp;&emsp;c /= a;     // c is 5<br>
+              &emsp;&emsp;printf("c = %d\n", c); <br>
+              &emsp;&emsp;c %= a;     // c = 0 <br>
+              &emsp;&emsp;printf("c = %d\n", c);    <br> 
+              &emsp;&emsp;return 0;<br>
+              &emsp;}<br> 
+    </code> <br>
+  </div><br>
+    <h3>Output</h3>
+    <div class="output">
+      <code>
+        &emsp;c = 5 <br>
+        &emsp;c = 10 <br>
+        &emsp;c = 5 <br>
+        &emsp;c = 25 <br>
+        &emsp;c = 5 <br>
+        &emsp;c = 0<br>
+              </code>		
+             </div><br><br>
+    <h2>C Relational Operators</h2>
+    <p>A relational operator checks the relationship between two operands. If the relation is true, it returns 1; if the relation is false, it returns value 0.<br><br>Relational operators are used in decision making and loops.</p>
+    <br> <br> <table rules="all">
+      <tr>
+        <th>Operator</th>
+        <th>Meaning of Operator</th>
+        <th>Example</th>
+      </tr>
+      <tr>
+        <td>==</td>
+        <td>Equal to</td>
+        <td>5 == 3 is evaluated to 0</td>
+      </tr>
+      <tr>
+        <td>></td>
+        <td>Greater than</td>
+        <td>5 > 3 is evaluated to 1</td>
+      </tr>
+      <tr>
+        <td><</td>
+        <td>Less than</td>
+        <td>5 < 3 is evaluated to 0</td>
+      </tr>
+      <tr>
+        <td>!=</td>
+        <td>Not equal to</td>
+        <td>5 != 3 is evaluated to 1</td>
+      </tr>
+      <tr>
+        <td>>=</td>
+        <td>Greater than or equal to</td>
+        <td>5 >= 3 is evaluated to 1</td>
+      </tr>
+      <tr>
+        <td><=</td>
+        <td>Less than or equal to</td>
+        <td>5 <= 3 is evaluated to 0</td>
+      </tr>
+    </table> <br> <br>
+    <h3>Example 4: Relational Operators</h3>
+    <div> <br>
+      <div class="code1">
+      <code>
+      &emsp;#include <<x>stdio.h>  <br>
+      &emsp;int main()<br>
+      &emsp;{ <br> 
+              &emsp;int a = 5, b = 5, c = 10;<br>
+              &emsp;&emsp;printf("%d == %d is %d \n", a, b, a == b);<br>
+              &emsp;&emsp;printf("%d == %d is %d \n", a, c, a == c);<br>
+              &emsp;&emsp;printf("%d > %d is %d \n", a, b, a > b);<br>
+              &emsp;&emsp;printf("%d > %d is %d \n", a, c, a > c);<br>
+              &emsp;&emsp;printf("%d < %d is %d \n", a, b, a < b);<br>
+              &emsp;&emsp;printf("%d < %d is %d \n", a, c, a < c);<br>
+              &emsp;&emsp;printf("%d != %d is %d \n", a, b, a != b);<br>
+              &emsp;&emsp;printf("%d != %d is %d \n", a, c, a != c);<br>
+              &emsp;&emsp;printf("%d >= %d is %d \n", a, b, a >= b);<br>
+              &emsp;&emsp;printf("%d >= %d is %d \n", a, c, a >= c);<br>
+              &emsp;&emsp;printf("%d <= %d is %d \n", a, b, a <= b);<br>
+              &emsp;&emsp;printf("%d <= %d is %d \n", a, c, a <= c);<br>
+              &emsp;&emsp;return 0;<br>
+              &emsp;}<br> 
+    </code>
+  </div><br> <br>
+    <h3>Output</h3>
+    <div class="output">
+      <code>
+        &emsp;5 == 5 is 1<br>
+        &emsp;5 == 10 is 0<br>
+        &emsp;5 > 5 is 0<br>
+        &emsp;5 > 10 is 0<br>
+        &emsp;5 < 5 is 0<br>
+        &emsp;5 < 10 is 1<br>
+        &emsp;5 != 5 is 0<br>
+        &emsp;5 != 10 is 1<br>
+        &emsp;5 >= 5 is 1<br>
+        &emsp;5 >= 10 is 0<br>
+        &emsp;5 <= 5 is 1<br>
+        &emsp;5 <= 10 is 1 <br>
+              </code>		
+             </div><br> <br>
+    <h2>C Logical Operators</h2>
+    <p>An expression containing logical operator returns either 0 or 1 depending upon whether expression results true or false. Logical operators are commonly used in decision making in C programming.</p>
+    <br> <br> <table id="tb1" rules="all">
+      <tr>
+        <th>Operator</th>
+        <th>Meaning</th>
+        <th>Example</th>
+      </tr>
+      <tr>
+        <td>&&</td>
+        <td>Logical AND. True only if all operands are true</td>
+        <td>If c = 5 and d = 2 then, expression ((c==5) && (d>5)) equals to 0.</td>
+      </tr>
+      <tr>
+        <td>||</td>
+        <td>Logical OR. True only if either one operand is true</td>
+        <td>If c = 5 and d = 2 then, expression ((c==5) || (d>5)) equals to 1.</td>
+      </tr>
+      <tr>
+        <td>!</td>
+        <td>Logical NOT. True only if the operand is 0</td>
+        <td>If c = 5 then, expression !(c==5) equals to 0.</td>
+      </tr>
+    </table> <br> <br>
+    <h3>Example 5: Logical Operators</h3>
+    <div> <br>
+      <div class="code1">
+      <code>
+      &emsp;#include <<x>stdio.h>  <br>
+      &emsp;int main()<br>
+      &emsp;{ <br> 
+              &emsp;&emsp;int a = 5, b = 5, c = 10, result;<br>
+              &emsp;&emsp;result = (a == b) && (c > b);<br>
+              &emsp;&emsp;printf("(a == b) && (c > b) is %d \n", result);<br>
+              &emsp;&emsp;result = (a == b) && (c < b);<br>
+              &emsp;&emsp;printf("(a == b) && (c < b) is %d \n", result);<br>
+              &emsp;&emsp;result = (a == b) || (c < b);<br>
+              &emsp;&emsp;printf("(a == b) || (c < b) is %d \n", result);<br>
+              &emsp;&emsp;result = (a != b) || (c < b);<br>
+              &emsp;&emsp;printf("(a != b) || (c < b) is %d \n", result);<br>
+              &emsp;&emsp;result = !(a != b);<br>
+              &emsp;&emsp;printf("!(a != b) is %d \n", result);<br>
+              &emsp;&emsp;result = !(a == b);<br>
+              &emsp;&emsp;printf("!(a == b) is %d \n", result);<br>
+              &emsp;&emsp;return 0;<br>
+              &emsp;}<br> 
+    </code> 
+  </div><br>
+    <h3>Output</h3>
+    <div class="output">
+      <code>
+        &emsp;(a == b) && (c > b) is 1 <br>
+        &emsp;(a == b) && (c < b) is 0 <br>
+        &emsp;(a == b) || (c < b) is 1 <br>
+        &emsp;(a != b) || (c < b) is 0 <br>
+        &emsp;!(a != b) is 1 <br>
+        &emsp;!(a == b) is 0 <br>
+              </code>	
+             </div><br><br>
+    <h3>Explanation of logical operator program</h3><br>
+    <ul>
+      <li>(a == b) && (c > 5) evaluates to 1 because both operands (a == b) and (c > b) is 1 (true).</li>
+      <li>(a == b) && (c < b) evaluates to 0 because operand (c < b) is 0 (false).</li>
+      <li>(a == b) || (c < b) evaluates to 1 because (a = b) is 1 (true).</li>
+      <li>(a != b) || (c < b) evaluates to 0 because both operand (a != b) and (c < b) are 0 (false).</li>
+      <li>!(a != b) evaluates to 1 because operand (a != b) is 0 (false). Hence, !(a != b) is 1 (true).</li>
+      <li>!(a == b) evaluates to 0 because (a == b) is 1 (true). Hence, !(a == b) is 0 (false).</li>
+    </ul>
+    <br> <br>
+    <h2>C Bitwise Operators</h2><br>
+    <p>During computation, mathematical operations like: addition, subtraction, multiplication, division, etc are converted to bit-level which makes processing faster and saves power.<br><br>Bitwise operators are used in C programming to perform bit-level operations.</p>
+    <br> <br> <table rules="all">
+      <tr>
+        <th>Operators</th>
+        <th>Meaning of operators</th>
+      </tr>
+      <tr>
+        <td>&</td>
+        <td>Bitwise AND</td>
+      </tr>
+      <tr>
+        <td>|</td>
+        <td>Bitwise OR</td>
+      </tr>
+      <tr>
+        <td>^</td>
+        <td>Bitwise exclusive OR</td>
+      </tr>
+      <tr>
+        <td>~</td>
+        <td>Bitwise complement</td>
+      </tr>
+      <tr>
+        <td><<</td>
+        <td>Shift left</td>
+      </tr>
+      <tr>
+        <td>>></td>
+        <td>Shift right</td>
+      </tr>
+    </table> <br> <br>    
+    <h2><u>Other Operators</u></h2><br>
+    <h2>Comma Operator</h2><br>
+    <p>Comma operators are used to link related expressions together. For example:</p><br>
+    <div> 
+      <div class="code1">
+      <code>      
+              &emsp;int a, c = 5, d;<br>              
+    </code> 
+  </div><br><br>
+    <br> <br>
+    <div class="end">
+      <p><b>Did you find this article helpful?</b></p><br>
+      <input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+    </div>
+    <br>
+    <h2>Check these also:</h2>
+    <a href="1.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 1 <<"></a>
+    <br>
+    <br>
+    <a href="3.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 3 <<"></a>
+    <br>
+    <br>
+    <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+    <br>
+    <br>
+</div>
+    </main>
+    <footer class="flex-all-center">
+        <p>CopyRight &copy Beginners Point</p>
+    </footer>
+  </body>
+</html>

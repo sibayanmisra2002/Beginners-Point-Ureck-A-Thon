@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<link href="css/6.css" rel="stylesheet" />
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<title>Chapter 8</title>
+</head>
+
+<body>
+  <header class="main-header">
+    <img src="images/Logo.png" class="logo-img"/>
+    <h1 class="head">Strings</h1>
+  </header> <br>
+<article>
+
+	<header class="post-header"><br>
+	<h2>8.1 Introduction</h2>
+	</header>
+<p>Strings in C are represented by arrays of characters. The
+end of the string is marked with a special character, the <i>null
+character</i>, which is a character whose bits are all zero, i.e.,
+a NUL (not a NULL). (The null character has no relation
+except in name to the null pointer. In the ASCII character
+
+set, the <i>null character</i> is named NUL.) The null or string-
+terminating character is represented by another character
+
+escape sequence, <tt>\0.</tt>
+Although C does not have a string data type, it allows string
+constants. For example,<tt>‘‘hello students”</tt> is a string constant.</p>
+
+<h3>8.1.1 Declaration of a String</h3>
+<p>Strings can be declared like one-dimensional arrays. For
+example,<pre>
+char str[30];
+char text[80];</pre>
+illustrates this feature.</p>
+
+<h3>8.1.2 String Initialization</h3>
+<p>Character arrays or strings allow a shorthand initialization,
+for example,<p><div> <br><b>
+				<div class="code1">
+          <code>char str[9] = “I like C”;</div></br></b></code></p>
+which is the same as
+<p><div> <br><b>
+				<div class="code1">
+          <code>char str[9] = {‘I’,‘ ’,‘l’,‘i’,‘k’,‘e’,‘ ’,‘C’,‘\0’};</div></br></b></code></p>
+<p>Whenever a string, enclosed in double quotes, is written,
+C automatically creates an array of characters containing that
+string, terminated by the \0 character. C language allows the
+alternative notation
+<p><div> <br><b>
+				<div class="code1">
+          <code>char msg[] = “Hello”;</div></br></b></code></p>
+that is always used in practice. The rules for writing string
+constants are exactly the same as those that were discussed
+earlier in this book when the use of <tt>printf()</tt> was introduced.
+It should be noted that the size of the aggregate <tt>‘msg’</tt> is six
+bytes, five for the letters and one for the terminating NUL.
+There is one special case where the null character is not
+automatically appended to the array. This is when the array
+size is explicitly specified and the number of initializers
+completely fills the array size. For example,
+<p><div> <br><b>
+				<div class="code1">
+          <code>char c[4] = “abcd”;</div></br></b></code></p>
+Here, the array <tt>c</tt> holds only the four specified characters,
+a, b, c, and d. No null character terminates the array.</p>
+
+<br><h4>8.1.3 Printing Strings</h4><br>
+<p>The conversion type ‘s’ may be used for output of strings
+using <tt>printf()</tt>. Width and precision specifications may be
+used with the <tt>%s</tt> conversion specifier. The width specifies
+the minimum output field width; if the string is shorter,
+then space padding is generated. The precision specifies the
+maximum number of characters to display. If the string is too
+long, it is truncated.Anegative width implies left justification
+of short strings rather than the default right justification. For
+example,
+<p><div> <br><b>
+				<div class="code1">
+          <code>printf(“%7.3s”,name)</div></br></b></code></p>
+This specifies that only the first three characters have to
+be printed in a total field width of seven characters and right
+justified in the allocated width by default. We can include a
+minus sign to make it left justified <tt>(%-7.3)</tt>. The following
+points should be noted.<ol>
+<li> When the field width is less than the length of the string,
+the entire string is printed.</li>
+<li> The integer value on the right side of the decimal point
+specifies the number of characters to be printed.</li>
+<li> When the number of characters to be printed is specified as
+zero, nothing is printed.</li>
+<li> The minus sign in the specification causes the string to be
+printed as left justified.</li></ol>
+The following program illustrates the use of the <tt>%s</tt>
+conversion specifier.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+char s[]=“Hello, World”;<br>
+printf(“>>%s<<\n”,s);<br>
+printf(“>>%20s<<\n”,s);<br>
+printf(“>>%-20s<<\n”,s);<br>
+printf(“>>%.4s<<\n”,s);<br>
+printf(“>>%-20.4s<<\n”,s);<br>
+printf(“>>%20.4s<<\n”,s);<br>
+return 0;<br>
+}<br>
+This program produces the output<br>
+>>Hello, World<<<br>
+>> Hello, World<<<br>
+>>Hello, World <<<br>
+>>Hell<<<br>
+>>Hell <<<br>
+>> Hell<<</div></br></b></code></p>
+The >> and << symbols are included in this program so
+that the limits of the output fields are clearly visible in the
+output.
+There is another way to print a string. The library function
+<tt>puts()</tt> writes a line of output to the standard output. It
+terminates the line with a new line, ‘\n’. It returns an EOF if
+an error occurs. It will return a positive number upon success.
+The use of <tt>puts()</tt> is given as follows:
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+char s[]=“Hello, World”;<br>
+puts(s);<br>
+return 0;<br>
+}</div></br></b></code></p>
+The library function <tt>sprintf()</tt> is similar to <tt>printf()</tt>.
+The only difference is that the formatted output is written to
+a memory area rather than directly to a standard output. It is
+particularly useful when it is necessary to construct formatted
+strings in memory for subsequent transmission over a
+communications channel or to a special device. Its relationship
+with <tt>printf()</tt> is similar to the relationship between <tt>sscanf()</tt>
+and <tt>scanf()</tt>. The library function <tt>puts()</tt> may be used to copy
+a string to the standard output, its single parameter is the start
+address of the string. <tt>puts()</tt> writes a new-line character to
+standard output after it has written the string.
+The following is a simple example of the use of <tt>sprintf()</tt>
+and <tt>puts().</tt>
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+char buf[128];<br>
+double x = 1.23456;<br>
+int i = 0;<br>
+sprintf(buf,“x = %7.5lf”,x);<br>
+while(i<10)<br>
+puts(buf+i++);<br>
+return 0;<br>
+}<br>
+The output produced is as follows:<br>
+x = 1.23456<br>
+= 1.23456<br>
+= 1.23456<br>
+1.23456<br>
+1.23456<br>
+.23456<br>
+23456<br>
+3456<br>
+456<br>
+56</div></br></b></code></p>
+If ‘\n’ had been incorporated in the format string of
+the <tt>sprintf()</tt>, the output would have been double-spaced
+because the function would have put a new-line character in
+the generated string and <tt>puts()</tt> would then generate a further
+new line.</p>
+
+<h3> 8.1.4 String Input</h3>
+<p>The following sections will describe the methods of taking
+input from the user.</p>
+<h2>Using %s control string with scanf()</h2>
+<p>Strings may be read by using the %s conversion with the
+function scanf() but there are some restrictions. The first
+is that scanf() only recognizes a sequence of characters
+delimited by white space characters as an external string. The
+second is that it is the programmer’s responsibility to ensure
+that there is enough space to receive and store the incoming
+string along with the terminating null which is automatically
+generated and stored by scanf() as part of the %s conversion.
+The associated parameter in the value list must be the address
+of the first location in an area of memory set aside to store the
+incoming string.
+Of course, a field width may be specified and this is
+the maximum number of characters that are read in, but
+remember that any extra characters are left unconsumed in
+the input buffer. A simple use of scanf() with %s conversions
+is illustrated in the following program.
+<p><div> <br><b>
+				<div class="code1">
+          <code>int main()<br>
+{<br>
+char str[50];<br>
+printf(“Enter a string”);<br>
+
+scanf(“%s”,str);<br>
+printf(“The string was :%s\n”,str);<br>
+return 0;<br>
+}<br>
+Output of sample runs:<br>
+(a) Enter a string manas<br>
+The string was :manas<br>
+(b) Enter a string manas ghosh<br>
+The string was :manas<br>
+(c) Enter a string “manas and ghosh”<br>
+The string was : “manas”</div></br></b></code></p>
+Dissimilar to the integer, float, and characters, the <tt>%s</tt>
+format does not require the ampersand before the variable
+<tt>str</tt>.
+It will also be observed that attempts to quote a string with
+internal spaces or to escape the internal spaces (both of which
+normally work in the UNIX command environment) did not
+work. C supports variable field width or precision, e.g.,
+printf(“%*.*s”,w,d,str);
+prints the first d characters of the string in the field width of
+w. For example,
+<p><div> <br><b>
+				<div class="code1">
+          <code>int main()<br>
+{<br>
+char str[50];<br>
+printf(“\n Enter a string:”);<br>
+scanf(“%s”,str);<br>
+printf(“\n %*.*s\n”,2,3,str);<br>
+return 0;<br>
+}<br>
+Sample run:<br>
+Enter a string:Manas</div></br></b></code></p>
+As an illustration, the following program converts a
+decimal number into its hexadecimal equivalent.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main(void)<br>
+{<br>
+int n, r, i, a[50];<br>
+char hexdigit[]=“0123456789ABCDEF”;<br>
+printf(“\n Enter the decimal number: ....\t”);<br>
+scanf(“%d”, &n);<br>
+i=0;<br>
+while(n>0)<br>
+{<br>
+r=n%16;<br>
+a[i]=r;<br>
+i++;<br>
+n=n/16;<br>
+}<br>
+printf(“\n Hexadecimal equivalent is...: \t”);<br>
+for(--i;i>=0;--i)<br>
+printf(“%c”, hexdigit[a[i]]);<br>
+return 0;<br>
+} </div></br></b></code></p>
+<p>Here, at each iteration, remainder of the integer division
+of n by 16 is stored as an element of the array variable ‘a’. It
+continues until the number ‘n’ becomes 0. After storing the
+remainders as elements of the array ‘a’, it is needed to print
+the elements in reverse order. When the control comes out of
+the <tt>while</tt> loop the value of ‘i’ would be incremented.
+So it is needed to decrement i by 1 and it has been
+performed at the initialization part of the for loop. The
+expression <tt>hexdigit[a[i]]</tt> would print the corresponding
+hexadecimal digit at each iteration. If the value stored in <tt>a[i]</tt>
+is 5 then <tt>printf(“%c”, hexdigit[5])</tt> would print 5. If the
+value stored in a[i] is 13 then <tt>printf(“%c”, hexdigit[13])</tt>
+  would <tt>print D</tt>. The trace of the above program is given below.</p>
+<p><div> <br><b>
+				<div class="code1">
+          <code>n= 28<br>
+n=28 i=0 r=12 a[0]=12<br>
+n=1 i=1 r=1 a[1]=1<br>
+n=0 i=2</div></br></b></code></p>
+The value of i is 2 when the control is outside the while
+loop. ‘i’ becomes 1 at the initialization step. In the first
+iteration, <tt>hexdigit[1]</tt> that is ‘1’ will be printed because the
+value stored in <tt>a[1]</tt> is 1. In the second iteration, <tt>hexdigit[0]</tt>
+that is ‘C’ will be printed because the value stored in <tt>a[0]</tt>
+is 12.
+The above program can be rewritten where the remainders
+are stored in the string <tt>hexdigit.</tt>
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+#include &lt;string.h&gt;<br>
+int main(void)<br>
+{<br>
+int n, r, i;<br>
+char hexdigit[50];<br>
+printf(“\n Enter the decimal number: ....\t”);<br>
+scanf(“%d”, &n);<br>
+i=0;<br>
+while(n>0)<br>
+{<br>
+r=n%16;<br>
+if(r<10)<br>
+hexdigit[i]=r+48;<br>
+else<br>
+hexdigit[i]=r%10+65;<br>
+i++;<br>
+n=n/16;<br>
+}<br>
+hexdigit[i]=‘\0’;<br>
+printf(“\n Hexadecimal equivalent is...: \t”);<br>
+for(i=strlen(hexdigit)-1;i>=0;--i)<br>
+printf(“%c”, hexdigit[i]);<br>
+return 0;<br>
+}</div></br></b></code></p>
+
+<h2>Using scanset</h2>
+<p> The scanset conversion facility provided by <tt>scanf()</tt> is a
+useful string input method. This conversion facility allows
+the programmer to specify the set of characters that are (or
+are not) acceptable as part of the string. A scanset conversion
+consists of a list of acceptable characters enclosed within
+square brackets. A range of characters may be specified using
+notations such as‘a-z’, meaning all characters within this
+range. The actual interpretation of a range in this context
+is implementation-specific, i.e., it depends on the particular
+character set being used on the host computer. If an actual ‘-’
+is required in the scanset, it must be the first or last character
+in the set. If the first character after the ‘[’ is a ‘^’ character,
+then the rest of the scanset specifies unacceptable characters
+rather than acceptable characters.
+The following program shows the use of scansets.
+<p><div> <br><b>
+				<div class="code1">
+          <code>int main()<br>
+{<br>
+char str[50];<br>
+printf(“Enter a string in lower case:”);<br>
+scanf(“%[a-z]”,str);<br>
+printf(“The string was : %s\n”,str);<br>
+return 0;<br>
+}<br>
+Three sample runs are given below.<br>
+<ol><li> Enter a string in lower case: hello world<br>
+The string was: hello world</li><br>
+<li> Enter a string in lower case: hello, world<br>
+The string was: hello</li><br>
+<li> Enter a string in lower case: abcd1234<br>
+  The string was : abcd</li></ol></div></code></br></b></p>
+In the second case, the character, ‘,’ (comma) is not in
+the specified range. Note that in all cases, conversion is
+terminated by the input of something other than a space or
+lower-case letter.</p>
+
+<h2>Single-line input using scanset with ^</h2>
+<p>The circumflex (^) plays an important role while taking input.
+For a single-line text input, the user presses the <Return> or
+<Enter> key to terminate the string. The maximum number
+of characters typed by the user might be 80 because the
+screen can print a maximum of 80 characters in a line. All
+characters are allowed to be typed as input except ‘\n’. In the
+example that follows, the computer takes this (\n) as a clue
+indicating that the string has ended.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+char str[80];<br>
+printf(“Enter a string in lower case”);<br>
+scanf(“%[^\n]”,str);<br>
+printf(“The string was : %s\n”, str);<br>
+return 0;<br>
+            }</div></br></code></b></p>
+
+<h2>Multiline input using scanset</h2>
+<p>One can use a bracketed string read, %[..] where the square
+brackets [] are used to enclose all characters which are
+permissible in the input. If any character other than those
+listed within the brackets occurs in the input string, further
+reading is terminated. Reciprocally, those characters may be
+specified with the brackets which, if found in the input, will
+cause further reading of the string to be terminated. Such input
+terminators must be preceded by the caret (^). For example,
+if the tilde (~) is used to end a string, the following <tt>scanf()</tt>
+shows how it is coded.
+<p><div> <br><b>
+				<div class="code1">
+          <code>char string [200];
+scanf(“%[^~]”, string);</div></br></code></b></p>
+<p>Then, if the input for string consists of embedded spaces,
+no matter what, they will all be accepted by <tt>scanf()</tt>; and
+reading will stop when a tilde (~) is entered. This is illustrated
+in the following program and its output.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main( )<br>
+{<br>
+char string [80];<br>
+printf(“Enter a string, terminate with a tilde\
+(~)...”);<br>
+scanf(“%[^~]”, string);<br>
+printf(“%s”, string);<br>
+return 0;<br>
+}<br>
+Output<br>
+Enter a string, terminate with a tilde (~) ... I am
+a string. ~<br>
+I am a string.</div></br></b></code></p>
+<p>Though the terminating tilde is not itself included as an
+element of the string read, it stays in the ‘read buffer’—the
+area of memory designated to store the input—and will be
+picked up by the next call to <tt>scanf()</tt>, even though it is not
+required. This is illustrated by the following program and its
+output. Here, when the second call to <tt>scanf()</tt> is executed au-
+tomatically, the tilde (~) character is assigned to the character
+
+variables x. The call to <tt>putchar()</tt> prints the value of x.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main( )<br>
+{<br>
+char string [80];<br>
+char x;<br>
+printf(“Enter a string, terminate with a tilde\
+(~)...”);<br>
+scanf(“%[^~]”, string);<br>
+
+scanf(“%c”, &x); /* The leftover from the last
+scanf is read here. This scanf() does not
+wait for the user to enter another char.*/<br>
+printf(“%s”, string);<br>
+putchar(x);<br>
+return 0;<br>
+}<br>
+Output<br>
+Enter a string, terminate with a tilde (~) ... I am a
+string. ~<br>
+I am a string. ~</div></code></p></br></b>
+Compile and execute the program. It will be found that
+the machine executes the second scanf() without much
+fuss. Such dangling characters must be ‘absorbed away’ by
+a subsequent call to scanf() with %c, or to getchar() or they
+may interfere in unexpected ways with subsequent calls to
+<tt>scanf()</tt> or <tt>getchar().</tt></p>
+<h2>String input using scanf() with conversion specifier %c</h2>
+<p>An alternative method for the input of strings is to use
+<tt>scanf()</tt> with the %c conversion which may have a count
+associated with it. This conversion does not recognize the
+new-line character as special. The count specifies the number
+of characters to be read in. Unlike the %s and %[] (scanset)
+conversions, the %c conversion does not automatically
+generate the string terminating NUL and strange effects will
+be noted if the wrong number of characters is supplied. The
+following program demonstrates its use.
+<p><div> <br><b>
+				<div class="code1">
+          <code>int main()<br>
+{<br>
+char str[10];<br>
+int i;<br>
+while(1)<br>
+{<br>
+printf(“Enter a string of 9 characters:”);<br>
+scanf(“%10c”,str);<br>
+str[9]=‘\0’; /* Make it a string */<br>
+printf(“String was :%s\n”,str);<br>
+if(str[0] == ‘Z’)<br>
+break;<br>
+}<br>
+return 0;<br>
+}<br>
+The output of the sample runs is given below.<br>
+<ul><li>Enter a string of 9 characters: 123456789<br>
+String was : 123456789</li><br>
+<li>Enter a string of <br>9 characters: abcdefghi<br>
+String was : abcdefghi</li><br>
+<li>Enter a string of 9 charac<br>ters: abcdefghijklmnopqr<br>
+String was :abcdefghi</li><br>
+<li>Enter a string of 9 charac<br>ters: 123456789<br>
+String was :klmnopqr</li><br>
+<li>Enter a string of 9 chara<br>cters: ttttttttt<br>
+String was :23456789</li></ul></p></br></b></code></div><br>
+<br>
+<p>Some other points need to be noted here. The first is that,
+contrary to the prompt, 10 characters are being converted.
+This is done so that the new-line character at the end of the
+input line is also read in; otherwise it would be left in the
+input buffer to be read as one of the input characters the
+next time round. The effect of providing too many input
+characters is that ‘unconsumed’ input characters (including
+new-line characters) are left in the input buffer. These will
+be ‘consumed’ by the next call to <tt>scanf()</tt>. If too few input
+characters are provided, <tt>scanf()</tt> hangs (or blocks) until it
+gets enough input characters. Both types of behaviour can be
+seen in the above example.
+The complexities in using the <tt>scanf()</tt> function suggest
+that it is not really suitable for a reliable, general-purpose
+string input.</p>
+
+<h2>Using gets()</h2>
+<p>The best approach to string input is to use a library function
+called <tt>gets()</tt>. This takes the start address of an area of
+memory suitable to hold the input as a single parameter. The
+complete input line is read in and stored in the memory area
+as a null-terminated string. Its use is shown in the program
+below.
+<p><div> <br><b>
+				<div class="code1">
+          <code>int main()<br>
+{<br>
+char str[150];<br>
+printf(“Enter a string”);<br>
+gets(str);<br>
+printf(“The string was :%s\n”,str);<br>
+return 0;<br>
+}<br>
+Sample run:<br>
+(a) Enter a string manas<br>
+The string was :manas<br>
+(b) Enter a string manas ghosh<br>
+The string was :manas ghosh</div></b></code></p></br>
+<tt>gets()</tt> can be implemented using <tt>getchar() or scanf()</tt> with
+%c conversion specifier as follows:
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+char s[80], ch;<br>
+int i;<br>
+printf(“\n Enter the text:”);<br>
+for(i=0; i<80 ;i++)<br>
+{<br>
+ch=getchar();<br>
+if(ch==‘\n’)<br>
+break;<br>
+s[i]=ch;<br>
+}<br>
+s[i]=‘\0’;<br>
+printf(“\n Entered text is:”);<br>
+
+puts(s);<br>
+return 0;<br>
+}</div></br></b></p></code>
+<p>Be careful not to input more characters than can be stored
+in the string variable used because C does not check array
+bounds. <tt>gets() and puts()</tt> functions can be nested. The
+following statements can be written in C.
+printf(“%s”, gets(s));
+puts(gets(s));</p>
+<h2>sscanf()</h2>
+<p>There are a variety of library functions for handling input data.
+The most useful include <tt>sscanf()</tt> and the function <tt>atoi().</tt>
+The function <tt>sscanf()</tt> applies <tt>scanf()</tt> type conversions to
+data held in a program buffer as a single string but not to read
+data from standard input. The <tt>atoi()</tt> function converts a
+character string from external decimal form to internal binary
+form.
+The use of <tt>sscanf()</tt> in conjunction with <tt>gets()</tt> is
+illustrated by the following program. The purpose of the
+program is to read an integer. Unlike simple uses of <tt>scanf(),</tt>
+input errors are detected and the prompt repeated until a valid
+integer is entered.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+int error;<br>
+char inbuf[256];<br>
+int i;<br>
+char c;<br>
+while(1)<br>
+{<br>
+error = i = 0;<br>
+printf(“Enter an integer”);<br>
+gets(inbuf); /* get complete input line */<br>
+while(inbuf[i] == ‘ ’)<br>
+i++; /* skip spaces */<br>
+if(inbuf[i] == ‘-’ || inbuf[i] == ‘+’)<br>
+i++;<br>
+while((c = inbuf[i++])!=‘\0’)<br>
+
+/* while string end with NUL */<br>
+
+{<br>
+if(c>‘9’ || c<‘0’) /* non-digit ? */<br>
+{<br>
+printf(“Non-Numeric Character %c\n”,c);<br>
+error = 1;<br>
+break;<br>
+}<br>
+}<br>
+if(!error) /* was everything OK ? */<br>
+{<br>
+int num; /* local variable */<br>
+sscanf(inbuf,“%d”,&num); /* conversion */<br>
+printf(“Number was %d\n”,num);<br>
+break;<br>
+}<br>
+}<br>
+return 0;<br>
+}<br>
+Sample outputs are shown below:<br>
+(a) Enter an integer a123<br>
+Non-Numeric Character a<br>
+(b) Enter an integer 123a<br>
+Non-Numeric Character a<br>
+(c) Enter an integer 1234.56<br>
+Non-Numeric Character .<br>
+(d) Enter an integer 1234<br>
+Number was 1234<br>
+(e) Enter an integer +43<br>
+Number was 43</div></br></b></code></p>
+<p>There are some interesting points about this program. The
+main processing loop first skips any leading spaces pointing
+to the first non-blank character in the input text. An initial
+sign is also skipped. After the optional initial sign, all input
+characters must be digits until the input string terminating
+NUL is encountered. If anything other than a digit, including
+trailing blanks, is encountered, the loop is broken and an error
+indicator is set. The condition
+<p><div> <br><b>
+				<div class="code1">
+          <code>c = inbuf[i++]</div></code></br></b></p>
+<p>associated with the loop that checks for digits is a typical
+piece of C code that does several things in one go. The value
+of the expression <tt>inbuf[i++]</tt> is the next character from the
+input buffer inbuf. In the course of shifting of the character,
+the variable i is incremented as a side effect. The character
+value is assigned to the variable c to be used in the test for
+being a digit on the following line, the value of the assignment
+expression being, of course, the value assigned. The value of
+this expression becomes zero and terminates the loop when
+the character in question is the string terminating NUL that is
+represented with ‘\0’.
+In practice the code of this program would be incorporated
+into a user-defined function that might return the value of the
+entered integer.
+The function <tt>sscanf()</tt> is similar to <tt>scanf()</tt> except that it
+has an extra parameter, which is the address of the start of the
+memory area that holds the character string to be processed.
+The library function <tt>atoi() </tt>could have been used instead of
+<tt>sscanf()</tt> in this example by changing the appropriate line to
+read.
+<p><div> <br><b>
+				<div class="code1">
+          <code>num = atoi(inbuf);</div></code></br></b></p>
+The function <tt>atoi()</tt> takes the address of an area of
+memory as parameter and converts the string stored at that
+
+location to an integer using the external decimal to internal
+binary conversion rules. This may be preferable to sscanf()
+since <tt>atoi()</tt> is a much smaller, simpler, and faster function.
+<tt>sscanf()</tt> can do all possible conversions whereas <tt>atoi()</tt>
+can only do single decimal integer conversions. This type of
+function will be discussed in later sections.</p>
+
+<h2><br>String input and output using <tt>fscanf() and fprintf()</tt></h2>
+<p><tt>stdin, stdout, and stderr:</tt> Each C program has three I/O
+streams.The input stream is called standard-input (stdin); the usual
+output stream is called standard-output (stdout); and the side
+stream of output characters for errors is called standard error
+(stderr). Internally they occupy file descriptors 0, 1, and 2
+respectively.
+Now, one might think that calls to <tt>fprinf()</tt> and <tt>fscanf()</tt>
+differ significantly from calls to <tt>printf()</tt> and <tt>scanf().</tt>
+<tt>fprintf()</tt> sends formatted output to a stream and <tt>fscanf()</tt>
+scans and formats input from a stream. See the following
+example.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+int first, second;<br>
+fprintf(stdout,“Enter two ints in this line: ”);<br>
+fscanf(stdin,“%d %d”, &first, &second);<br>
+fprintf(stdout,“Their sum is: %d.\n”, first + second);<br>
+return 0;<br>
+}</div></code></br></b></p>
+<p>There is a third defined stream named <tt>stderr</tt>. This is
+associated with the standard error file. In some systems such
+as MSDOS and UNIX, one can redirect the output of the
+programs to files by using the redirection operator. In DOS,
+for example, if <tt>fl.exe</tt> is an executable file that writes to the
+monitor, then it can be redirected to output to a disk file.
+Output that would normally appear on the monitor can thus
+be sent to a file. Writing error messages to <tt>stderr</tt> can be
+done by<p><div> <br><b>
+				<div class="code1">
+          <code>fprintf(stderr,“Unable to open for writing”);</div></code></br></b></p>
+<p>This ensures that normal output will be redirected, but
+error messages will still appear on the screen. Observe the
+following program.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdlib.h&gt;<br>
+#include &lt;stdio.h&gt;<br>
+int main()<br>
+int i;<br>
+printf(“Input an integer:”);<br>
+/* read an integer from the standard input stream */<br>
+if(fscanf(stdin,“%d”, &i))<br>
+printf(“The integer read was: %i\n”, i);<br>
+else<br>
+{<br>
+fprintf(stderr,“Error in reading from stdin.\n”);<br>
+exit(1);<br>
+}<br>
+return 0;<br>
+}</div></b></br></code></p>
+Note
+<ol><li> One special case, where the null character is not
+automatically appended to the array, is when the array
+size is explicitly specified and the number of initializers
+completely fills the array size.</li>
+<li>printf() with the width and precision modifiers in the %s
+conversion specifier may be used to display a string.</li>
+<li> The %s format does not require the ampersand before
+the string name in scanf().</li>
+<li> If fewer input characters are provided, scanf() hangs
+until it gets enough input characters.</li>
+<li><tt> scanf()</tt> only recognizes a sequence of characters
+delimited by white space characters as an external string.</li>
+<li>While using scanset with <tt>scanf()</tt>, dangling characters
+must be ‘absorbed away’ by a subsequent call to <tt>scanf()</tt>
+with %c or to <tt>getchar().</tt></li></ol></p>
+
+<h3>8.1.5 Character Manipulation in the String</h3>
+<p>In working with a string, one important point to remember
+is that it must be terminated with NUL (\0). The following
+program removes all the blank spaces in the character string.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+#include &lt;string.h&gt;<br>
+int main()<br>
+{<br>
+char a[80],t[80];<br>
+int i,j;<br>
+printf(“\n enter the text\n”);<br>
+gets(a);<br>
+for(i=0,j=0; a[i]!=‘\0’;++i)<br>
+if(a[i]!= ‘ ’)<br>
+t[j++]=a[i];<br>
+t[j]=‘\0’;<br>
+printf(“\n the text without blank spaces\n”);<br>
+
+puts(t);<br>
+return 0;<br>
+}</div></code></br></b></p>
+<p>The Table below lists the character-handling functions of the
+header file.Notice that exceptforthe <tt>toupper() and tolower()</tt>
+functions, all these functions return values indicating true
+or false. It may be recalled that in C, true is any non-zero
+number and false is zero. The character is seemingly typed
+as an integer in these functions. This is because the character
+functions are really looking at the <tt>ASCII</tt> values of the
+characters, which are integers.</p>
+
+
+<p><br><b>Character functions in <ctype.h> where c is the character argument::</b></p><br>
+    <table rules="all">
+      <tr>
+        <th>Function</th>
+        <th>Description</th>
+       </tr>
+      <tr>
+        <td id="t">ialnum(c)</td>
+        <td>Returns a non-zero if c is alphabetic or numeric</td>
+      </tr>
+      <tr>
+        <td id="t">isalpha(c)</td>
+        <td>Returns a non-zero if c is alphabetic</td>
+      </tr>
+      <tr>
+        <td id="t">scntrl(c)</td>
+        <td>Returns a non-zero if c is a control character</td>
+      </tr>
+      <tr>
+        <td id="t">isdigit(c)</td>
+        <td>Returns a non-zero if c is a digit, 0 – 9</td>
+      </tr>
+      <tr>
+        <td id="t">isgraph(c)</td>
+        <td>Returns a non-zero if c is a non-blank but printing
+
+character</td>
+      </tr>
+      <tr>
+        <td id="t">islower(c)</td>
+        <td>Returns a non-zero if c is a lowercase alphabetic
+
+character, i.e., a – z</td>
+      </tr>
+      <tr>
+        <td id="t">isprint(c)</td>
+        <td>Returns a non-zero if c is printable, non-blanks and
+
+white space included</td>
+      </tr>
+      <tr>
+        <td id="t">ispunct(c)</td>
+        <td>Returns a non-zero if c is a printable character, but not
+
+alpha, numeric, or blank</td
+      </tr>
+      <tr>
+        <td id="t">isspace(c)</td>
+        <td>Returns a non-zero for blanks and these escape sequences:
+
+‘\f’, ‘\n’, ‘\r’, ‘\t’, and ‘\v’</td>
+      </tr>
+      <tr>
+        <td id="t">isupper(c)</td>
+        <td>Returns a non-zero if c is a capital letter, i.e., A – Z</td>
+      </tr>
+      <tr>
+        <td id="t">isxdigit(c)</td>
+        <td>Returns a non-zero if c is a hexadecimal character: 0 –
+
+9, a – f, or A – F</td>
+      </tr>
+      <tr>
+        <td id="t">tolower(c)</td>
+        <td>Returns the lowercase version if c is a capital letter;
+
+otherwise returns c</td>
+        
+      </tr>
+      <tr>
+        <td id="t">toupper(c)</td>
+        <td>Returns the capital letter version if c is a lowercase
+
+character; otherwise returns c</td>
+       
+      </tr>
+    </table>
+  </p>
+  
+<p>To see the actual effect of some of these character
+manipulation functions, write and run the following program
+on the computer. This program counts the number of words
+in a string.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+#include &lt;ctype.h&gt;<br>
+int main()<br>
+{<br>
+char s[30];<br>
+int i=0,count=0;<br>
+printf(“\n enter the string\n”);<br>
+scanf(“%[^\n]”,s);<br>
+while(s[i]!=‘\0’)<br>
+{<br>
+while(isspace(s[i]))<br>
+i++;<br>
+if(s[i]!=‘\0’)<br>
+{<br>
+++count;<br>
+while(!isspace(s[i]) && s[i] != ‘\0’)<br>
+i++;<br>
+}<br>
+}<br>
+printf(“\n NO. of words in the string is %d:”, count);<br>
+return 0;<br>
+}</div></br></b></code></p>
+<p>Here is a short program which illustrates the effect of the
+<tt>tolower()</tt> and <tt>toupper()</tt> functions. Notice that if a character
+is not lower case, the <tt>toupper()</tt> function does not change the
+character; the effect is similar if a character is not a capital
+letter. The following program converts a given text into a
+capital letter using <tt>toupper()</tt> function.</p>
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+#include &lt;string.h&gt;<br>
+int main()<br>
+{<br>
+char a[30];<br>
+int i=0;<br>
+printf(“\n enter the string\n”);<br>
+gets(a);<br>
+while(a[i]!=‘\0’)<br>
+{<br>
+a[i]=toupper(a[i]);<br>
+i++;<br>
+}<br>
+a[i]=‘\0’;<br>
+puts(a);<br>
+return 0;<br>
+}</div></code></p></br></b>
+<p>It should be remembered that there is a difference between
+characters and integers. If the character ‘1’ is treated as an
+integer, perhaps by writing</p>
+<p><div> <br><b>
+				<div class="code1">
+          <code>int i = ‘1’;</div></code></p></br></b>
+<p>it will probably not get the value 1 in i; it will produce
+the value of the character ‘1’ in the machine’s character
+set. In ASCII, it is 49. When the numeric value of a digit
+character has to be found (or to put it in another way, to
+get the digit character with a particular value), it is useful
+to remember that in any character set used by C, the values
+for the digit characters, whatever they are, are contiguous.
+In other words, no matter what values <tt>‘0’ and ‘1’</tt> have,
+<tt>‘1’ - ‘0’</tt> will be 1 (and, obviously, ‘0’ - ‘0’ will be 0). So, for a
+variable c holding some digit character, the expression
+<tt>c - ‘0’</tt>
+gives its value. Similarly, for an integer value <tt>i, i + ‘0’</tt>
+gives us the corresponding digit character, as long as <tt>0 <=
+i <= 9.</tt>
+
+Just as the character ‘1’ is not the integer 1, the string ‘123’
+is not the integer 123. When a string of digits is available, it
+can be converted to the corresponding integer by calling the
+standard function atoi.</p>
+<p><div> <br><b>
+				<div class="code1">
+          <code>char string[] =“123”;
+int i = atoi(string);
+int j = atoi(“456”);</div></code></p></br></b>
+
+<h2>8.2 String Manipulation</h2>
+<p>C has the weakest character string capability of any general-
+purpose programming language. Strictly speaking, there are
+
+no character strings in C, just arrays of single characters that
+are really small integers. If s1 and s2 are such ‘strings’, a
+program cannot
+<ul><li> assign one to the other: s1 = s2;</li>
+<li> compare them for collating sequence: s1 < s2</li>
+<li> concatenate them to form a single longer string: s1 + s2</li>
+<li> return a string as the result of a function</li></ul>
+A set of standard C library functions that are contained
+in <string.h> provides limited support for the first three.
+
+By convention, the end of a string is delimited by the non-
+printable null character (0 value), but there is no indication
+
+of the amount of memory allocated. Consequently, both user
+code and standard library functions can overwrite memory
+outside the space allocated for the array of characters.
+The string header, string.h, provides many functions
+useful for manipulating strings or character arrays. Some of
+these are mentioned in the table below.
+<p><b><br>String manipulation functions available in <tt>string.h</tt>::</b></p><br>
+    <table rules="all">
+      <tr>
+        <th>Function</th>
+        <th>Description</th>
+       </tr>
+      <tr>
+        <td id="t">strcpy(s1,s2)</td>
+        <td>Copies s2 into s1</td>
+      </tr>
+      <tr>
+        <td id="t">strcat(s1,s2)</td>
+        <td>Concatenates s2 to s1. That is, it appends the
+string contained by s2 to the end of the string
+pointed to by s1. The terminating null character
+of s1 is overwritten. Copying stops once the
+terminating null character of s2 is copied.</td>
+      </tr>
+      <tr>
+        <td id="t">strncat(s1,s2,n)</td>
+        <td>Appends the string pointed to by s2 to the end
+of the string pointed to by s1 up to n characters
+long. The terminating null character of s1 is
+overwritten. Copying stops once n characters are
+copied or the terminating null character of s2
+is copied. A terminating null character is always
+appended to s1.</td>
+      </tr>
+      <tr>
+        <td id="t">strlen(s1)</td>
+        <td>Returns the length of s1. That is, it returns the
+number of characters in the string without the
+terminating null character.</td>
+      </tr>
+      <tr>
+        <td id="t">strcmp(s1,s2)</td>
+        <td>Returns 0 if s1 and s2 are the same.
+Returns less than 0 if s1<s2.
+Returns greater than 0 if s1>s2.</td>
+      </tr>
+      <tr>
+        <td id="t">strchr(s1,ch)</td>
+        <td>Returns pointer to first occurrence ch in s1.</td>
+      </tr>
+      <tr>
+        <td id="t">strstr(s1,s2)</td>
+        <td>Returns pointer to first occurrence s2 in s1.</td>
+      </tr>
+    </table>
+  </p>
+
+<h2>8.3 Counting number of characters in a string</h2>
+<p>The first of these, <tt>strlen()</tt>, is particularly straightforward.
+Its single parameter is the address of the start of the string and
+its value is the number of characters in the string excluding
+the terminating NUL.
+To demonstrate the use of <tt>strlen()</tt>, here is a simple
+program that reads in a string and prints it out reversed, a
+useful thing to do. The repeated operation of this program is
+terminated by the user by entering a string of length zero, i.e.,
+by hitting the <Return> key immediately after the program
+prompt.
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+#include &lt;string.h&gt;<br>
+int main()<br>
+{<br>
+char s[100];<br>
+int len; /* holds length of string */<br>
+while(1)<br>
+{<br>
+printf(“Enter a string”);<br>
+gets(s);<br>
+len = strlen(s); /* find length */<br>
+if(len == 0) break; /* termination condition */<br>
+while(len > 0)<br>
+{<br>
+len--;<br>
+printf(“%c”,s[len]);<br>
+}<br>
+printf(“\n”);<br>
+}<br>
+return 0;<br>
+}</div></code></br></b></p>
+<p>The program operates by printing the characters one
+by one, starting with the last non-NUL character of the
+string. Notice that <tt>‘len’</tt> will have been decremented before
+the output of the character. This is correct since the length<br>
+returned by <tt>strlen()</tt> is the length excluding the NUL but the<br>
+actual characters are aggregate <br>members, 0, ..., length–1. The
+outputs of<br> this program for different sample runs are</p>
+<pre>(a) Enter a string 1234
+4321
+(b) Enter a string manas
+Sanam
+(c) Enter a string abc def ghi
+ihg fed cba</pre>
+Look at the following program that reads a line of text,
+stores it in a string, and prints its length (excluding the new
+line at the end).
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+int n, c;<br>
+char line[100];<br>
+n = 0;<br>
+while((c=getchar()) != ‘\n’)<br>
+{<br>
+
+if(n < 100)<br>
+line[n] = c;<br>
+n++;<br>
+}<br>
+line[n]=‘\0’;<br>
+printf(“length = %d\n”, n);<br>
+return 0;<br>
+}<br>
+Lastly, here is another version of strlen().<br>
+int mystrlen(char str[])<br>
+{<br>
+int i;<br><br>
+for(i = 0; str[i] != ‘\0’; i++)<br>
+{}<br>
+return 0;<br>
+}</div></br></b></code></p>
+<p>In this case, all one has to do is find the \0 that terminates
+the string. It turns out that the three control expressions of
+the for loop do all the work; there is nothing left to do in
+the body. Therefore, an empty pair of <tt>braces {}</tt> are used as
+the loop body. Equivalently, a null statement could be used,
+which is simply a semicolon as shown.
+<p><div> <br><b>
+				<div class="code1">
+          <code>for(i = 0; str[i] != ‘\0’; i++);</div></code></br></b></p>
+Empty loop bodies can be a bit startling at first, but they
+are not unheard of.</p>
+
+<h2>8.4 Comparing strings</h2>
+<p>Another function, <tt>strcmp()</tt>, takes the start addresses of two
+strings as parameters and returns the value zero if the strings
+are equal. If the strings are unequal, it returns a negative or
+positive value. The returned value is positive if the first string
+is greater than the second string and negative if the first string
+is lesser than the second string. In this context, the relative
+value of strings refers to their relative values as determined
+by the host computer character set (or collating sequence).
+It is important to realize that two strings cannot be
+compared by simply comparing their start addresses although
+this would be syntactically valid. The following program
+illustrates the comparison of two strings:
+<p><div> <br><b>
+				<div class="code1">
+          <code>#include &lt;stdio.h&gt;<br>
+#include &lt;string.h&gt;<br>
+int main()<br>
+
+{<br>
+char x[50],y[]=“a programming example”;<br>
+strcpy(x,“A Programming Example”);<br>
+if(strcmp(x,“A Programming Example”) == 0)<br>
+printf(“Equal \n”);<br>
+else<br>
+printf(“Unequal \n”);<br>
+if( strcmp(y,x) == 0)<br>
+printf(“Equal \n”);<br>
+else<br>
+printf(“Unequal \n”);<br>
+return 0;<br>
+}<br>
+<i>It produces the following output::</i><br>
+Equal<br>
+Unequal</div></br></b></code></p>
+
+<h4> Sample Problems :: </h4>
+<p><div> <br><b>
+				<div class="code1">
+          <code>1. What is the index of the element ‘A’ in the array below?<br>
+char myArray[] = {‘m’, ‘y’, ‘A’, ‘r’, ‘r’, ‘a’, ‘y’};<br>
+Output<br> 2</br></b></div></code></p>
+<p><div> <br><b>
+				<div class="code1">
+          <code>2. What will be the output of the following programs?<br>
+(a)#include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+char s1[]=“Oxford”;<br>
+char s2[]=“University”;<br>
+s1=s2;<br>
+printf(“%s”,s1);
+return 0;<br>
+}<br>
+Output<br> There is a compilation error that states “it cannot
+be a modifiable ‘lvalue’”<br> or<br> “Incompatible types in
+assignment”</div></br></b></code></p>
+<p><div> <br><b>
+				<div class="code1">
+          <code>(b) #include &lt;stdio.h&gt;<br>
+#include &lt;string.h&gt;<br>
+int main()<br>
+{<br>
+char p[]=“string”;<br>
+char t;<br>
+int i,j;<br>
+for(i=0,j=strlen(p);i<j;i++)<br>
+{<br>
+t=p[i];<br>
+p[i]=p[j-i];<br>
+p[j-i]=t;<br>
+}<br>
+printf(“%s”,p);<br>
+return 0;<br>
+}<br>
+Output<br> No output</div></br></b></code></p>
+<p><div> <br><b>
+				<div class="code1">
+          <code>(c) #include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+char names[5][20]={“pascal”,“ada”,“cobol”,“f
+ortran”,“perl”};<br>
+
+int i;<br>
+char *t;<br>
+t=names[3];<br>
+names[3]=names[4];<br>
+names[4]=t;<br>
+for(i=0;i<=4;i++)<br>
+printf(“%s”,names[i]);<br>
+return 0;<br>
+}<br>
+Output<br> Compiler error:“Lvalue required”<br>
+
+Or<br>
+
+“Incompatible types in assignment”</div></code></br></b></p>
+<p><div> <br><b>
+				<div class="code1">
+          <code>(d) #include &lt;stdio.h&gt;<br>
+int main()<br>
+{<br>
+int i;<br>
+char a[]=“\0”;<br>
+if(printf(“%s\n”,a))<br>
+printf(“Ok here \n”);<br>
+else<br>
+printf(“Forget it\n”);<br>
+return 0;<br>
+}<br>
+Output<br> Ok here</div></code></br></b></p>
+        </div>
+        <div class="end">
+          <p><b>Did you find this article helpful?</b></p> <br>
+          <input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+        </div>
+        <h2>Check these also:</h2>
+        <a href="7.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 7 <<"></a>
+        <br>
+        <br>
+        <a href="9.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 9 <<"></a>
+        <br>
+        <br>
+        <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+        <br>
+        <br>
+  
+        </article>
+    </main>
+    <footer class="flex-all-center">
+        <p>CopyRight &copy Beginners Point</p>
+    </footer>
+</body>
+
+</html>

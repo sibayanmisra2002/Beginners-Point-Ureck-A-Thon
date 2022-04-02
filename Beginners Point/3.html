@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/3.css">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<title>Chapter 3</title>
+</head>
+<header class="main-header">
+	<img src="images/Logo.png" class="logo-img"/>
+	<h1>Statements and Control Flow</h1>
+</header>
+<body>
+    <main> <br> <br>
+        <p>Statements are the ``steps'' of a program.
+            Most statements compute and assign values
+            or call functions,
+            but we will eventually meet several other kinds of statements as well.
+            By default,
+            statements are executed in sequence,
+            one after another.
+            We can, however, modify that sequence by using
+            <dfn> <b>control flow constructs</b> </dfn> 
+            which
+            arrange that a statement or group of statements
+            is executed only if some condition is true or false,
+            or executed over and over again to form a <dfn> <b>loop</b> </dfn> .
+            (A somewhat different kind of control flow happens when we call a function:
+            execution of the caller is suspended while the called function proceeds.
+            We'll discuss functions in
+            
+            chapter 5.)
+            </p> <br>
+            <p>My definitions of the terms <dfn> <b>statement</b> </dfn>  and
+                <dfn> <b>control flow</b> </dfn>  are somewhat circular.
+                A statement is an element within a program which you can apply
+                control flow to;
+                control flow is how you specify the order in which the
+                statements in your program are executed.
+                (A weaker definition of a statement might be
+                ``a part of your program that does something,''
+                but this definition could as easily be applied to
+                expressions
+                or functions.)
+                </p>
+                <h2>3.1 Expression Statements</h2>
+                    
+                    <p>[This section corresponds to K&amp;R Sec. 3.1]
+                    </p> <br><p>Most of the statements in a C program are <dfn> <b>expression statements</b> </dfn> .
+                    An expression statement is simply an expression followed by a semicolon.
+                    The lines
+
+                    </p> <br>
+                    <div class="code">
+				<code>  
+                    i = 0; <br>
+                        i = i + 1; <br>
+                    and <br>
+                        printf("Hello, world!\n");<br>
+			</code><br>
+			 </div>
+                    are all expression statements.
+                    (In some languages, such as Pascal,
+                    the semicolon separates statements,
+                    such that the last statement is not followed by a semicolon.
+                    In C, however, the semicolon is a statement terminator;
+                    all simple statements are followed by semicolons.
+                    The semicolon is also used for a few other things in C;
+                    we've already seen that it terminates declarations, too.)
+                    <p></p> <br><p>Expression statements do all of the real work in a C program.
+                    Whenever you need to compute new values for variables,
+                    you'll typically use expression statements
+                    (and they'll typically contain assignment operators).
+                    Whenever you want your program to do something visible,
+                    in the real world,
+                    you'll typically call a function
+                    (as part of an expression statement).
+                    We've already seen the most basic example:
+                    calling the function <tt>printf</tt> to print text to the screen.
+                    But anything else you might do--read or write a disk file,
+                    talk to a modem or printer,
+                    draw pictures on the screen--will
+                    also involve function calls.
+                    (Furthermore, the functions you call to do these things
+                    are usually different depending on which operating system you're using.
+                    The C language does not define them,
+                    so we won't be talking about or using them much.)
+                    </p> <br><p>Expressions and expression statements can be arbitrarily complicated.
+                    They don't have to consist of exactly one simple function call,
+                    or of one simple assignment to a variable.
+                    For one thing,
+                    many functions return values,
+                    and the values they return can then be used
+                    by other parts of the expression.
+                    For example, C provides a <tt>sqrt</tt> (square root) function,
+                    which we might use to compute the hypotenuse of a right 
+                    triangle like this:
+                    </p> <br>
+      <div class="code"><code>	c = sqrt(a*a + b*b);
+                    </code></div>
+                    <p></p> <br><p>To be useful, an expression statement must
+                    do something;
+                    it must have some lasting effect on the state of the program.
+                    (Formally, a useful statement must have at least one
+                    <dfn> <b>side effect</b> </dfn> .)
+                    The first two
+                    sample
+                    expression
+                    statements
+                    in this section
+                    (above)
+                    assign new values to the
+                    variable <tt>i</tt>,
+                    and the third one calls <tt>printf</tt> to print something out,
+                    and these are good examples of statements that do something useful.
+                    </p> <br><p>(To make the distinction clear, we may note that degenerate
+                    constructions such as
+                    </p> <br>
+      <div class="code"><code>	0;<br>
+                     &emsp;&emsp;   i;<br>
+                    or<br>
+                    &emsp;&emsp;    i + 1;<br>
+                    </code></div>
+                    are syntactically valid statements--they
+                    consist of an expression followed by a semicolon--but
+                    in each case,
+                    they compute a value without doing anything with it,
+                    so the computed value is discarded,
+                    and the statement is useless.
+                    But if
+                    the ``degenerate'' statements in this paragraph
+                    don't make much sense to you, don't worry;
+                    it's because they, frankly, don't make much sense.)
+                    <p></p> <br><p>It's also possible for a single expression to have multiple
+                    side effects, but it's easy for such an expression to be
+                    (a) confusing or (b) undefined.
+                    For now, we'll only be looking at expressions
+                    (and, therefore, statements)
+                    which do one well-defined thing at a time.
+                    
+                    </p> 
+                     <h2>3.2 <tt>if</tt> Statements</h2>
+                        
+                        <p>[This section corresponds to K&amp;R Sec. 3.2]
+                        </p> <br><p>The simplest way to modify the control flow of a program is
+                        with an <tt>if</tt> statement,
+                        which in its simplest form looks
+                        like this:
+                        </p> <br><div class="code"><code>	if(x &gt; max)<br>
+                              &emsp;&emsp;  max = x;<br>
+                        </code></div>
+                        Even if you didn't know any C,
+                        it would probably be pretty obvious
+                        that what happens here is that
+                        if <tt>x</tt> is greater than <tt>max</tt>,
+                        <tt>x</tt> gets assigned to <tt>max</tt>.
+                        (We'd use code like this to keep track of the maximum value of 
+                        <tt>x</tt> we'd seen--for each new <tt>x</tt>,
+                        we'd compare it to the old maximum value <tt>max</tt>,
+                        and if the new value was greater,
+                        we'd update <tt>max</tt>.)
+                        <p></p> <br><p>More generally, we can say that
+                        the syntax of an <tt>if</tt> statement is:
+                        </p> <br><div class="code"><code>	if( <i>expression</i> )<br>
+                               &emsp;&emsp;&emsp;&emsp; <i>statement</i><br>
+                        </code></div>
+                        where <i>expression</i> is any expression and <i>statement</i>
+                        is any statement.
+                        
+                        <p></p> <br><p>What if you have a series of statements,
+                        all of which should be executed together or not at all
+                        depending on whether some condition is true?
+                        The answer is that you enclose them in braces:
+                        </p> <br><div class="code"><code>	if( <i>expression</i> )<br>
+                                {<br>
+                                &emsp;&emsp;<i>statement<tt>&lt;sub&gt;</tt>1<tt>&lt;/sub&gt;</tt></i><br>
+                                &emsp;&emsp;<i>statement<tt>&lt;sub&gt;</tt>2<tt>&lt;/sub&gt;</tt></i><br>
+                                &emsp;&emsp;<i>statement<tt>&lt;sub&gt;</tt>3<tt>&lt;/sub&gt;</tt></i><br>
+                                }<br>
+                        </code></div>
+                        As a general rule,
+                        anywhere the syntax of C calls for a statement,
+                        you may write a series of statements enclosed by braces.
+                        (You do not need to,
+                        and should not,
+                        put a semicolon after the closing brace,
+                        because
+                        the series of statements enclosed by braces
+                        is not itself a
+                        simple expression
+                        statement.)
+                        <p></p> <br><p>An <tt>if</tt> statement may also optionally contain a second
+                        statement, the ``<tt>else</tt> clause,''
+                        which is to be executed if the condition is not met.
+                        Here is an example:
+                        </p> <br><div class="code"><code>	if(n &gt; 0)<br>
+                                &emsp;&emsp;average = sum / n;<br>
+                                else	{<br>
+                                &emsp;&emsp;printf("can't compute average\n");<br>
+                                &emsp;&emsp;average = 0;<br>
+                                &emsp;&emsp;}<br>
+                        </code></div>
+                        The first statement or block of statements is executed
+                        if the condition <em>is</em> true,
+                        and the second statement or block of statements
+                        (following the keyword <tt>else</tt>)
+                        is executed if the condition is <em>not</em> true.
+                        In this example,
+                        we can compute a meaningful average only if <tt>n</tt> is greater than 0;
+                        otherwise,
+                        we print a message saying that we cannot compute the average.
+                        The general syntax of an <tt>if</tt> statement is therefore
+                       <div class="code"> <code>	if( <i>expression</i> )<br>
+                               &emsp;&emsp; <i>statement<tt>&lt;sub&gt;</tt>1<tt>&lt;/sub&gt;</tt></i><br>
+                            else<br>
+                               &emsp;&emsp; <i>statement<tt>&lt;sub&gt;</tt>2<tt>&lt;/sub&gt;</tt></i><br>
+                        </code></div>
+                        (where both
+                        <i>statement<tt>&lt;sub&gt;</tt>1<tt>&lt;/sub&gt;</tt></i> and <i>statement<tt>&lt;sub&gt;</tt>2<tt>&lt;/sub&gt;</tt></i>
+                        may be lists of statements enclosed in braces).
+                        <p></p> <br><p>It's also possible to nest one <tt>if</tt> statement inside another.
+                        (For that matter, it's in general possible to nest any kind of
+                        statement or control flow construct within another.)
+                        For example,
+                        here is a little piece of code which decides roughly which
+                        quadrant of the compass you're walking into,
+                        based on an <tt>x</tt> value which is positive if you're
+                        walking east, and a <tt>y</tt> value which is positive if
+                        you're walking north:
+                        </p> <br><div class="code"><code>	if(x &gt; 0)<br>
+                                {<br>
+                                &emsp;&emsp;if(y &gt; 0)<br>
+                                 &emsp;&emsp;&emsp;&emsp;printf("Northeast.\n");<br>
+                                &emsp;&emsp;else	<br>
+                                &emsp;&emsp;&emsp;&emsp;printf("Southeast.\n");<br>
+                               &emsp;&emsp; }<br>
+                            else	{<br>
+                                &emsp;&emsp;if(y &gt; 0)<br>
+                                &emsp;&emsp;&emsp;&emsp;printf("Northwest.\n");<br>
+                                &emsp;&emsp;else<br>	
+                                &emsp;&emsp;&emsp;&emsp;printf("Southwest.\n");<br>
+                                }<br>
+                        </code></div>
+                        When you have one <tt>if</tt> statement (or loop) nested
+                        inside another,
+                        it's a very good idea to use explicit braces <tt>{}</tt>, as
+                        shown, to make it clear (both to you and to the compiler)
+                        how they're nested and which <tt>else</tt> goes with which
+                        <tt>if</tt>.
+                        It's also a good idea to indent the various levels,
+                        also as shown, to make the code more readable to humans.
+                        Why do both?
+                        You use indentation to make the code visually more readable
+                        to yourself and other humans,
+                        but the compiler doesn't pay attention to the indentation
+                        (since all whitespace is essentially equivalent and is essentially ignored).
+                        Therefore, you also have to make sure that the punctuation is right.
+                        <p></p> <br><p>Here is an example of another common arrangement
+                        of <tt>if</tt> and <tt>else</tt>.
+                        Suppose we have a variable <tt>grade</tt>
+                        containing a student's numeric grade,
+                        and we want to print out the corresponding letter grade.
+                        Here is code that would do the job:
+                        </p> <br><div class="code"><code>	if(grade &gt;= 90)<br>
+                            &emsp;&emsp;&emsp;&emsp;printf("A");<br>
+                            &emsp;&emsp;else if(grade &gt;= 80)<br>
+                            &emsp;&emsp;&emsp;&emsp;printf("B");<br>
+                            &emsp;&emsp;else if(grade &gt;= 70)<br>
+                            &emsp;&emsp;&emsp;&emsp;printf("C");<br>
+                            &emsp;&emsp;else if(grade &gt;= 60)<br>
+                            &emsp;&emsp;&emsp;&emsp;printf("D");<br>
+                            &emsp;&emsp;else	printf("F");<br>
+                        </code></div>
+                        What happens here is that exactly one of the five
+                        <tt>printf</tt> calls
+                        is executed,
+                        depending on which of the conditions is true.
+                        Each condition is tested in turn, and if one is true,
+                        the corresponding statement is executed,
+                        and the rest are skipped.
+                        If none of the conditions is true,
+                        we fall through to the last one, printing ``F''.
+                        <p></p> <br><p>In the cascaded
+                        <tt>if</tt>/<tt>else</tt>/<tt>if</tt>/<tt>else</tt>/... chain,
+                        each <tt>else</tt> clause is another <tt>if</tt> statement.
+                        This may be more obvious at first
+                        if we reformat the example,
+                        including every set of braces
+                        and indenting each <tt>if</tt> statement relative to the previous one:
+                        </p> <br><div class="code"><code>	if(grade &gt;= 90)<br>
+                               &emsp;&emsp;{<br>
+                                &emsp;&emsp;printf("A");<br>
+                                &emsp;&emsp;}<br>
+                            &emsp;else{<br>
+                                &emsp;&emsp;if(grade &gt;= 80)<br>
+                                   &emsp;&emsp;&emsp;&emsp;{<br>
+                                    &emsp;&emsp;&emsp;&emsp;printf("B");<br>
+                                    &emsp;&emsp;&emsp;&emsp;}<br>
+                               &emsp;else{<br>
+                                    &emsp;&emsp;if(grade &gt;= 70)<br>
+                                        &emsp;&emsp;&emsp;&emsp;{<br>
+                                        &emsp;&emsp;&emsp;&emsp;printf("C");<br>
+                                        &emsp;&emsp;&emsp;&emsp;}<br>
+                                    &emsp;else{<br>
+                                        &emsp;&emsp;if(grade &gt;= 60)<br>
+                                            &emsp;&emsp;&emsp;&emsp;{<br>
+                                            &emsp;&emsp;&emsp;&emsp;printf("D");<br>
+                                            &emsp;&emsp;&emsp;&emsp;}<br>
+                                        &emsp;else{<br>
+                                            &emsp;&emsp;printf("F");<br>
+                                            &emsp;&emsp;&emsp;&emsp;&emsp;}<br>
+                                        &emsp;&emsp;&emsp;}<br>
+                                    &emsp;&emsp;}<br>
+                                &emsp;}<br>
+                        </code></div>
+                        By examining the code this way,
+                        it should be obvious that
+                        exactly one of the <tt>printf</tt> calls is executed,
+                        and that whenever one of the conditions is found true,
+                        the remaining conditions do not need to be checked
+                        and none of the later statements within the chain will be executed.
+                        But once you've convinced yourself of this
+                        and learned to recognize the idiom,
+                        it's generally preferable to arrange the statements as in the first example,
+                        without trying to indent each successive <tt>if</tt> statement
+                        one tabstop further out.
+                        (Obviously, you'd run into the right margin very quickly if the
+                        chain had just a few more cases!)
+                        
+                    </p>                   
+                    
+                        <h2>3.3 Boolean Expressions</h2>
+                        
+                        <p>An <tt>if</tt> statement like
+                        </p> <br><div class="code"><code>	if(x &gt; max)<br>
+                                max = x;
+                        </code></div>
+                        is perhaps deceptively simple.
+                        Conceptually, we say that it checks whether the condition
+                        <tt>x &gt; max</tt> is ``true'' or ``false''.
+                        The mechanics underlying C's conception of ``true''
+                        and ``false,'' however, deserve some explanation.
+                        We need to understand how true and false values are represented,
+                        and how they are interpreted by statements like <tt>if</tt>.
+                        <p></p> <br><p>As far as C is concerned,
+                        a true/false condition can be represented as an integer.
+                        (An integer can represent many values;
+                        here we care about only two values:
+                        ``true'' and ``false.''
+                        The study of mathematics involving only two values is called
+                        Boolean algebra, after George Boole, a mathematician who
+                        refined this study.)
+                        In C, ``false'' is represented by a value of 0 (zero),
+                        and ``true'' is represented by any value that is nonzero.
+                        Since there are many nonzero values (at least 65,534, for
+                        values of type <tt>int</tt>),
+                        when we have to pick a specific value for ``true,''
+                        we'll pick 1.
+                        </p> <br><p>The <dfn> <b>relational operators</b> </dfn>  such as
+                        <tt>&lt;</tt>, <tt>&lt;=</tt>, <tt>&gt;</tt>, and <tt>&gt;=</tt>
+                        are in fact operators, just like <tt>+</tt>, <tt>-</tt>, <tt>*</tt>,
+                        and <tt>/</tt>.
+                        The relational operators take two values, look at them, and
+                        ``return'' a value of 1 or 0 depending on whether the
+                        tested relation was true or false.
+                        The complete set of relational operators in C is:
+                        <br>
+                        <br>
+                        </p> <br><div class="code"><code>	<tt>&lt;</tt>	less than<br>
+                            &emsp;&emsp;&emsp;&emsp;<tt>&lt;=</tt>	less than or equal<br>
+                            &emsp;&emsp;&emsp;&emsp;<tt>&gt;</tt>	greater than<br>
+                            &emsp;&emsp;&emsp;&emsp;<tt>&gt;=</tt>	greater than or equal<br>
+                            &emsp;&emsp;&emsp;&emsp;<tt>==</tt>	equal<br>
+                            &emsp;&emsp;&emsp;&emsp;<tt>!=</tt>	not equal<br>
+                        </code></div>
+                        <br>
+                        <br>
+                        For example,
+                        <tt>1 &lt; 2</tt> is 1,
+                        <tt>3 &gt; 4</tt> is 0,
+                        <tt>5 == 5</tt> is 1,
+                        and
+                        <tt>6 != 6</tt> is 0.
+                        <p></p> <br><p>We've now encountered perhaps the most easy-to-stumble-on
+                        ``gotcha!'' in C:
+                        the equality-testing operator is <tt>==</tt>,
+                        not a single <tt>=</tt>, which is assignment.
+                        If you accidentally write
+                        </p> <br><div class="code"><code>	if(a = 0)
+                        </code></div>
+                        (and you probably will at some point;
+                        everybody
+                        makes this mistake),
+                        it will <em>not</em> test whether <tt>a</tt> is zero,
+                        as you probably intended.
+                        Instead, it will <em>assign</em> 0 to <tt>a</tt>,
+                        and then perform the ``true'' branch
+                        of the <tt>if</tt> statement if <tt>a</tt> is <em>non</em>zero.
+                        But <tt>a</tt> will have just been assigned the value 0,
+                        so the ``true'' branch will never be taken!
+                        (This could drive you crazy while debugging--you
+                        wanted to do something if <tt>a</tt> was 0,
+                        and after the test, <tt>a</tt> <em>is</em> 0,
+                        whether it was supposed to be or not,
+                        but the ``true'' branch is nevertheless not taken.)
+                        <p></p> <br><p>The relational operators work with arbitrary numbers
+                        and generate true/false values.
+                        You can
+                        also
+                        combine true/false values by using the
+                        <dfn> <b>Boolean operators</b> </dfn> ,
+                        which take true/false values as operands
+                        and compute new true/false values.
+                        The three Boolean operators are:
+                        <br>
+                        <br>
+                        </p> <br><div class="code"><code>	<tt>&amp;&amp;</tt>	and<br>
+                            &emsp;&emsp;&emsp;&emsp;<tt>||</tt>	or<br>
+                            &emsp;&emsp;&emsp;&emsp;<tt>!</tt>	not (takes one operand; ``<dfn> <b>unary</b> </dfn> '')<br>
+  </code></div>
+                        <br>
+                        The <tt>&amp;&amp;</tt> (``and'') operator
+                        takes two true/false values
+                        and produces a true (1) result if both operands are true
+                        (that is, if the left-hand side is true <b>and</b>
+                        the right-hand side is true).
+                        The <tt>||</tt> (``or'') operator
+                        takes two true/false values
+                        and produces a true (1) result if either operand is true.
+                        The <tt>!</tt> (``not'') operator
+                        takes a single true/false value and negates it,
+                        turning false to true and true to false
+                        (0 to 1 and nonzero to 0).
+                        <p></p> <br><p>For example, to test whether the variable <tt>i</tt> lies
+                        between 1 and 10, you might use
+                        </p> <br><div class="code"><code>	if(1 &lt; i &amp;&amp; i &lt; 10)<br>
+                                &emsp;&emsp;&emsp;&emsp;...
+                        </code></div>
+                        Here we're expressing the
+                        relation
+                        
+                        ``<tt>i</tt> is between 1 and 10''
+                        as
+                        ``1 is less than <tt>i</tt> <b>and</b>
+                        <tt>i</tt> is less than 10.''
+                        <p></p> <br><p>It's important to understand why the more obvious
+                        expression
+                        
+                        </p> <br><div class="code"><code>	if(1 &lt; i &lt; 10)			/* WRONG */
+                        </code></div>
+                        would not work.
+                        The expression
+                        <tt>1 &lt; i &lt; 10</tt>
+                        is parsed by the compiler analogously to
+                        <tt>1 + i + 10</tt>.
+                        The expression <tt>1 + i + 10</tt>
+                        is parsed as <tt>(1 + i) + 10</tt>
+                        and
+                        means ``add 1 to <tt>i</tt>, and then add the result to 10.''
+                        Similarly,
+                        the expression
+                        <tt>1 &lt; i &lt; 10</tt>
+                        is parsed as <tt>(1 &lt; i) &lt; 10</tt>
+                        and
+                        means ``see if 1 is less than <tt>i</tt>,
+                        and then see if the result is less than 10.''
+                        But in this case, ``the result'' is 1 or 0, depending
+                        on whether <tt>i</tt> is greater than 1.
+                        Since both 0 and 1 are less than 10, the expression
+                        <tt>1 &lt; i &lt; 10</tt>
+                        would <em>always</em> be true in C,
+                        regardless of the value of <tt>i</tt>!
+                        <p></p> <br><p>Relational and Boolean expressions are usually used
+                        in contexts such as an <tt>if</tt> statement, where something is
+                        to be done or not done depending on some condition.
+                        In these cases
+                        what's actually checked is whether the expression representing
+                        the condition has a zero or nonzero value.
+                        As long as the expression is a relational or Boolean expression,
+                        the interpretation is just what we want.
+                        For example,
+                        when we wrote
+                        </p> <br><div class="code"><code>	if(x &gt; max)
+                        </code></div>
+                        the <tt>&gt;</tt> operator produced a 1
+                        if <tt>x</tt> was greater than <tt>max</tt>,
+                        and a 0 otherwise.
+                        The <tt>if</tt> statement interprets 0 as false and 1
+                        (or any nonzero value)
+                        as true.
+                        <p></p> <br><p>But what if the expression is not a relational or Boolean expression?
+                        As far as C is concerned,
+                        the controlling expression
+                        (of conditional statements like <tt>if</tt>)
+                        can
+                        in fact
+                        be <em>any</em> expression:
+                        it doesn't have to ``look like'' a Boolean expression;
+                        it doesn't have to contain relational or logical operators.
+                        All C looks at
+                        (when it's evaluating an <tt>if</tt> statement,
+                        or anywhere else where it needs a true/false value)
+                        is whether the expression evaluates to 0 or nonzero.
+                        For example,
+                        if you have
+                        a variable <tt>x</tt>,
+                        and you want to do something if <tt>x</tt> is nonzero,
+                        it's possible to write
+                        </p> <br><div class="code"><code>	if(x)<br>
+                                &emsp;&emsp;<i>statement</i><br>
+                        </code></div>
+                        and the statement will be executed if <tt>x</tt> is nonzero
+                        (since nonzero means ``true'').
+                        <p></p> <br><p>This possibility
+                        (that the controlling expression of an <tt>if</tt> statement
+                        doesn't have to ``look like'' a Boolean expression)
+                        is both useful and potentially confusing.
+                        It's useful when you have a variable or a function that is
+                        ``conceptually Boolean,''
+                        that is,
+                        one
+                        that you consider to hold
+                        a true or false (actually nonzero or zero) value.
+                        For example, if you have a variable <tt>verbose</tt>
+                        which contains a nonzero value when your program should run in
+                        verbose mode and zero when it should be quiet,
+                        you can write things like
+                        </p> <br><div class="code"><code>	if(verbose)<br>
+                                &emsp;&emsp;printf("Starting first pass\n");
+                        </code></div>
+                        and this code is both legal and readable,
+                        besides which it does what you want.
+                        
+                        The standard library contains a function <tt>isupper()</tt>
+                        which tests whether a character is an upper-case letter,
+                        so if <tt>c</tt> is a character,
+                        you might write
+                        <div class="code"><code>	if(isupper(c))<br>
+                               &emsp;&emsp; ...
+                        </code></div>
+                        Both of these examples (<tt>verbose</tt> and <tt>isupper()</tt>)
+                        are useful and readable.
+                        <p></p> <br><p>However, you will eventually come across code like
+                        </p> <br><div class="code"><code>	if(n)<br>
+                                &emsp;&emsp;average = sum / n;<br>
+                        </code></div>
+                        where <tt>n</tt> is just a number.
+                        Here, the programmer wants to compute the average only if
+                        <tt>n</tt> is nonzero
+                        (otherwise, of course, the code would divide by 0),
+                        and the code works,
+                        because, in the context of the <tt>if</tt> statement,
+                        the trivial expression <tt>n</tt> is
+                        (as always)
+                        interpreted as ``true'' if it is nonzero,
+                        and ``false'' if it is zero.
+                        <p></p> <br><p>``Coding shortcuts''
+                        like these
+                        can
+                        seem cryptic,
+                        but they're also quite common,
+                        so you'll need to be able to recognize them
+                        even if you don't choose to write them in your own code.
+                        Whenever you see code like
+                        </p> <br><div class="code"><code>	if(x)
+                        </code></div>
+                        or
+                        <div class="code"><code>	if(f())
+                        </code></div>
+                        where <tt>x</tt> or <tt>f()</tt>
+                        do not have obvious ``Boolean'' names,
+                        you can read them as ``if <tt>x</tt> is nonzero''
+                        or
+                        ``if <tt>f()</tt> returns nonzero.''
+                        
+                    </p> 
+                            <h2>3.4 <tt>while</tt> Loops</h2>
+                            
+                            <p>[This section corresponds to half of K&amp;R Sec. 3.5]
+                            </p> <br><p>Loops generally consist of two parts:
+                            one or more <dfn> <b>control expressions</b> </dfn>  which
+                            (not surprisingly)
+                            control the execution of the loop,
+                            and the <dfn> <b>body</b> </dfn> ,
+                            which is the statement or set of statements
+                            which is executed over and over.
+                            </p> <br><p>The most basic <dfn> <b>loop</b> </dfn>  in C is the
+                            <tt>while</tt> loop.
+                            A <tt>while</tt> loop
+                            has one control expression,
+                            and executes as long as
+                            that expression
+                            is true.
+                            This example repeatedly doubles the number 2
+                            (2, 4, 8, 16, ...)
+                            and prints the resulting numbers as long as they are less than 1000:
+                            </p> <br><div class="code"><code>	int x = 2;<br><br>
+                            
+                                while(x &lt; 1000)<br>
+                                    &emsp;&emsp;{<br>
+                                    &emsp;&emsp;printf("%d\n", x);<br>
+                                    &emsp;&emsp;x = x * 2;<br>
+                                    &emsp;&emsp;}<br>
+                            </code></div>
+                            (Once again,
+                            we've used braces <tt>{}</tt> to enclose the group of statements
+                            which are to be executed together as the body of the loop.)
+                            <p></p> <br><p>The general syntax of a <tt>while</tt> loop is
+                            </p> <br><div class="code"><code>	while( <i>expression</i> )<br>
+                                    &emsp;&emsp;<i>statement</i><br>
+                            </code></div>
+                            A <tt>while</tt> loop starts out like an <tt>if</tt> statement:
+                            if the condition expressed by the <i>expression</i> is true,
+                            the <i>statement</i> is executed.
+                            However,
+                            after executing the statement,
+                            the condition is tested again,
+                            and if it's still true,
+                            the statement is executed again.
+                            (Presumably, the condition depends on some value which is
+                            changed in the body of the loop.)
+                            As long as the condition remains true,
+                            the body of the loop is executed over and over again.
+                            (If the condition is false right at the start,
+                            the body of the loop is not executed at all.)
+                            <p></p> <br><p>As another
+                            example, if you wanted to print a number of blank lines,
+                            with the variable <tt>n</tt> holding the number of blank 
+                            lines to be printed, you might use code like this:
+                            </p> <br><div class="code"><code>	while(n &gt; 0)<br>
+                                    {<br>
+                                    &emsp;&emsp;printf("\n");<br>
+                                    &emsp;&emsp;n = n - 1;<br>
+                                    }<br>
+                            </code></div>
+                            After the loop finishes
+                            (when control ``falls out'' of it,
+                            due to the condition being false),
+                            <tt>n</tt> will have the value 0.
+                            
+                            <p></p> <br><p>You use a <tt>while</tt> loop when
+                            you have a statement or group of statements which may have to
+                            be executed a number of times to complete their task.
+                            The controlling expression represents the condition ``the
+                            loop is not done'' or ``there's more work to do.''
+                            As long as the expression is true, the body of the loop is executed;
+                            presumably, it makes at least some progress at its task.
+                            When the expression becomes false, the task is done, and the
+                            rest of the program (beyond the loop) can proceed.
+                            When we think about a loop in this way,
+                            we can seen an additional important property:
+                            if the expression evaluates to ``false'' 
+                            before the very first trip through the loop,
+                            we make <em>zero</em> trips through the loop.
+                            In other words,
+                            if the task is already done
+                            (if there's no work to do)
+                            the body of the loop is not executed at all.
+                            (It's always a good idea
+                            to think about the ``boundary conditions'' in a piece of code,
+                            and to make sure that the code will work correctly
+                            when there is no work to do,
+                            or when there is a trivial task to do,
+                            such as sorting an array of one number.
+                            Experience has shown that bugs at boundary conditions
+                            are quite common.)
+                            </p>                         
+
+                            
+                                <h2>3.5 <tt>for</tt> Loops</h2>
+                                
+                                <p>[This section corresponds to the other half of K&amp;R Sec. 3.5]
+                                </p> <br><p>Our second loop,
+                                which we've seen
+                                
+                                at least one example of already,
+                                is the <tt>for</tt> loop.
+                                The first one we saw was:
+                                </p> <br><div class="code"><code>	for (i = 0; i &lt; 10; i = i + 1)<br>
+                                        &emsp;&emsp;printf("i is %d\n", i);
+                                </code></div>
+                                More generally, the syntax of a <tt>for</tt> loop is
+                                <div class="code"><code>	for( <i>expr<sub>1</sub></i> ; <i>expr<sub>2</sub></i> ; <i>expr<sub>3</sub></i> )<br>
+                                        &emsp;&emsp;<i>statement</i><br>
+                                </code></div>
+                                (Here we see that the <tt>for</tt> loop has three control expressions.
+                                As always,
+                                the <i>statement</i> can be a brace-enclosed block.)
+                                <p></p> <br><p>Many loops are set up to cause some variable to step
+                                through a range of values,
+                                or, more generally, to set up an initial condition
+                                and then modify some value to perform each succeeding loop
+                                as long as some condition is true.
+                                The three expressions in a <tt>for</tt> loop
+                                encapsulate these conditions:
+                                <i>expr<sub>1</sub></i> sets up the initial condition,
+                                <i>expr<sub>2</sub></i> tests whether another trip through the loop should be taken,
+                                and <i>expr<sub>3</sub></i> increments or updates
+                                things
+                                
+                                after each trip through the loop and prior to the next one.
+                                In
+                                our first example,
+                                we had
+                                <tt>i = 0</tt> as <i>expr<sub>1</sub></i>,
+                                <tt>i &lt; 10</tt> as <i>expr<sub>2</sub></i>,
+                                <tt>i = i + 1</tt> as <i>expr<sub>3</sub></i>,
+                                and the call to <tt>printf</tt> as
+                                <i>statement</i>,
+                                the body of the loop.
+                                So the loop began by setting <tt>i</tt> to 0,
+                                proceeded as long as <tt>i</tt> was less than 10,
+                                printed out <tt>i</tt>'s value during each trip through the loop,
+                                and added 1 to <tt>i</tt> between each trip through the loop.
+                                </p> <br><p>
+                                When the compiler sees a <tt>for</tt> loop,
+                                first, <i>expr<sub>1</sub></i> is evaluated.
+                                Then, <i>expr<sub>2</sub></i> is evaluated, and if it is true,
+                                the body of the loop (<i>statement</i>) is executed.
+                                Then, <i>expr<sub>3</sub></i> is evaluated
+                                to go to the next step,
+                                and <i>expr<sub>2</sub></i> is evaluated again,
+                                to see if there <em>is</em> a next step.
+                                During the execution of a <tt>for</tt> loop, the sequence is:
+                                </p> <br><blockquote><div class="code"><code><i>expr<sub>1</sub></i><br>
+                                &emsp;&emsp;&emsp;&emsp;<i>expr<sub>2</sub></i><br>
+                                &emsp;&emsp;&emsp;&emsp;<i>statement</i><br>
+                                &emsp;&emsp;&emsp;&emsp;<i>expr<sub>3</sub></i><br>
+                                &emsp;&emsp;&emsp;&emsp;<i>expr<sub>2</sub></i><br>
+                                &emsp;&emsp;&emsp;&emsp;<i>statement</i><br>
+                                &emsp;&emsp;&emsp;&emsp;<i>expr<sub>3</sub></i><br>
+                                &emsp;&emsp;&emsp;&emsp;...<br>
+                                &emsp;&emsp;&emsp;&emsp;<i>expr<sub>2</sub></i><br>
+                                &emsp;&emsp;&emsp;&emsp;<i>statement</i><br>
+                                &emsp;&emsp;&emsp;&emsp;<i>expr<sub>3</sub></i><br>
+                                &emsp;&emsp;&emsp;&emsp;<i>expr<sub>2</sub></i><br>
+                                </code></div>
+                                </blockquote>The first thing executed is <i>expr<sub>1</sub></i>.
+                                <i>expr<sub>3</sub></i> is evaluated after <em>every</em> trip through the loop.
+                                The last thing executed is always <i>expr<sub>2</sub></i>, because
+                                when <i>expr<sub>2</sub></i> evaluates false, the loop exits.
+                                <p></p> <br><p>All three expressions of a <tt>for</tt> loop are optional.
+                                If you leave out <i>expr<sub>1</sub></i>, there simply is no initialization step,
+                                and the variable(s) used with the loop had better have been
+                                initialized already.
+                                If you leave out <i>expr<sub>2</sub></i>,
+                                there is no test,
+                                and the default for the <tt>for</tt> loop
+                                is that another trip through the loop should be taken
+                                (such that
+                                unless you break out of it some other way, the loop runs forever).
+                                If you leave out <i>expr<sub>3</sub></i>, there is no increment step.
+                                </p> <br><p>The semicolons separate the three controlling expressions of a
+                                <tt>for</tt> loop.
+                                (These semicolons, by the way, have nothing to do with
+                                statement terminators.)
+                                
+                                If you leave out one or more of the expressions, the semicolons remain.
+                                Therefore, one way of writing a deliberately infinite loop in C is
+                                </p> <br><div class="code"><code>	for(;;)<br>
+                                        &emsp;&emsp;...
+                                </code></div>
+                                <p></p> <br><p>It's useful to compare C's <tt>for</tt> loop to the 
+                                equivalent loops in other computer languages you might know.
+                                The C loop
+                                </p> <br><div class="code"><code>	for(i = x; i &lt;= y; i = i + z)
+                                </code></div>
+                                is roughly equivalent to:
+                                <div class="code"><code>	for I = X to Y step Z	<i>(BASIC)</i><br>
+                                
+                                    &emsp;&emsp;do 10 i=x,y,z		<i>(FORTRAN)</i><br><br>
+                                
+                                    &emsp;&emsp;for i := x to y		<i>(Pascal)</i><br><br>
+                                </code></div>
+                                In C (unlike FORTRAN), if the test condition is false before
+                                the first trip through the loop, the loop won't be traversed at all.
+                                In C (unlike Pascal), a loop control variable
+                                (in this case, <tt>i</tt>)
+                                is guaranteed to retain its final value after the loop completes,
+                                and it is also legal to modify the control variable within the loop,
+                                if you really want to.
+                                (When the loop terminates due to the test condition turning false,
+                                the value of the control variable after the loop will be the
+                                first value for which the condition failed, not the last value
+                                for which it succeeded.)
+                                <p></p> <br><p>It's also worth noting that a <tt>for</tt> loop can be used
+                                in more general ways than the simple, iterative examples we've
+                                seen so far.
+                                The ``control variable'' of a <tt>for</tt> loop
+                                does not have to be an integer, and it does not have to be
+                                incremented by an additive increment.
+                                It could be ``incremented'' by a multiplicative
+                                factor (1, 2, 4, 8, ...) if that was what you needed,
+                                or it could be a floating-point variable,
+                                or it could be another type of variable
+                                
+                                which we haven't met yet
+                                which would step, not over numeric values,
+                                but over the elements of an array or other data structure.
+                                Strictly speaking, a <tt>for</tt> loop doesn't have to have
+                                a ``control variable'' at all;
+                                the three expressions can be anything,
+                                although the loop will make the most sense
+                                if they are related and together form the expected
+                                initialize, test, increment
+                                sequence.
+                                </p> <br><p>The powers-of-two example of the previous section
+                                does fit this pattern,
+                                so we could rewrite it like this:
+                                </p> <br><div class="code"><code>	int x;<br><br>
+                                
+                                    for(x = 2; x &lt; 1000; x = x * 2)<br>
+                                       &emsp;&emsp; printf("%d\n", x);<br>
+                                </code></div>
+                                <p></p> <br><p>There is no earth-shaking or fundamental difference between the
+                                <tt>while</tt> and <tt>for</tt> loops.
+                                In fact, given the general
+                                <tt>for</tt> loop
+                                </p> <br><div class="code"><code>	for(<i>expr<sub>1</sub></i>; <i>expr<sub>2</sub></i>; <i>expr<sub>3</sub></i>)<br>
+                                        &emsp;&emsp;<i>statement</i><br>
+                                </code></div>
+                                you could
+                                usually
+                                
+                                rewrite it as a <tt>while</tt> loop,
+                                moving the initialize and increment expressions to statements
+                                before and within the loop:
+                                <div class="code"><code>	<i>expr<sub>1</sub></i> ;<br>
+                                    while(<i>expr<sub>2</sub></i>)<br>
+                                        &emsp;&emsp;{<br>
+                                        &emsp;&emsp;<i>statement</i><br>
+                                        &emsp;&emsp;<i>expr<sub>3</sub></i> ;<br>
+                                        &emsp;&emsp;}<br>
+                                </code></div>
+                                
+                                Similarly,
+                                given the general
+                                <tt>while</tt> loop
+                                <div class="code"><code>	while(<i>expr</i>)<br>
+                                        &emsp;&emsp;<i>statement</i>
+                                </code></div>
+                                you could rewrite it as a <tt>for</tt> loop:
+                                <div class="code"><code>	for(; <i>expr</i>; )<br>
+                                        &emsp;&emsp;<i>statement</i>
+                                </code></div>
+                                <p></p> <br><p>Another
+                                contrast
+                                between the <tt>for</tt> and <tt>while</tt> loops
+                                is that although the test expression (<i>expr<sub>2</sub></i>)
+                                is optional in a <tt>for</tt> loop,
+                                it is required in a <tt>while</tt> loop.
+                                If you leave out the controlling expression of a <tt>while</tt> loop,
+                                the compiler will complain about a syntax error.
+                                (To write a deliberately infinite <tt>while</tt> loop,
+                                you have to supply an expression which is always nonzero.
+                                The most obvious one would simply be <tt>while(1)</tt>
+                                .)
+                                </p> <br><p>If it's possible to rewrite a <tt>for</tt> loop as a
+                                <tt>while</tt> loop and vice versa, why do they both exist?
+                                Which one should you choose?
+                                In general,
+                                when you choose a <tt>for</tt> loop,
+                                its three expressions
+                                should all
+                                manipulate
+                                the same variable or data structure,
+                                using the
+                                initialize, test, increment pattern.
+                                If they don't manipulate the same variable or don't follow that pattern,
+                                wedging them into a <tt>for</tt> loop buys nothing
+                                and a <tt>while</tt> loop would probably be clearer.
+                                (The reason that one loop or the other can be clearer is simply that,
+                                when you see a <tt>for</tt> loop,
+                                you <em>expect</em> to see an idiomatic
+                                initialize/test/increment of a single variable,
+                                and if the <tt>for</tt> loop you're looking at
+                                doesn't end up matching that pattern,
+                                you've been momentarily misled.)
+                                </p>                               
+                                
+                                    <h2>3.6 <tt>break</tt> and <tt>continue</tt></h2>
+                                    
+                                    <p>[This section corresponds to K&amp;R Sec. 3.7]
+                                    </p> <br><p>Sometimes, due to an exceptional condition, you need to jump
+                                    out of a loop early, that is, before the main controlling
+                                    expression of the loop causes it to terminate normally.
+                                    Other times, in an elaborate loop, you may want to jump back to
+                                    the top of the loop
+                                    (to test the controlling expression again, and perhaps begin a
+                                    new trip through the loop)
+                                    without playing out all the steps of the current loop.
+                                    The <tt>break</tt> and <tt>continue</tt> statements allow you to do
+                                    these two things.
+                                    (They are, in fact, essentially restricted forms of <tt>goto</tt>.)
+                                    </p> <br><p>To put everything we've seen in this chapter together,
+                                    as well as demonstrate
+                                    the use of the
+                                    <tt>break</tt> statement,
+                                    here is a program for printing prime numbers between 1 and 100:
+                                    </p> <br><div class="code"><code>#include &lt;stdio.h&gt;<br>
+                                    #include &lt;math.h&gt;<br><br>
+                                    
+                                    main()<br>
+                                    {<br>
+                                    int i, j;<br><br>
+                                    
+                                    printf("%d\n", 2);<br><br>
+                                    
+                                    for(i = 3; i &lt;= 100; i = i + 1)<br>
+                                        &emsp;{<br>
+                                        &emsp;for(j = 2; j &lt; i; j = j + 1)<br>
+                                            &emsp;&emsp;{<br>
+                                            &emsp;&emsp;if(i % j == 0)<br>
+                                                &emsp;&emsp;&emsp;&emsp;break;<br>
+                                            &emsp;&emsp;&emsp;&emsp;if(j &gt; sqrt(i))<br>
+                                                &emsp;&emsp;&emsp;&emsp;{<br>
+                                                &emsp;&emsp;&emsp;&emsp;printf("%d\n", i);<br>
+                                                &emsp;&emsp;&emsp;&emsp;break;<br>
+                                                &emsp;&emsp;&emsp;&emsp;}<br>
+                                            &emsp;&emsp;&emsp;}<br>
+                                        &emsp;}<br><br>
+                                    
+                                    return 0;<br>
+                                    } </code>
+                                    </p> <br></div>
+                                    The outer loop steps the variable <tt>i</tt> through
+                                    the numbers from 3 to 100;
+                                    the code tests
+                                    to see if each number has
+                                    any divisors other than 1 and itself.
+                                    The trial divisor <tt>j</tt> loops from 2 up to <tt>i</tt>.
+                                    <tt>j</tt> is a divisor of <tt>i</tt>
+                                    if the remainder of <tt>i</tt> divided by <tt>j</tt> is 0,
+                                    so the code uses C's ``remainder'' or ``modulus''
+                                    operator <tt>%</tt> to make this test.
+                                    (Remember that <tt>i % j</tt> gives the remainder 
+                                    when <tt>i</tt> is divided by <tt>j</tt>.)
+                                    <p></p> <br><p>If the program finds a divisor, it uses <tt>break</tt> to 
+                                    break out of the inner loop, without printing anything.
+                                    But if it notices that <tt>j</tt> has risen higher than the 
+                                    square root of <tt>i</tt>, without its having found any 
+                                    divisors, then <tt>i</tt> must not have any divisors, so 
+                                    <tt>i</tt> is prime, and its value is printed.
+                                    (Once we've determined that <tt>i</tt> is prime by noticing 
+                                    that <tt>j &gt; sqrt(i)</tt>,
+                                    there's no need to try the other trial divisors, so we use a 
+                                    second <tt>break</tt> statement to break out of the loop in 
+                                    that case, too.)
+                                    </p> <br><p>The simple algorithm and implementation we used
+                                    here
+                                    (like many simple prime number algorithms)
+                                    does not work for 2, the only even prime number,
+                                    so the program ``cheats'' and prints out 2 no matter 
+                                    what, before going on to test the numbers from 3 to 100.
+                                    </p> <br><p>Many improvements to this simple program are of course possible;
+                                    
+                                    you might experiment with it.
+                                    (Did you notice that the ``test'' expression of the 
+                                    inner loop
+                                    <tt>for(j = 2; j &lt; i; j = j + 1)</tt>
+                                    is in a sense unnecessary,
+                                    because the loop always terminates early
+                                    due to one of the two <tt>break</tt> statements?)
+                                    </p> <br>
+            <div class="end">
+                <p><b>Did you find this article helpful?</b></p> <br>
+                <input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+              </div>
+              <br>
+              <h2>Check these also:</h2>
+              <a href="2.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 2 <<"></a>
+              <br>
+              <br>
+              <a href="4.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 4 <<"></a>
+              <br>
+              <br>
+              <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+              <br>
+              <br>
+        </div>
+    </main>
+    <footer class="flex-all-center">
+        <p>CopyRight &copy Beginners Point 2021</p>
+    </footer>
+</body>
+</html>

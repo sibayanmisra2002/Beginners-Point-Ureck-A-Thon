@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<link href="css/style.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/utils.css">
+	<title>Chapter 12</title>
+</head>
+<header class="main-header">
+	<img src="images/Logo.png" class="logo-img"/>
+	<h1>Input and Output</h1>
+</header>
+<body>
+    <main>
+        <div class="body"> 
+            <h2>12.1 File Pointers and <tt>fopen</tt></h2>
+            <p>How will we specify that we want to access a particular data file?
+                It would theoretically be possible
+                to mention the name of a file
+                each time it was desired to read from or write to it.
+                But such an approach would have a number of drawbacks.
+                
+                Instead,
+                the usual approach
+                (and the one taken in C's stdio library)
+                is that you mention the name of the file once,
+                at the time you <dfn>open</dfn> it. <br> <br>
+                Thereafter, you use some little
+                token--in
+                this case,
+                the <dfn>file pointer</dfn>--which
+                keeps track
+                (both for your sake and the library's)
+                of which file you're talking about. <br>
+                Whenever you want to
+                read from or write to
+                one of the files you're working with,
+                you identify that file
+                by using its file pointer
+                (that is, the file pointer you obtained when you opened the file).
+                As we'll see, you store file pointers in variables
+                just as you store any other data you manipulate,
+                so
+                it
+                is possible to have several files open,
+                as long as you use distinct variables to store the file pointers.
+            </p><p>You declare a variable to store a file pointer like this:</p>
+            <div class="code">
+				<code>  
+                    FILE *fp;<br>
+			</code><br>
+			 </div>
+            The type <tt>FILE</tt> is codedefined for you by
+            <tt>&lt;stdio.h&gt;</tt>. 
+            <p>It is a data structure which holds the information
+            the standard I/O library needs to keep track of
+            the file for you.
+            For historical reasons,
+            you declare a variable which is a pointer to this <tt>FILE</tt> type.
+            The name of the variable can
+            (as for any variable)
+            be anything you choose;
+            it is traditional to use the letters <tt>fp</tt> in the variable name
+            (since we're talking about a <tt>f</tt>ile <tt>p</tt>ointer).
+            If you were reading from two files at once
+            you'd probably use two file pointers:</p>
+            <div class="code">
+				<code>  
+                    FILE *fp1, *fp2;<br>
+			</code><br>
+			 </div>
+             If you were reading from one file and writing to another
+            you might declare
+            and input file pointer and an output file pointer:
+            <div class="code">
+				<code>  
+                    FILE *ifp, *ofp;<br> 
+			</code><br>
+			 </div>
+            <p></p>
+            <p>Like any pointer variable,
+                a file pointer isn't any good until it's initialized to point to something.
+                (Actually, no variable of any type is much good until you've initialized it.)
+                To actually open a file,
+                and receive the ``token''
+                which you'll store in your file pointer variable,
+                you call <tt>fopen</tt>.
+                <tt>fopen</tt> accepts a file name (as a string)
+                and a <dfn>mode</dfn> value
+                indicating among other things whether you intend to read or write this file.
+                (The mode variable is also a string.)
+                To open the file <tt>input.dat</tt> for reading you might call
+            </p>
+            <div class="code">
+				<code>  
+                    ifp = fopen("input.dat", "r");<br> 
+			</code><br>
+			 </div>
+             The mode string <tt>"r"</tt> indicates reading.
+            Mode <tt>"w"</tt> indicates writing,
+            so we could open <tt>output.dat</tt> for  
+            output like this:
+            <div class="code">
+				<code>  
+                    ofp = fopen("output.dat", "w");<br>
+			</code><br>
+			 </div>
+            The other values for the mode string are less frequently used.
+            The third major mode is <tt>"a"</tt> for append.
+            (If you use <tt>"w"</tt> to write to a file which already exists,
+            its old contents will be discarded.) <br>
+            You may also add a <tt>+</tt> character
+            to the mode string
+            to indicate that you want to both read and write,
+            or a <tt>b</tt> character
+            to indicate that you want to do ``binary''
+            (as opposed to text)
+            I/O.
+            <p></p>
+            <p>One thing to beware of when opening files
+                is that it's an operation which may fail.
+                The requested file might not exist,
+                or it might be protected against reading or writing.
+                (These possibilities ought to be obvious,
+                but it's easy to forget them.) <br>
+                <tt>fopen</tt> returns a null pointer if it can't open the requested file,
+                and it's important to check for this case
+                before going off and using <tt>fopen</tt>'s return value as a file pointer.
+                Every call to <tt>fopen</tt> will typically be followed with a test,
+                like this:
+            </p>
+            <div class="code">
+                <code>  
+                    ifp = fopen("input.dat", "r"); <br>
+                    &emsp;if(ifp == NULL) { <br>
+                        &emsp;&emsp;    printf("can't open file\n"); <br>
+                        &emsp;&emsp;    <i>exit or return</i> <br>
+                        &emsp;    }<br>
+			</code><br>
+			 </div>
+            If <tt>fopen</tt> returns a null pointer,
+            and you store it in your file pointer variable
+            and go off and try to do I/O with it,
+            your program will typically crash.
+            <p></p>
+            <p>It's common to collapse the call to <tt>fopen</tt>
+                and
+                the assignment
+                in with
+                the test:
+            </p>
+            <div class="code">
+				<code>	
+                    if((ifp = fopen("input.dat", "r")) == NULL) { <br>
+                        &emsp;&emsp;printf("can't open file\n"); <br>
+                        &emsp;&emsp;<i>exit or return</i> <br>
+                    }
+            </code>
+			 </div>
+            <br>
+
+            <h2>12.2 I/O with File Pointers</h2>
+            <p>For each of the I/O library functions we've been using so far,
+                there's a companion function
+                which accepts an additional file pointer argument
+                telling it where to read from or write to. <br>
+                The companion function to <tt>printf</tt> is <tt>fprintf</tt>,
+                and the file pointer argument comes first.
+                To print a string to the <tt>output.dat</tt> file
+                we opened in the codevious section,
+                we might call</p>
+                <div class="code">
+                    <code>  
+                        fprintf(ofp, "Hello, world!\n");<br> 
+                </code><br>
+                 </div>
+                <p></p><p>The companion function to <tt>getchar</tt> is <tt>getc</tt>,
+                and the file pointer is its only argument.
+                To read a character from the <tt>input.dat</tt> file
+                we opened in the codevious section,
+                we might call
+                </p>
+                <div class="code">
+                    <code>
+                        int c;<br>
+                        &emsp;&emsp;c = getc(ifp); <br>
+                    </code><br>
+                 </div>
+                <p></p><p>The companion function to <tt>putchar</tt> is <tt>putc</tt>,
+                and the file pointer argument comes last.
+                To write a character to <tt>output.dat</tt>,
+                we could call</p>
+                <div class="code">
+                    <code>
+                        putc(c, ofp);
+                    </code><br>
+                 </div>
+                 <p></p><p>Our own <tt>getline</tt> function calls <tt>getchar</tt>
+                and so always reads the standard input.
+                We could write a companion <tt>fgetline</tt> function
+                which reads from an arbitrary file pointer:
+                </p>
+                <div class="code">
+                    <code>
+                        #include &lt;stdio.h&gt;<br>
+                        <br>
+                        /* Read one line from fp, */ <br>
+                        /* copying it to line array (but no more than max chars). */ <br>
+                        /* Does not place terminating \n in line array. */ <br>
+                        /* Returns line length, or 0 for empty line, or EOF for end-of-file. */ <br>
+                        <br>
+                        int fgetline(FILE *fp, char line[], int max) { <br>
+                        int nch = 0; <br>
+                        int c; <br>
+                        max = max - 1;&emsp;&emsp;/* leave room for '\0' */ <br>
+                        <br>
+                        while((c = getc(fp)) != EOF) <br>
+                        &emsp;&emsp;{
+                        &emsp;&emsp;&emsp;if(c == '\n') <br>
+                        &emsp;&emsp;&emsp;&emsp;break; <br>
+                        <br>
+                        &emsp;&emsp;if(nch &lt; max) <br>
+                        &emsp;&emsp;{ <br>
+                        &emsp;&emsp;&emsp;line[nch] = c; <br>
+                        &emsp;&emsp;&emsp;nch = nch + 1; <br>
+                        &emsp;&emsp;} <br>
+                        &emsp;} <br>
+                        <br>
+                        &emsp;if(c == EOF &amp;&amp; nch == 0) <br>
+                        &emsp;&emsp;return EOF; <br>
+                        <br>
+                        &emsp;&emsp;line[nch] = '\0'; <br>
+                        &emsp;&emsp;return nch;<br>
+                        }br
+                        </code>
+                 </div>
+                <p></p><p>Now we could read one line from <tt>ifp</tt> by calling
+                </p>
+                <div class="code">
+                    <code>
+                        char line[MAXLINE];<br>
+                    <div class="br"></div>
+                    fgetline(ifp, line, MAXLINE);
+                    </code><br>
+                 </div>
+            <br>
+
+            <h2>12.3 codedefined Streams</h2>
+            <p>Besides the file pointers which we explicitly open by calling <tt>fopen</tt>,
+                there are also three codedefined streams.
+                <tt>stdin</tt> is a constant file pointer corresponding to standard input,
+                and <tt>stdout</tt> is
+                a constant file pointer corresponding to standard output. <br>
+                Both of these can be used anywhere a file pointer is called for;
+                for example,
+                <tt>getchar()</tt> is the same as <tt>getc(stdin)</tt>
+                and <tt>putchar(c)</tt> is the same as <tt>putc(c, stdout)</tt>.
+                The third codedefined stream is <tt>stderr</tt>.
+                Like <tt>stdout</tt>,
+                <tt>stderr</tt> is typically connected to the screen by default.
+                The difference is that <tt>stderr</tt> is not redirected
+                when the standard output is redirected.
+                For example,
+                under Unix or MS-DOS,
+                when you invoke
+                </p>
+                <div class="code">
+                    <code>
+                        program &gt; filename
+                    </code><br>
+                 </div>
+                anything printed to <tt>stdout</tt>
+                is redirected to the file <tt>filename</tt>,
+                but anything printed to <tt>stderr</tt> still goes to the screen.
+                The intent behind <tt>stderr</tt> is
+                that it is the ``standard error output'';
+                error messages printed to it will not disappear into an output file.
+                For example,
+                a more realistic way to print an error message
+                when a file can't be opened would be
+                <div class="code">
+                    <code>	if((ifp = fopen(filename, "r")) == NULL) <br>
+                        { <br>
+                        fprintf(stderr, "can't open file %s\n", filename); <br>
+                        <i>exit or return</i> <br>
+                        } <br>
+                </code>
+                 </div>where <tt>filename</tt> is a string variable
+                indicating the file name to be opened.
+                Not only is the error message printed to <tt>stderr</tt>,
+                but it is also more informative
+                in that it mentions the name of the file that couldn't be opened.
+            <br>
+
+            <h2>12.4 Closing Files</h2>
+            <p>Although you can
+                open multiple files,
+                
+                there's a limit to how many you can have open at once.
+                If your program will open many files in succession,
+                you'll want to close each one as you're done with it;
+                otherwise the standard I/O library could run out of
+                the resources it uses to keep track of open files.
+                Closing a file simply involves
+                calling <tt>fclose</tt> with the file pointer as its argument:
+                </p>
+                <div class="code">
+                    <code>
+                        fclose(fp);
+                    </code><br>
+                 </div>
+                Calling <tt>fclose</tt> arranges that
+                (if the file was open for output)
+                any last, buffered output is finally written to the file,
+                and that those resources used by the operating system
+                (and the C library)
+                for this file are released.
+                If you forget to close a file,
+                it will be closed automatically when the program exits.
+            <br>
+
+            <h2>12.5 Example: Reading a Data File</h2>
+            <p>Suppose you had a data file consisting of rows and columns of numbers:
+                </p>
+                <div class="code">
+                    <code>	
+                        &emsp;&emsp;1	&emsp;&emsp;2	&emsp;&emsp;34 <br>
+                        &emsp;&emsp;5	&emsp;&emsp;6	&emsp;&emsp;78 <br>
+                        &emsp;&emsp;9	&emsp;&emsp;10	&emsp;&emsp;112 <br>
+                    </code>
+                 </div>
+                Suppose you wanted to read these numbers into an array.
+                (Actually, the array will be an array of arrays,
+                or a ``multidimensional'' array;
+                see section 4.1.2.)
+                We can write code to do this by putting together several pieces:
+                the <tt>fgetline</tt> function we just showed,
+                and the <tt>getwords</tt> function from chapter 10.
+                Assuming that the data file is named <tt>input.dat</tt>,
+                the code would look like this:
+                <div class="code">
+                    <code>
+                        #define MAXLINE 100 <br>
+                        #define MAXROWS 10 <br>
+                        #define MAXCOLS 10 <br>
+                         <br>
+                        int array[MAXROWS][MAXCOLS]; <br>
+                        char *filename = "input.dat"; <br>
+                        FILE *ifp; <br>
+                        char line[MAXLINE]; <br>
+                        char *words[MAXCOLS]; <br>
+                        int nrows = 0; <br>
+                        int n; <br>
+                        int i; <br>
+                         <br>
+                        ifp = fopen(filename, "r"); <br>
+                        &emsp;&emsp;if(ifp == NULL) <br>
+                        &emsp;&emsp;    { <br>
+                            &emsp;&emsp;&emsp;    fprintf(stderr, "can't open %s\n", filename); <br>
+                            &emsp;&emsp;&emsp;    exit(EXIT_FAILURE); <br>
+                            &emsp;&emsp;    } <br>
+                         <br>
+                         &emsp; &emsp;while(fgetline(ifp, line, MAXLINE) != EOF) <br>
+                         &emsp;&emsp;    { <br>
+                            &emsp;&emsp;&emsp;    if(nrows &gt;= MAXROWS) <br>
+                            &emsp;&emsp;&emsp;       { <br>
+                                &emsp;&emsp;&emsp;&emsp;        fprintf(stderr, "too many rows\n"); <br>
+                                &emsp;&emsp;&emsp;&emsp;       exit(EXIT_FAILURE); <br>
+                                &emsp;&emsp;&emsp;       } <br>
+                         <br>
+                        &emsp;    n = getwords(line, words, MAXCOLS); <br>
+                         <br>
+                         &emsp;&emsp;    for(i = 0; i &lt; n; i++) <br>
+                         &emsp;&emsp;&emsp;       array[nrows][i] = atoi(words[i]); <br>
+                         &emsp;&emsp;&emsp;    nrows++; <br>
+                         &emsp;&emsp;   } <br>
+                        </code>
+                 </div>
+                 Each trip through the loop reads one line from the file,
+                using <tt>fgetline</tt>.
+                Each line is broken up into ``words'' using <tt>getwords</tt>;
+                each ``word'' is actually one number.
+                The numbers are however still recodesented as strings,
+                so each one is converted to an <tt>int</tt> by calling <tt>atoi</tt>
+                before being stored in the array. <br>
+                The code checks for two different error conditions
+                (failure to open the input file,
+                and too many lines in the input file)
+                and if one of these conditions occurs,
+                it prints an error message, and exits.
+                The <tt>exit</tt> function is a Standard library function
+                which terminates your program.
+                It is declared in <tt>&lt;stdlib.h&gt;</tt>,
+                and accepts one argument,
+                which will be the <dfn>exit status</dfn> of the program.
+                <tt>EXIT_FAILURE</tt> is a code,
+                also defined by
+                <tt>&lt;stdlib.h&gt;</tt>,
+                which indicates that the program failed.
+                Success is indicated by a code of <tt>EXIT_SUCCESS</tt>, or simply 0.
+                (These values can also be returned from <tt>main()</tt>;
+                calling <tt>exit</tt> with a particular status value
+                is
+                essentially equivalent
+                to returning that same status value from <tt>main</tt>.)
+            <br> <br> <br>
+            <div class="end">
+                <p><b>Did you find this article helpful?</b></p> <br>
+                <input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+              </div>
+              <br>
+              <h2>Check these also:</h2>
+              <a href="11.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 11 <<"></a>
+              <br>
+              <br>
+              <a href="13.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 13 <<"></a>
+              <br>
+              <br>
+              <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+              <br>
+              <br>
+        </div>
+    </main>
+    <footer class="flex-all-center">
+        <p>CopyRight &copy Beginners Point 2021</p>
+    </footer>
+</body>
+</html>

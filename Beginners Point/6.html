@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/6.css">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<title>Chapter 6</title>
+</head>
+<header class="main-header">
+	<img src="images/Logo.png" class="logo-img"/>
+	<h1>Basic I/O</h1>
+</header>
+<body>
+  <article>
+    <br> <br> <br>
+    <header class="post-header"><br>
+    <h2>6.1 Introduction</h2>
+    </header> 
+              <p>For carrying out an arithmetic calculation using C, there is
+  no way other than writing a program, which is equivalent to
+  using a pocket calculator. Different outcomes are obtained
+  when different values are assigned to variables involved in
+  the arithmetic calculation.
+  Hence, there is a need to read values into variables as
+  the program runs. Notice the words here: ‘as the program
+  runs’. Values can be stored in variables using the assignment
+  operator. For example, a=100; stores 100 in the variable a
+  each time the program is run, no matter what the program
+  does. Without some sort of input command, every program
+  would produce exactly the same result every time it is run. <br> <br>
+  This would certainly make debugging easy. But in practice,
+  of course, the user may need programs to do different jobs that give different outcomes each time they are run. For this
+  purpose, C has been provided with some input instructions
+  that are in fact a set of functions. For the present, it may be
+  said that a function is a code segment that is complete in
+  itself and does some particular task as and when it is called.
+  When a program is in execution, each of its statements are
+  executed one after the other or in a particular order. When
+  this process of execution reaches an input instruction, also
+  referred to as an input statement, the most common being the
+  scanf() function, the program execution pauses to give the
+  user time to enter something on the keyboard. <br> <br> The execution
+  of the program continues only after the user enters some data
+  (or nothing) and presses <b>[Enter] or [Return]</b>  to signal that
+  the procedure of entering input data has been completed. The
+  program execution then continues with the inputted value stored in the memory location reserved for the variable. In
+  this way, each time the program is run, users get a chance to
+  type in different values for the variable and the program also
+  gets a chance to produce different results.
+  The final missing piece in the jigsaw is using an output
+  command or statement, the commonly used one being the
+  printf() function, the one that has already been used in some
+  example programs in the previous chapter, to print the value
+  currently stored in a variable.</p> <br> 
+  <p>In the context of the above example, it should be
+  understood that the input function, scanf(), is used to read
+  the data entered through the keyboard. On the other hand, the
+  printf() function is used to display the data on the screen.
+  The original C specification did not include commands for
+  input and output. Instead, the compiler writers were supposed
+  to implement library functions to suit their machines. In
+  practice, all chose to implement printf() and scanf()
+  and, after a while, C programmers started to think of these
+  functions as I/O keywords. It sometimes helps to remember
+  that they are functions like any other function. <br> <br> 
+  To make C a more uniform language, it has been provided
+  with standard libraries of functions that perform common
+  tasks. Though these libraries are termed standard but until
+  the ANSI committee actually produced a standard, there
+  was, and still is, some variation in what the standard libraries
+  contained and exactly how the functions worked. However,
+  in practice, the situation is not that bad; most of the functions
+  that are used frequently are standard on all implementations.
+  In particular the input and output functions vary very little.
+  This chapter will, therefore, primarily consider input
+  functions that read data from the keyboard and output
+  functions that display data on the screen.
+  </p> 
+  
+       <h2> 6.2 Basic Screen and Keyboard I/O in C </h2>
+  <p>C provides several functions that give different levels of
+  input and output capability. These functions are, in most
+  cases, implemented as routines that call lower-level input/
+  output functions.
+  The input and output functions in C are built around the
+  concept of a set of standard data streams being connected
+  from each executing program to the basic input/output
+  devices. These standard data streams or files are opened
+  by the operating system and are available to every C and
+  assembler program for use without having to open or close
+  the files. These standard files or streams are called </p> <br>
+  <p><div> 
+          <div class="code1">
+          <code> &emsp;(a) stdin : connected to the keyboard<br>
+  &emsp;(b) stdout : connected to the screen<br>
+  &emsp;(c) stderr : connected to the screen<br>
+  </code></div></br></b></p> <br>
+  <p>The following two data streams are also available on MS-
+  DOS-based computers, but not on UNIX or other multi-user-
+    based operating systems.</p> <br><div> 
+          <div class="code1">
+          <code> &emsp;(a) stdaux: connected to the first serial communications port<br>
+  &emsp;(b) stdprn: connected to the first parallel printer port<br>
+  </code></div></br></b></p> <br>
+  <p>A number of functions and macros exist to provide support
+  for streams of various kinds. The <stdio.h> header file
+  contains the various declarations necessary for the functions,
+  together with the macros and type declarations needed for the
+  input and output functions. The input/output functions fall
+  into two categories: non-formatted read (input) and display
+  (output) functions and formatted read (input) and display
+  (output) functions.
+  </p> 
+    <h2>6.3 Non-formatted Input and Output</h2>
+  <p>Non-formatted input and output can be carried out by standard
+  input–output library functions in C. These can handle one
+  character at a time. For the input functions, it does not require
+  <b>[Enter]</b> to be pressed after the entry of the character. For
+  output functions, it prints a single character on the console.</p> <br>
+  
+  
+  
+  
+  
+  
+    <h3>6.3.1 Single Character Input and Output</h3>
+  <p>A number of functions provide for character-oriented input
+  and output. The declaration formats of two of these are given
+  as follows: <br>
+  <p><br><div> 
+          <div class="code1">
+          <code> &emsp;int getchar(void);<br>
+     &emsp;//function for character input<br>
+     &emsp;int putchar(int c);<br>
+     //function of character output</code></div></br></b></p> <br>
+    <tt>getchar()</tt> is an input function that reads a single character
+  from the standard input device, normally a keyboard.
+    <tt>putchar()</tt> is an output function that writes a single character
+  on the standard output device, the display screen.
+    There are two other functions, <tt>gets() and puts()</tt>, that are
+  used to read and write strings from and to the keyboard and
+  the display screen, respectively. A string may be defined as
+  an arranged collection of characters. These two functions will
+  be dealt with in greater detail in the chapter on arrays and
+  strings.</p> <br>
+  
+  
+  
+  
+  <h3>6.3.2 Single Character Input</h3>
+    <p>The <tt>getchar()</tt> input function reads an unsigned char from
+  the input stream stdin. The character obtained from the input
+  stream is treated as an unsigned char and is converted to an
+  int, which is the return value. On end of file, the constant EOF
+  is returned and the end-of-file indicator is set for the associated
+  stream. On error, the error indicator is set for the stream.
+  Successive calls will obtain characters sequentially.
+  To read a single character from the keyboard, the general
+  form of the statement used to call the getchar() function is
+  given as follows: <br>
+    <div> 
+          <div class="code1">
+            <code> &emsp; char_variable = getchar();<br></div><br></b></code>
+  where char_variable is the name of a variable of type char.
+      The <tt>getchar()</tt> input function receives the character data
+  entered through the keyboard and places it in the memory
+  location allotted to the variable char_variable. The code <br>
+  <div> 
+          <div class="code1">
+            <code> &emsp;int ch;<br>
+      &emsp;ch = getchar();</div><br></code></b>
+  places the character read from the keyboard in the lower byte
+  of the variable named <tt>ch</tt>. It has to be noted here that getchar() reads a single
+  character from the input data stream, but does not return
+  the character to the program until the ‘\n’ (<b> [Return] or
+  [Enter] </b>) key is pressed.
+  There is an important observation that has to be made
+  about the <tt>ch = getchar();</tt> function. Though the data
+  entered through the keyboard is perceived to be of character
+  type, the data is actually stored as an integer. Here, this
+  integer is the variable <tt>ch</tt>. This is because everytime<tt>
+  ch = getchar()</tt>; reads a data from the keyboard, it checks
+  whether it is a character data or an <tt>EOF</tt>. The problem is
+  distinguishing the end of input from valid data. The solution
+  is that <tt>getchar()</tt> returns a distinctive value when there is no
+  more input, a value that cannot be confused with any real
+  character. This value is called <tt>EOF</tt>, i.e., end of file. So ch must
+  be declared to be of a type big enough to hold any value that
+  <tt>getchar()</tt> returns. Therefore, <tt>char</tt> cannot be used since <tt>ch</tt>
+  must be big enough to hold <tt>EOF</tt> in addition to any possible <tt>
+  char</tt>. Therefore, <tt>int</tt> is used.</p> <br>
+   <h3> 6.3.3 Single Character Output</h3>
+  <p>The <tt>putchar()</tt> function is identical in description to the
+  <tt>getchar()</tt> function except the following difference. <tt>putchar()</tt> writes a character to the stdout data stream. On success,
+  <tt>putchar()</tt> returns the character. On error, <tt>putchar()</tt> returns
+  <tt>EOF</tt>. There is no equivalent to end of file for an output file.
+  To write a single character on the screen, the general form of
+  the statement used to call the <tt>putchar()</tt> function is given as
+  follows: <br> <br>
+  <div> 
+          <div class="code1">
+            <code> putchar(char_variable);</div></code></br></b>
+  where <tt>char_variable</tt> is the name of a variable that is of
+  type <tt>char</tt>. The character data stored in the memory location
+  allotted to the variable <tt>char_variable</tt> is displayed on the
+  display screen.
+  The following program code displays the character entered
+  through <tt>getchar()</tt> on the screen.It has to be noted that the character ‘x’ remains stored in
+  the lower order byte of <tt>ch</tt> even after <tt>putchar(ch)</tt> copies it
+  and displays it on the monitor screen.</p> <br> 
+  <h3>6.3.4 Character Input and Output Functions</h3>
+  <p>Other than <tt>getchar()</tt> and <tt>putchar()</tt>, there are some more
+  single character input and output functions that are available
+  in Turbo C only. These are as follows: <br>
+  <tt>getch()</tt> This input function reads, without echoing on the
+  screen, a single character from the keyboard and immediately
+  returns that character to the program. General statement
+  form: <br>
+  <div> 
+          <div class="code1">
+            <code> &emsp;  ch = getch(); /* ‘ch’ is a character variable */</div></code></br></b>
+  <tt>getche()</tt> This input function reads, with echo on the screen,
+  a single character from the keyboard and immediately returns
+  that character to the program. General statement form: <br>
+  <div> 
+          <div class="code1">
+            <code> &emsp;  ch = getche(); /* ‘ch’ is a character variable */</div></code></br></b>
+  <tt>putch()</tt> This output function writes the character directly
+  to the screen. On success, the function <tt>putch()</tt> returns the
+  character printed. On error, it returns <tt>EOF</tt>. General statement
+  form: <br>
+  <div> 
+          <div class="code1">
+            <code> &emsp;  putch(ch); /* ‘ch’ is a character variable */</div></code></br></b>
+  When used in programs, the above functions require the
+  header file <tt>conio.h</tt> to be included. It should be noted here
+  that the data held by the variable in all the input and output
+  functions are in ASCII value. <br>
+  <div>
+          <div class="code1">
+            <code> 1.<tt>getchar()</tt>: the single character input function, reads a
+  one byte character input from the keyboard and stores it in the lower order byte of an integer variable. <br> <br>
+  2.<tt>putchar()</tt>:the single character output function, displays
+    a one-byte character on the monitor screen.</tt></div></code></br></b>
+   
+  <h3>6.3.5  Examples </h3>
+  <h4>1. Double the output of next two characters from the ASCII table.</h4> <br>
+  <div>
+    <div class="code1">
+      <code>
+    &emsp;#include &lt;stdio.h&gt;<br>
+    &emsp;int main(void)<br>
+    &emsp;{<br>
+    &emsp;&emsp;int ch;<br>
+    &emsp;&emsp;ch=getchar();<br>
+    &emsp;&emsp;putchar(++ch); /* first putchar() */<br>
+    &emsp;&emsp;putchar(ch++); /* second putchar()*/<br>
+    &emsp;&emsp;putchar(ch); /* third putchar() */<br>
+    &emsp;&emsp;putchar(ch––); /* fourth putchar()*/<br>
+    &emsp;&emsp;putchar(ch); /* fifth putchar() */<br>
+    &emsp;&emsp;return 0;<br>
+    &emsp;}<br>
+  </code></div></b> <br> 
+  <div class="output"> <code>
+    (i) <b>Input</b> a<br>
+    <b>Output</b> bbccb<br>
+    (ii) <b>Input</b> h<br>
+    <b>Output</b> iijji</br></div>
+  </code></div> <br>
+  <p><b>Explanation:</b> Here when the program is executed, <tt>getchar()</tt>
+  obtains the typed-in character and places its ASCII equivalent in the
+  integer variable <tt>ch</tt>. As shown, the typed-in character is chosen to
+  be <tt>a</tt>. Next, in the first <tt>putchar()</tt>, at the beginning, the content
+  of <tt>ch</tt> is incremented by 1 to represent <tt>b</tt>, then this is displayed
+  on the monitor screen. In the second <tt>putchar()</tt>, the content
+  of <tt>ch</tt>,which is <tt>b</tt>, is displayed on the monitor screen and then its
+  content is incremented by 1 to represent <tt>c</tt> in ASCII. In the third
+  <tt>putchar()</tt>, the content of <tt>ch</tt>, which is <tt>c</tt>, is displayed on the
+  monitor screen and the content in ch does not get altered. During the
+  fourth <tt>putchar()</tt>, the content in <tt>ch</tt>, which is <tt>c</tt>, is first displayed
+  on the monitor screen and then the content in <tt>ch</tt> is decremented
+  to represent <tt>b</tt> in ASCII. Therefore, during the fifth <tt>putchar()</tt>, the
+  content of <tt>ch</tt> is displayed as <tt>b</tt> on the monitor screen.
+  Similar result is obtained when the program is run for the second
+  time with <tt>h</tt> as the input data.</p> <br>
+  <p><br>
+    <h4>2. Compare two numbers.</h4> <br>
+    <div> 
+          <div class="code1">
+            <code>
+    &emsp;#include &lt;stdio.h&gt;<br>
+    &emsp;#include &lt;conio.h&gt;<br>
+    &emsp;int main(void)<br>
+    &emsp;{<br>
+    &emsp;&emsp;&emsp;int a=2,b=5;<br>
+    &emsp;&emsp;&emsp;int t,f,x;<br>
+    &emsp;&emsp;&emsp;t=getchar();<br>
+    &emsp;&emsp;&emsp;fflush(stdin); /* the fflush() function clears */<br>
+    &emsp;&emsp;&emsp;/* the input stream stdin */<br>
+    &emsp;&emsp;&emsp;f=getchar();<br>
+    &emsp;&emsp;&emsp;x=((a>b)?t:f);<br>
+    &emsp;&emsp;&emsp;putchar(x);<br>
+    &emsp;&emsp;&emsp;putch(x);<br>
+    &emsp;&emsp;&emsp;return 0;<br>
+    &emsp;}</code></div><br>
+    <div class="output">
+      <code>
+        <b>Input</b> 1<br>
+        &emsp;&emsp;&emsp;0<br>
+        <b>Output</b> 00 </br>
+      </code>
+    </div> <br>
+  <b>Explanation:</b> In this example, the character entered in variable
+  t is 1 while that for f is 0. During evaluation of the expression
+  x=((a>b)?t:f), the relation a > b is found to be false, so f
+  is assigned to x. Since f contains 0, thus x is assigned this
+  character 0. Therefore, putchar(x) displays a 0 on the monitor
+  screen. Since there is no new-line command following the display
+  of 0, the cursor positions itself next to this character. Now, when
+  <tt>putch(x)</tt> is executed, it displays the value in x at the cursor
+  positioned next to the earlier display. So the output finally appears
+  as 00.</p>
+  <h2>6.4 Formatted Input and Output Functions</h2>
+  <p>When input and output is required in a specified format, the
+  standard library functions <tt>scanf() and printf()</tt> are used. The
+  <tt>scanf()</tt> function allows the user to input data in a specified
+    format. It can accept data of different data types.</p> <br>
+  <h3>6.4.1 Output Function print f ( )</h3>
+  <p>The <tt>printf()</tt> [and <tt>scanf()</tt>] functions differ from the kind of functions that are created by the programmer as they can take a variable number of parameters. In the case of <tt>printf()</tt>,
+  the first parameter is always a control string, for example,
+  ‘Hello World’, but after that the programmer can include any
+  number of parameters of any type. The general form of a call
+  to the printf() function is <p><div> 
+          <div class="code1">
+            <code> printf(“control_string”,variable1,variable2,
+   variable3,...); </div></code></br></b></p> <br>
+  <p>where ‘...’ means a list of variables that can be written separated
+  by commas and this list may be as long as is desired. The
+  control string is all-important because it specifies the type of
+  each variable in the list and how the user wants it printed. The
+  control string is also called the <tt>format string.</tt>
+  The <i>control string</i>, which is written within “and”, contains
+  <i>data type</i> with <i>format specifiers</i> indicated by the characters
+  that follow the % symbol. These are arranged in order so
+  that they correspond to the respective variables. In between
+  the % symbol with the specifiers, character strings may be
+  inserted. When the <tt>printf()</tt> function executes, it scans the
+  control string from left to right and prints out the character
+  string as it is while printing the values of the listed variables
+  according to the information specified with the respective
+  format specifiers. For example,<p><div> 
+          <div class="code1">
+            <code> printf(“Hello World”);</div></code></br></p> <br></b>
+  has a control string only and has no % characters. The above
+  statement displays Hello World only. The format specifier %d
+  means convert the next value to a signed decimal integer, and
+  hence
+  <p><div> 
+          <div class="code1">
+            <code>printf(“Total = %d”,total);</div></code></br></b>
+  will print <tt>Total</tt> = and then the value passed by the variable
+  named <tt>total</tt> as a decimal integer.</p> <br>
+  <p> The C view of output is at a lower level than one might
+  expect. The %d is known as a formatspecifier, while it also acts
+  as a <i>conversion code</i>. It indicates the data type of the variable
+  to be printed and how that data type should be converted to
+  the characters that appear on the screen. Thus %d says that
+  the next value to be printed is a signed integer value, i.e., a
+  value that would be stored in a standard int variable, which
+  should be converted into a sequence of characters, where
+  digits represent the value in decimal. If by some accident
+  the variable that is to be displayed happens to be a float or a
+  double, then the user will still see a value displayed but it will
+  not correspond to the actual value of the float or double.
+  The reason for this is twofold.
+  <ol><li>An int uses two bytes (considering 16-bit machine) to store
+  its value, while a float uses four and a double uses eight.
+  If an effort is made to display a float or a double using %d,
+  then only the first two bytes of the value are actually used.</li>
+  <li> Even if there was no size difference, int, float, and double
+  use a different binary representation and %d expects the bit
+  pattern to be a simple signed binary integer.
+  This is all a bit technical, but that is in the nature of C.
+  These details can be ignored as long as two important facts
+  are remembered.</li>
+  <li> The conversion code following % indicates the type of
+  variable to be displayed as well as the format in which that
+  value should be displayed.</li>
+  <li> If the programmer uses a conversion code with the wrong
+  type of variable, then some strange things will be seen on
+  the screen and the error often propagates to other items in
+  the <tt>printf()</tt> list.</li></ol>
+  Though this appears a bit complicated, it should also be
+  pointed out that the benefit lies in being able to treat what
+  is stored in a variable in a more flexible way than other
+  languages allow. In fact, the programmer need not know that
+  the numeric number stored in a variable is in binary form.
+  But while printing this number using the <tt>printf()</tt> function, it
+  would appear to be a decimal number. Of course, whether this
+  is viewed as an advantage depends on what the programmer
+  is trying to do. It certainly brings the user closer to the way
+  the machine works.</p> <br>
+  <p> The format string in <tt>printf()</tt>, enclosed in quotation
+  marks, has three types of objects:</p> <br>
+  <p><ol><li><b>Ordinary characters</b> These are copied to output.</li>
+  <b><li>Conversion specifier field</b> It is denoted by % containing the
+  codes  and by optional modifiers such as
+  width, precision, flag, and size.</li>
+  <b><li>Control code</b> It includes optional control characters such
+  as \n, \b, and \t.</li></ol></p> <br>
+  
+  
+  
+  <h3>6.4.2 Examples </h3>
+  <h4>1.Write a program for computing product cost. The program should output the computed cost and the delivery date of the product.</h4> <br>
+  <div> 
+  <div class="code1">
+  &emsp;#include &lt;stdio.h&gt;<br>
+  &emsp;int main()<br>
+  &emsp;{<br>
+  &emsp;&emsp;int quantity, day, month, year;<br>
+  &emsp;&emsp;&emsp;float cost, total;<br>
+  &emsp;&emsp;&emsp;int prod_code;<br>
+  &emsp;&emsp;&emsp;printf(“Enter quantity: ”);<br>
+  &emsp;&emsp;&emsp;scanf(“%d”, &quantity);<br>
+  &emsp;&emsp;&emsp;printf(“Enter cost: ”);<br>
+  &emsp;&emsp;&emsp;scanf(“%f”, &cost);<br>
+  &emsp;&emsp;&emsp;total = cost * quantity;<br>
+  &emsp;&emsp;&emsp;printf(“Enter product code: ”);<br>
+  &emsp;&emsp;&emsp;scanf(“%d”, &prod_code);<br>
+  &emsp;&emsp;&emsp;printf(“Enter date in format dd/mm/yyyy: ”);<br>
+  &emsp;&emsp;&emsp;scanf(“%d/%d/%d”, &day, &month, &year);<br>
+  &emsp;&emsp;&emsp;month+=1;<br>
+  &emsp;&emsp;&emsp;if( month > 12 ) { <br>
+  &emsp;&emsp;&emsp;&emsp;month = 1; year++;<br>
+  &emsp;&emsp;&emsp;}<br>
+  &emsp;&emsp;&emsp;printf(“Order for %d should be with you by %d/%d/%d at a total cost of %6.2f\n”,prod_code, day, month, year, total);<br>
+  &emsp;&emsp;return 0;<br>
+  &emsp;}</code></div><br>
+  <div class="output">
+    <code>
+      Result:<br>
+      Input<br>
+      Enter quantity: 3<br>
+      Enter cost: 1.25<br>
+      Enter product code: 1 2<br>
+      Enter date in format dd/mm/yy: 17/12/2003<br>
+      Output<br>
+      Order for 1 should be with you by 17/1/2004 at a total
+      cost of 3.75
+    </code>
+  </div> <br>
+  <h4>2. Determine how much money is in a piggy bank that contains several
+    50, 25, 20, 10 , and 5 paise coins. Use the following values to test
+    the program: five 50 paise coins, three 25 paise coins, two 20 paise
+    coins, one 10 paise coin, and fifteen 5 paise coins.</h4> <br>
+ <div> 
+          <div class="code1">
+            <code>
+  /* To determine how much money there is in a piggy bank */<br>
+  &emsp;&emsp;&emsp;#include &lt;stdio.h&gt;<br>
+  &emsp;&emsp;&emsp;#include &lt;string.h&gt;<br>
+  &emsp;&emsp;&emsp;int main(void)<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;{<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;float coin1=0.50,coin2=0.25,coin3=0.20,
+  coin4=0.10, coin5=0.05,total=0.0;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;int ncoins;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“How many 50 paise coins : ”);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;scanf(“%d”,&ncoins);<br>
+  
+  &emsp;&emsp;&emsp;&emsp;&emsp;total += (ncoins * coin1);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“** %.2f **”,total);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“\nHow many 25 paise coins : ”);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;scanf(“%d”,&ncoins);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;total += (ncoins * coin2);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“** %.2f **”,total);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“\nHow many 20 paise coins : ”);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;scanf(“%d”,&ncoins);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;total += (ncoins * coin3);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“** %.2f **”,total);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“\nHow many 10 paise coins : ”);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;scanf(“%d”,&ncoins);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;total += (ncoins * coin4);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“** %.2f **”,total);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“\nHow many 5 paise coins : ”);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;scanf(“%d”,&ncoins);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;total += (ncoins * coin5);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“\n\nThe total amount is
+  Rs.%.2f”,total);<br>
+  
+  &emsp;&emsp;&emsp;&emsp;&emsp;return 0;<br>
+  }</code></div><br>
+  <div class="output">
+    <code>
+      <b>Output</b><br>
+      How many 50 paise coins : 5<br>
+      ** 2.50 **<br>
+      How many 25 paise coins : 3<br>
+      ** 3.25 **<br>
+      How many 20 paise coins : 2<br>
+      ** 3.65 **<br>
+      How many 10 paise coins : 1<br>
+      ** 3.75 **<br>
+      How many 5 paise coins : 15<br>
+      The total amount is Rs 4.50
+    </code>
+  </div> <br>
+  <h4>3. Modify the program given in Example 28 to accept the total amount
+    (in rupees) and convert them into paise.</h4> <br>
+  <div> 
+          <div class="code1">
+            <code>
+  &emsp;&emsp;&emsp;#include &lt;stdio.h&gt;<br>
+  &emsp;&emsp;&emsp;#include &lt;string.h&gt;<br>
+  &emsp;&emsp;&emsp;int main(void)<br>
+  &emsp;&emsp;&emsp;{<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;int nc1,nc2,nc3,nc4,nc5,temp;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;float total;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“Enter the amount : ”);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;scanf(“%f”,&total);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;temp = total * 100;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;nc1 = temp / 50;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;temp = temp % 50;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;nc2 = temp / 25;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;temp = temp % 25;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;nc3 = temp / 20;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;temp = temp % 20;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;nc4 = temp / 10;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;temp = temp % 10;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;nc5=temp;<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“\n\nNo. of 50 paise coins = %d”,nc1);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“\nNo. of 25 paise coins = %d”,nc2);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“\nNo. of 20 paise coins = %d”,nc3);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“\nNo. of 10 paise coins = %d”,nc4);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;printf(“\nNo. of 5 paise coins = %d”,nc5);<br>
+  &emsp;&emsp;&emsp;&emsp;&emsp;return 0;<br>
+  &emsp;&emsp;&emsp;} </code></div><br>
+  <div class="output">
+    <code>
+      <b>Output</b><br>
+      Enter the amount: 7.65<br>
+      No. of 50 paise coins = 15<br>
+      No. of 25 paise coins = 0<br>
+      No. of 20 paise coins = 0<br>
+      No. of 10 paise coins = 1 
+    </code>
+  </div><br>
+                        <div class="end">
+                            <p><b>Did you find this article helpful?</b></p> <br>
+                            <input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+                          </div>
+                          <h2>Check these also:</h2>
+                          <a href="5.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 5 <<"></a>
+                          <br>
+                          <br>
+                          <a href="7.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 7 <<"></a>
+                          <br>
+                          <br>
+                          <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+                          <br>
+                          <br>
+                    </div>
+                </main>
+    </article>
+    <footer class="flex-all-center">
+        <p>CopyRight &copy Beginners Point 2021</p> <br>
+    </footer>
+</body>
+</html>

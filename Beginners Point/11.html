@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<link href="css/9.css" rel="stylesheet" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<title>Chapter 11</title>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=zoilW--qbPrHFm017mlWAtBxiP5RhLD-Q3rdJcFyLYcCgXigh9Z2NhvG3P_d1doEPvr2qy_uIf0linMtEc9cm0Ujdl6682sKKed902B62vATnDfSQE7dNoWOXILok_bBTWGbt7appmFj9QMviPa8ZnoVDMoA4qJHL67LIJ6TB3SFP4bb4EDkhHBtwqt47oBFiX6h3eMzUPb-0t2PqIiX1_pv63x2oEoxfWcbbe99OGMk-dwwNlNa34AYB_EYkeT_4vlvgCuwDLAeZXF2AZtHPJ_U9p7MtLHlvMYekAi3mh50KhbbByDo6lKR4x4LaRCTIfoylx2rn2hK4BvQUqH5Fw" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9kb2MtMDQtMmstZG9jcy5nb29nbGV1c2VyY29udGVudC5jb20vZG9jcy9zZWN1cmVzYy9kMGs2Y2M5bDlkNmk4dG5oM2EwcjYycnU0MmlwcjlybC92bzd2NWc5YjU5NmhsdmNkNGNhMWpjMmRkNWsxNWM0by8xNjMyNzE3MTUwMDAwLzE4MzMzNzE4MTExOTI2NTkyMzIxLzE3NzcyNTE1NTg4MjQwNDk0NTczLzFwZExJWEFIUWpGMERyMnVvT0xfTkpGYzROZHNBakpwdj9lPWRvd25sb2FkJmF1dGh1c2VyPTE"/></head>
+
+<body>
+<header class="main-header">
+	<img src="images/Logo.png"
+	class="logo-img"/>
+	<h1 class="head">Memory Management in C</h1>
+</header>
+<article>
+	<h2>Memory Allocation</h2>
+	<p>Before you learn C Dynamic Memory allocation, letâ€™s understand:</p><br>
+	<h3>How Memory Management in C works?</h3><br>
+	<img src="images/process.jpg"
+	class="memory-func"
+	width="600 px"/><br><br>
+	<p>When you declare a variable using a basic data type, the C compiler automatically allocates memory space for the variable in a pool of memory called the stack.</p><br>
+	<p>For example, a float variable takes typically 4 bytes (according to the platform) when it is declared. We can verify this information using the sizeof operator as shown in below example:</p>
+	
+      <div> <br>
+				<div class="code1">
+				<code> #include <<x>stdio.h> <br>
+				&emsp;int main()<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;float x;<br>
+				&emsp;&emsp;&emsp;&emsp;printf("The size of float is %d bytes", sizeof(x));<br>
+				&emsp;&emsp;&emsp;&emsp;return 0;<br>
+				&emsp;}<br></code></div></div><br>
+				<p>The output will be:</p>
+		<br>
+		<div class="output">
+		<code> &emsp;The size of float is 4 bytes<br></code>
+      </div><br>
+      <p>Also, an array with a specified size is allocated in contiguous blocks of memory, each block has the size for one element:</p>
+      <div> <br>
+				<div class="code1">
+				<code> #include <<x>stdio.h> <br>
+				&emsp;int main()<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;float arr[10];<br>
+				&emsp;&emsp;&emsp;&emsp;printf("The size of the float array with 10 element is %d", sizeof(arr));<br>
+				&emsp;&emsp;&emsp;&emsp;return 0;<br></code></div></div><br>
+				<p>The result is:</p>
+		<br>
+		<div class="output">
+		<code> &emsp;The size of the float array with 10 element is 40<br></code>
+      </div><br>
+      <br>
+	<p>After declaring a basic data type or an array, the memory is automatically managed. However, there is a process for allocating memory in C which will permit you to implement a program in which the array size is undecided until you run your program (runtime). This process is called <strong>â€œDynamic memory allocation.â€</strong></p>
+	
+	<h2>Dynamic Memory Allocation in C</h2>
+	<p><strong>Dynamic Memory Allocation</strong> is manual allocation and freeing of memory according to your programming needs and enables the C programmer to allocate memory at runtime. Dynamic memory allocation in c language is possible by 4 functions of <strong>stdlib.h</strong> header file.</p><br>
+	<img src="images/functions.png"
+	class="memory-func"
+	width="600 px"/><br><br>
+	<p>Before learning above functions, let's understand the difference between <strong>static memory allocation</strong> and <strong>dynamic memory allocation.</strong></p><br>
+
+<table class="table">
+<tbody><tr><th>Static memory allocation</th><th>Dynamic memory allocation</th></tr>
+<tr><td>Memory is allocated at compile time.</td><td>Memory is allocated at run time.</td></tr>
+<tr><td>Memory can't be increased while executing program.</td><td>Memory can be increased while executing program.</td></tr>
+<tr><td>Used in array.</td><td>Used in linked list.</td></tr>
+</tbody></table><br>
+
+<p>Now let's have a quick look at the methods used for dynamic memory allocation.</p><br>
+
+<table class="table">
+<tbody><tr>
+<td class="th" width="50%"><strong>Function</strong>
+</td>
+<td class="th"><strong>Purpose</strong>
+</td>
+</tr>
+<tr>
+<td><strong>malloc()</strong>
+</td>
+<td>Allocates the memory of requested size and returns the pointer to the first byte of<br>
+allocated space.
+</td>
+</tr>
+<tr>
+<td><strong>calloc()</strong>
+</td>
+<td>Allocates the space for elements of an array. Initializes the elements to zero and returns a pointer to the memory.
+</td>
+</tr>
+<tr>
+<td><strong>realloc()</strong>
+</td>
+<td>It is used to modify the size of previously allocated memory space.
+</td>
+</tr>
+<tr>
+<td><strong>Free()</strong>
+</td>
+<td>Frees or empties the previously allocated memory space.
+</td>
+</tr>
+</tbody></table><br><br>
+<p>Letâ€™s discuss the above functions with their application:</p>
+   <h2>C malloc() Function</h2>
+   <p>The C malloc() function stands for memory allocation. It is a function which is used to allocate a block of memory dynamically. It reserves memory space of specified size and returns the null pointer pointing to the memory location. The pointer returned is usually of type void. It means that we can assign C malloc() function to any pointer.</p><br>
+<p>Syntax of malloc() Function:</p>
+<div> <br>
+				<div class="code1">
+				<code> &emsp;ptr = (cast_type *) malloc (byte_size); 
+        <br> <br></code></div><br>
+        <p>Here,</p>
+        <ul class="ul"><li>ptr is a pointer of cast_type.</li><li>The C malloc() function returns a pointer to the allocated memory of byte_size.</li></ul>
+	<p>Example of malloc():</p>
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;Example: ptr = (int *) malloc (50) 
+        <br> <br></code></div></div><br>
+        <p>When this statement is successfully executed, a memory space of 50 bytes is reserved. The address of the first byte of reserved space is assigned to the pointer ptr of type int.</p><br>
+        <p>Consider another example:</p>
+            <div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdlib.h> <br>
+				&emsp;int main()<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;int *ptr<br>
+				&emsp;&emsp;&emsp;&emsp;ptr = malloc(15*sizeof(*ptr));&emsp;//a block of 15 integers<br><br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;if (ptr != NULL) <br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;*(ptr + 5) = 480; //assign 480 to sixth integer<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;printf("Value of the 6th integer is %d",*(ptr + 5));<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;}<br>
+				&emsp;}<br>
+				<br> </code>
+			</div>
+		</div><br>
+		<p>Output:</p>
+		<br>
+		<div class="output">
+		<code> &emsp;Value of the 6th integer is 480<br></code>
+      </div><br>
+
+      <h2>C calloc() Function</h2>
+   <p>The C calloc() function stands for contiguous allocation. This function is used to allocate multiple blocks of memory. It is a dynamic memory allocation function which is used to allocate the memory to complex data structures such as arrays and structures.</p><br><p>Malloc() function is used to allocate a single block of memory space while the calloc() in C is used to allocate multiple blocks of memory space. Each block allocated by the calloc() function is of the same size.</p><br>
+<p>Syntax of calloc() Function:</p>
+<div> <br>
+				<div class="code1">
+				<code> &emsp;ptr = (cast_type *) calloc (n, size); 
+        <br> <br></code></div><br>
+        
+        <ul class="ul"><li>The above statement is used to allocate n memory blocks of the same size.</li>
+        	<li>After the memory space is allocated, then all the bytes are initialized to zero.</li>
+        <li>The pointer which is currently at the first byte of the allocated memory space is returned.</li></ul>
+        <p>Whenever there is an error allocating memory space such as the shortage of memory, then a null pointer is returned.</p><br>
+	<p>Example of malloc():</p><br>
+	<p>The program below calculates the sum of an arithmetic sequence.</p><br>
+	
+            <div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdlib.h> <br>
+				&emsp;int main()<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;int i, * ptr, sum = 0;<br>
+				&emsp;&emsp;&emsp;&emsp;ptr = calloc(10, sizeof(int));<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;if (ptr == NULL) <br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;printf("Error! memory not allocated.");<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;exit(0);<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;printf("Building and calculating the sequence sum of the first 10 terms \ n ");<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;for (i = 0; i < 10; ++i) { * (ptr + i) = i;<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;sum += * (ptr + i);<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;}<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;printf("Sum = %d", sum);<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;free(ptr);<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;return 0;<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;}<br>
+				&emsp;}<br>
+				<br> </code>
+			</div>
+		</div><br>
+		<p>Output:</p>
+		<br>
+		<div class="output">
+		<code> &emsp;Value of the 6th integer is 480<br></code>
+      </div><br>
+
+      <h2>C realloc() Function</h2>
+   <p>If memory is not sufficient for malloc() or calloc(), you can reallocate the memory by realloc() function. In short, it changes the memory size.</p><br>
+   <p>realloc() can also be used to reduce the size of the previously allocated memory.</p><br>
+<p>Syntax of realloc() Function:</p>
+<div> <br>
+				<div class="code1">
+				<code> &emsp;ptr=realloc(ptr, new-size)   
+        <br></code></div><br></div>
+
+         <h2>C free() Function</h2>
+   <p>realloc() can also be used to reduce the size of the previously allocated memory.</p><br>
+<p>Syntax of free() Function:</p>
+<div> <br>
+				<div class="code1">
+				<code> &emsp;free(ptr)    
+        <br></code></div><br></div>
+<h2>Difference Between malloc() and calloc()</h2>
+   <table class="table">
+				
+				<tbody><tr>
+					<th style="width: 50%;">malloc()</th>
+					<th style="width: 50%;">calloc()</th>
+				</tr>
+				<tr>
+					<td>
+						<p>The name <code>malloc</code> stands for <i>memory allocation</i>.</p>
+					</td>
+					
+					<td>
+						<p>The name <code>calloc</code> stands for <i>contiguous allocation</i>.</p>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>
+						<p><code>void *malloc(size_t n)</code> returns a pointer to <code>n</code> bytes of uninitialized storage, or <code>NULL</code> if the request cannot be satisfied. If the space assigned by <code>malloc()</code> is overrun, the results are undefined.</p>
+					</td>
+					
+					<td>
+						<p><code>void *calloc(size_t n, size_t size)</code> returns a pointer to enough free space for an array of <code>n</code> objects of the specified size, or <code>NULL</code> if the request cannot be satisfied. The storage is initialized to zero.</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p><code>malloc()</code> takes one argument that is, <i>number of bytes</i>.</p>
+					</td>
+					
+					<td>
+						<p><code>calloc()</code> take two arguments those are: <i>number of blocks</i> and <i>size of each block</i>.</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p>syntax of <code>malloc()</code>:</p>
+						<p><code>void *malloc(size_t n);</code></p>
+						<p>Allocates <code>n</code> bytes of memory. If the allocation succeeds, a void pointer to the allocated memory is returned. Otherwise <code>NULL</code> is returned. </p><p>
+					</p></td>
+					
+					<td>
+						<p>syntax of <code>calloc()</code>:</p>
+						<p><code>void *calloc(size_t n, size_t size);</code></p>
+						<p>Allocates a contiguous block of memory large enough to hold <code>n</code> elements of <code>size</code> bytes each. The allocated region is initialized to zero.</p><p>
+					</p></td>
+				</tr>
+				<tr>
+					<td>
+						<p><code>malloc</code> is faster than <code>calloc</code>.</p>
+					</td>
+					
+					<td>
+						<p><code>calloc</code> takes little longer than <code>malloc</code> because of the extra step of initializing the allocated memory by zero. However, in practice the difference in speed is very tiny and not recognizable.</p>
+					</td>
+				</tr>				
+			</tbody></table>
+        <h2>Similarities Between malloc() and calloc()</h2>
+        <p>
+			The pointer returned by <code>malloc</code> or <code>calloc</code> has the proper alignment for the object in question, but it must be cast into the appropriate type.
+			</p><br>
+			<p>
+			Proper alignment means the value of the returned address is guaranteed to be an  even  multiple of alignment. The value of alignment must be a power of two and must be greater than or equal  to  the size of a word.
+			</p><br>
+			<p>The <code>malloc()</code>, <code>calloc()</code>  functions  will  fail if: </p>
+			<ul>
+				<li>The physical limits of the system are exceeded by <code>n</code> bytes of memory which cannot be allocated. </li>
+				<li>There is not enough  memory available  to allocate <code>n</code> bytes of memory; but the application could try again later.</li>
+			</ul><br><br>   
+		   
+			<div class="end">
+				<p><b>Did you find this article helpful?</b></p> <br>
+				<input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+			  </div>
+			  <h2>Check these also:</h2>
+			  <a href="10.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 10 <<"></a>
+			  <br>
+			  <br>
+			  <a href="12.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 12 <<"></a>
+			  <br>
+			  <br>
+			  <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+			  <br>
+			  <br>
+</article>
+<footer class="flex-all-center">
+	<p>CopyRight &copy Beginners Point</p>
+</footer>		
+</body>
+</html>

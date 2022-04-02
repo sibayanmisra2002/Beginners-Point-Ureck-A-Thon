@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+*{
+	margin: 0px;
+	padding: 0;
+
+}
+  body{    
+  background: rgb(252,252,252);
+  background: linear-gradient(90deg, rgba(252,252,252,1) 0%, rgba(168,218,240,1) 100%);
+  font-family: sans-serif;
+  }
+main{
+  max-width: 90%;
+  margin: auto;
+}
+h1 {
+    margin-left: 38vw;
+    margin-bottom: 70px;
+    margin-top: -170px;
+    font-size: 45px;
+    color: white   
+}
+h2{
+	color: #008B8B;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+h3{
+  padding-bottom: 10px;
+  font-family: 'Fjalla One', sans-serif;
+  color: #088a76;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+.tr1:nth-child(even) {
+  background-color: #f5f5f5;
+}
+.table2 {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 40%;
+}
+td, th {
+  border: 2px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+#t{
+  text-align: left;
+}
+table{
+  border: 2px;
+  font-size: 20px;
+  background-color: #b6dbdb;
+}
+#pic_int1{
+  margin-left: 100px;
+  height: 30px;
+  width: 400px;
+}
+#pic_sl{
+  margin-left: 100px;
+  height: 60px;
+  width: 400px;
+}
+#pic_sz{
+  margin-left: 100px;
+  height: 400px;
+  width: 800px;
+}
+ul{
+  font-size: 20px;
+}
+#end_bt{
+    height: 40px;
+    width: 55px;
+}
+#ret_hmp{
+  height: 2em;
+  width: 20%;
+  color: white;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  border-radius: 20px;
+  transition: 0.6s ease;
+}
+#ret_hmp:hover{
+  font-size: 22px;
+  color: rgb(121, 236, 14);
+  cursor: pointer;
+}
+footer{
+    height: 10vh;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,139,139,1) 65%);
+    color: white;
+    font-size: 25px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+header{
+    font-family: 'Josefin Sans', sans-serif;
+}
+.flex-all-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-header{
+	background: rgb(245,251,250);
+    background: linear-gradient(90deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);
+	padding: 30px 25px;
+}
+.main-header img {
+    padding-bottom: 40px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: 50% 0;
+    margin-left: 40px;
+}
+#pic_egi{
+  margin-left: 10vw;
+  height: 600px;
+
+}
+#pic_ego{
+  margin-left: 10vw;
+  height: 200px;
+  width: 800px;
+}
+#pic_egi2{
+  margin-left: 10vw;
+  height: 400px;
+  width: 800px;
+}
+#pic_int{
+  margin-left: 10vw;
+  height: 70px;
+  width: 500px;
+}
+.code1 {
+	width: 70%;
+	border: 1px solid #e8eded;
+	border-left: 6px solid #6b5454;
+	box-shadow: 5px 4px 4px #ada8a8;
+  font-size: large;
+	padding: 15px;
+	background-color: #edeaea;
+}
+.output{
+	width: 70%;
+	border: 1px solid #e8eded;
+	border-left: 6px solid #6b5454;
+	box-shadow: 5px 4px 4px #ada8a8;
+  font-size: large;
+	padding: 15px;
+	background-color: #383b38;
+	color: #FFF;
+} 

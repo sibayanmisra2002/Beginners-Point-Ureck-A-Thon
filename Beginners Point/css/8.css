@@ -1,0 +1,134 @@
+*{
+	margin: 0px;
+	padding: 0;
+
+	}
+body
+{
+	font-family: sans-serif;
+	color: #444;
+}
+article{
+	padding: 20px;
+}
+.main-header{
+	background: rgb(0,0,0);
+  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,139,139,1) 65%);
+	padding: 30px 25px;
+  margin-bottom: 5px;
+
+}
+.main-header img{
+	padding-bottom: 40px;
+	width: 200px;
+	height: 200px; 
+	object-fit: cover; 
+	object-position: 50% 0;
+    } 
+}
+.logo-img{
+	margin-left: 40px;
+	height: 100px;
+	width: 100px;
+	padding-bottom: 40px;
+}
+h1 {
+  margin-left: 30vw;
+  margin-bottom: 70px;
+  margin-top: -190px;
+  font-size: 45px;
+  color: white   
+   
+}
+.post-header{
+	margin-top: -60px;
+	margin-bottom: 20px;
+}
+article{
+	margin-bottom: 60px;
+}
+h1{
+	color: #FFFFFF;
+	}
+h2{
+	color: #008B8B;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+h3{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.note{
+	line-height: 50px;
+	background-color: #E6E6FA;
+	padding: 10px 30px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+th {
+	color: #008B8B;
+	font-size: 20px;
+	background-color:#d8eded;
+}
+.th{
+	color: #008B8B;
+	font-size: 20px;
+	background-color:#d8eded;
+}
+.table {
+  width: 50%;
+  margin-left: 90px;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+ul {
+	margin-left:30px;
+	margin-bottom: 20px;
+}
+li{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.code1 {
+	width: 70%;
+	border: 1px solid #e8eded;
+	border-left: 6px solid #6b5454;
+	box-shadow: 5px 4px 4px #ada8a8;
+	padding: 15px;
+	background-color: #edeaea;
+}
+.output{
+	width: 70%;
+	border: 1px solid #e8eded;
+	border-left: 6px solid #6b5454;
+	box-shadow: 5px 4px 4px #ada8a8;
+	padding: 15px;
+	background-color: #383b38;
+	color: #FFF;
+} 
+#end_bt{
+    height: 40px;
+    width: 55px;
+}
+#ret_hmp{
+    height: 40px;
+    width: 350px;
+    color: white;
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+    border-radius: 20px;
+}
+footer{
+	 height: 10vh;
+   background: rgb(0,0,0);
+   background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,139,139,1) 65%);
+   color: white;
+   text-align: center;
+   font-size: 25px;
+   font-family: 'Josefin Sans', sans-serif;
+}

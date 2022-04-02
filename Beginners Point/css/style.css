@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+body
+{
+	font-family: sans-serif;
+	color: #444;
+    /* background-image: url(../images/bg.jpg); */
+    height: 100vh;
+    /* background-size: cover;
+    background-position: center;
+    background-attachment: fixed; */
+}
+h1 {
+  margin-left: 35vw;
+  margin-bottom: 70px;
+  margin-top: -170px;
+  font-size: 45px;
+  font-family: 'Josefin Sans', sans-serif; 
+  color: white;
+}
+main div{
+    font-family: 'Raleway', sans-serif;
+}
+h2{
+	color: #008B8B;
+	margin-top: 30px;
+	margin-bottom: 20px;
+    font-family: 'Josefin Sans';
+}
+.code1 {
+	width: 70%;
+	border: 1px solid #e8eded;
+	border-left: 6px solid #6b5454;
+	box-shadow: 5px 4px 4px #ada8a8;
+	padding: 15px;
+	background-color: #edeaea;
+}
+#end_bt{
+    height: 40px;
+    width: 55px;
+}
+#ret_hmp{
+    height: 2em;
+    width: 20%;
+    color: white;
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+    border-radius: 20px;
+    transition: 0.6s ease;
+}
+#ret_hmp:hover{
+    font-size: 22px;
+    color: rgb(121, 236, 14);
+    cursor: pointer;
+}
+footer{
+    height: 10vh;
+    background: rgb(245,251,250);
+    background: linear-gradient(90deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);
+    color: white;
+   text-align: center;
+   font-size: 25px;
+   font-family: 'Josefin Sans', sans-serif;
+}

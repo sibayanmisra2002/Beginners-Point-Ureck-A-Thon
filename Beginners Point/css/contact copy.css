@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:300');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:600');
+*{
+    margin: 0
+}
+body{
+   background: rgb(199,210,210);
+   background: linear-gradient(52deg, rgba(199,210,210,1) 0%, rgba(57,170,165,1) 100%);
+   font-family: 'Josefin Sans', sans-serif;
+}
+.top::after {
+  content:"";
+  position:absolute;
+  width:45%;
+  height:4px;
+  background-image:linear-gradient(to left, transparent 5%, #625261);
+  top:80px;
+  left:52%;
+  transform:translateX(-50%);  
+}
+
+.top{
+    margin-top: 30px;
+    text-align: center;
+    font-size: 50px;
+    color: #10615e;
+    font-weight: 600;  
+}
+input:active, input:focus {
+  outline: none;
+}
+input{
+    border: 1px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    font-weight: 300;
+    font-size: 18px;
+    color: #9C9C9C;
+    font-family: inherit;
+    padding:13px 25px;
+    background: transparent;
+    margin-bottom: 20px;  
+    width:350px;
+    max-width: 100%;    
+}
+
+ul{
+    list-style: none;
+    padding: 0
+}
+
+ul li{
+    display: inline-block;
+    padding-right: 10px;     
+}
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.contact-info-item {
+  display: flex;
+  margin-bottom: 40px;
+  margin-left: 60px;
+}
+
+.contact-info-icon {
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.contact-info-icon {
+  font-size: 30px;
+  line-height: 70px;
+}
+
+.contact-info-content {
+  margin-left: 20px;
+}
+
+.contact-info-content h4 {
+  text-align: left;
+  color: #1da9c0;
+  font-size: 1.4em;
+  margin-bottom: 5px;
+}
+
+.contact-info-content p {
+  color: #FFF;
+  font-size: 1em;
+}
+form { max-width:420px; margin:50px auto; }
+
+.feedback-input {
+  color:#000000;
+  font-family: sans-serif;
+  font-weight:500;
+  font-size: 18px;
+  border-radius: 30px;
+  line-height: 22px;
+  background-color: transparent;
+  border:2px solid #1c7875;
+  transition: all 0.3s;
+  padding: 20px;
+  margin-bottom: 15px;
+  width:100%;
+  box-sizing: border-box;
+  outline:0;
+}
+
+.feedback-input:focus { border:2px solid #c3e3e1; }
+
+textarea {
+  height: 150px;
+  line-height: 150%;
+  resize:vertical;
+}
+
+[type="submit"] {
+  font-family:sans-serif;
+  width: 100%;
+  background:#1c7875;
+  border-radius:50px;
+  border:0;
+  cursor:pointer;
+  color:white;
+  font-size:24px;
+  padding-top:20px;
+  padding-bottom:20px;
+  transition: all 0.3s;
+  margin-top:-4px;
+  font-weight:700;
+}
+[type="submit"]:hover { background:#759c9a; }
+
+@media (min-width: 576px){
+.container {
+    max-width: 540px;
+}
+}
+
+@media (min-width: 768px){
+.container {
+    max-width: 720px;
+}
+}
+
+@media (min-width: 992px){
+.container {
+    max-width: 960px;
+}
+}
+
+@media (min-width: 1200px){
+.container {
+    max-width: 1140px;
+}
+}
+
+
+
+
+.wrapper{
+    margin: 125px 0;
+
+}
+
+.form{
+    display: flex;
+    text-align: center;
+    justify-content: center; 
+}
+
+.left-col{
+    width: 40%;
+    padding: 135px 30px 0 30px;
+    background-color: #1c7875;
+}
+.left-col h2{
+    color:#fff;
+    font-size:32px;
+    line-height: 37px;
+}
+
+.left-col img.img1{
+    margin-bottom: 10px;
+}
+
+.left-col .bull{
+    margin: 100px 0 0;
+}
+.left-col .bull p{
+    font-size: 20px;
+    color: #fff;
+}
+
+.left-col .bull img.img2{
+    margin:25px 0;
+}
+
+.left-col .soc{
+    margin: 100px 0 0;
+}
+.left-col .soc a img{
+    transition: 0.5s;   
+}
+.left-col .soc a img:hover{
+    transition: 0.5s;
+    transform: scale(1.3)
+}
+
+.left-col .soc p{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.left-col .soc ul{
+    padding:20px 0 50px;
+}
+
+
+.contact-form{
+    width: 60%;
+    padding: 135px 30px 0 30px;    
+  
+}
+
+.contact-form h2{
+    margin-bottom: 70px;
+    font-size: 30px;
+    color: #585858;
+    font-weight: 600;    
+}
+
+.contact-form button{
+    background: linear-gradient(299.5deg, #6DBAC8 35.53%, #8FC7E9 109.8%);
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border:none;
+    cursor: pointer;
+}
+.contact-form button:hover{
+    background: linear-gradient(299.5deg, #8FC7E9 35.53%, #6DBAC8 109.8%);
+}
+@media screen and (max-width: 992px) {
+    .form{
+        display: block;
+    }
+    .left-col img.img1{
+        display: none
+    }
+
+    .contact-form, .left-col{
+        width:100%;
+        padding: 40px 0;
+    }
+
+}
+footer{
+    max-width: 90vw;
+    margin: auto;
+}
+#ret_hmp{
+    height: 2em;
+    width: 6rem;
+    color: white;
+    font-size: 1rem;
+    font-family: "myriad pro regular";
+    border-radius: 20px;
+    background-image: linear-gradient(to left, #0000005c 5%, #625261);
+    transition: 0.5s ease-in;
+}
+#ret_hmp:hover{
+  font-size: 1.2rem;
+  color: black;
+  cursor: pointer;
+}

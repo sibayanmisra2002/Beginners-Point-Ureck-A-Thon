@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<link href="css/9.css" rel="stylesheet" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<title>Chapter 10</title>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=r4aJPx2875772Cx-Zpt04BhsixAEoOO-CyC5VGBQdDjnJEhkypvbSgtoXPFFHvPoKTcXlVOZTkSLKB0kqPE8JBwJH3uT9w3Aj1_5OHEON_Ae1H7yqpPlDi7lbNoLtrv-UjTk22XEi5QK4CrxXNQGfPL2_uQaznHtIv_VjyyLhtKFcK33geQX-Hp9or-Mqb59qcA2DeC-TSlRWXQlIV1A4g1tHoO9aYHlhIj4B7nmx883JBSGOS9aBuLkLTysCCe_kIt1KIIOG8SwVOWSB-MCYyKYEsJiFb-OGoo-mfSAP0r034bh3YNpzaEzfJ9rsUMV5GioCt1DgwLUPrAnW67sNw" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9kb2MtMGMtMmstZG9jcy5nb29nbGV1c2VyY29udGVudC5jb20vZG9jcy9zZWN1cmVzYy9kMGs2Y2M5bDlkNmk4dG5oM2EwcjYycnU0MmlwcjlybC83a3FudDJtcGg0a3EybXI0cmkyZTcwZWNpYTNsNGkwbi8xNjMyNzE3MDc1MDAwLzE4MzMzNzE4MTExOTI2NTkyMzIxLzE3NzcyNTE1NTg4MjQwNDk0NTczLzFiY18tZE1zbEtna3BkYXlHME9HYUZzaTVQS0tic3pnMT9lPWRvd25sb2FkJmF1dGh1c2VyPTE"/></head>
+
+<body>
+<header class="main-header">
+	<img src="images/Logo.png"
+	class="logo-img"/>
+	<h1>C Pointers</h1>
+</header>
+<article>
+
+	<header class="post-header"><br>
+	<h2>C Pointers</h2>
+	</header>
+
+	<p>Pointers in C are easy and fun to learn. Some C programming tasks are performed
+    more easily with pointers, and other tasks, such as dynamic memory allocation, cannot be
+    performed without using pointers. So it becomes necessary to learn pointers to become a
+    perfect C programmer. Let's start learning them in simple and easy steps.</p><br>
+    <p>As you know, every variable is a memory location and every memory location has its
+    address defined which can be accessed using <strong>ampersand (&) </strong> operator, which denotes an
+    address in memory. </p><br>
+    <p>Consider the following example, which will print the address of the variables defined:</p><br>
+    
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdio.h> 
+        <br> <br>
+				&emsp;int main(void)<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;int var1;<br><br>
+				&emsp;&emsp;&emsp;&emsp;char var2[10];<br><br>
+				&emsp;&emsp;&emsp;&emsp;printf("Address of var1 variable: %x\n", &var1 );<br>
+				&emsp;&emsp;&emsp;&emsp;printf("Address of var2 variable: %x\n", &var2 );<br>
+				&emsp;&emsp;&emsp;&emsp;return 0;<br>
+				&emsp;}<br>
+				<br><br> </code>
+			</div>
+		</div><br>
+		<p>When the above code is compiled and executed, it produces the following result:</p>
+		<br>
+		<div class="output">
+		<code> &emsp;<br>Address of var1 variable: bff5a400<br>
+			 &emsp;<br>Address of var2 variable: bff5a3f6<br>
+        <br> &emsp;<br></code>
+      </div><br>
+      <p>So you understood what is memory address and how to access it, so base of the concept is
+      over. Now let us see what is a pointer.</p><br><br>
+	       <div>
+	       	<h2>What Are Pointers?</h2><br>
+	       	<img src="images/pointers.png"class="ptr-img"
+	       	width="50%"
+	       	height="40%" />
+			   <p>A pointer is a variable whose value is the address of another variable, i.e., direct address of
+         the memory location. Like any variable or constant, you must declare a pointer before you
+         can use it to store any variable address. The general form of a pointer variable declaration is:</p>
+	    
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;
+				type *var-name;
+			</code><br></div></div><br></section>
+			<p>Here, type is the pointer's base type; it must be a valid C data type and var-name is the
+      name of the pointer variable. The asterisk * you used to declare a pointer is the same
+      asterisk that you use for multiplication. However, in this statement the asterisk is being
+      used to designate a variable as a pointer. Following are the valid pointer declaration:</p>
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;int *ip;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;/* pointer to an integer */<br>
+				&emsp;double *dp;&emsp;&emsp; /* pointer to a double */<br>
+				&emsp;float *fp;&emsp;&emsp; /* pointer to a float */<br>
+				&emsp;char *ch;&emsp;&emsp; /* pointer to a character */<br> </code>
+				</div></div><br>
+			<p>The actual data type of the value of all pointers, whether integer, float, character, or
+      otherwise, is the same, a long hexadecimal number that represents a memory address. The
+      only difference between pointers of different data types is the data type of the variable or
+      constant that the pointer points to.</p>
+		
+		<div>
+		<h2>How to use Pointers?</h2>
+		<p>There are few important operations, which we will do with the help of pointers very
+    frequently. <strong>(a)</strong> we define a pointer variable <strong>(b) </strong> the address of a variable to a
+    pointer and <strong>(c) </strong>finally access the value at the address available in the pointer variable. This
+    is done by using unary operator * that returns the value of the variable located at the
+    address specified by its operand. Following example makes use of these operations:</p>
+		
+			<div> <br>
+				<div class="code1">
+				<code>&emsp;#include <<x>stdio.h> 
+        <br><br>
+				&emsp;int main(void)<br>
+				&emsp;{<br>
+				&emsp;int var = 20;  &emsp; &emsp;/* actual variable declaration */<br>
+				&emsp;int *ip; &emsp;  &emsp; &emsp; &emsp;/* pointer variable declaration */<br><br>
+				&emsp;ip = &var; &emsp; &emsp;&emsp;/* store address of var in pointer variable*/<br><br>
+				&emsp;printf("Address of var variable: %x\n", &var );<br><br>
+				&emsp;/* address stored in pointer variable */<br>
+				&emsp;printf("Address stored in ip variable: %x\n", ip );<br><br>
+				&emsp;/* access the value using the pointer */<br>
+				&emsp;printf("Value of *ip variable: %d\n", *ip );<br>
+				&emsp;}<br><br> </code>
+				</div></div><br>
+			<p>When the above code is compiled and executed, it produces result something as follows:</p><br>
+
+    <div class="output">
+		<code> &emsp;Address of var variable: bffd8b3c<br>
+		&emsp;Address stored in ip variable: bffd8b3c<br>
+	  &emsp;Value of *ip variable: 20<br></code>
+      </div><br>
+      <h3>Usage of pointer :</h3><br>
+      <p>There are many applications of pointers in c language.</p><br>
+      <div><ol>
+      	<li><strong>Dynamic memory allocation</strong></li>
+      	<p>In c language, we can dynamically allocate memory using malloc() and calloc() functions where the pointer is used.</p><br>
+      	<li><strong>Arrays, Functions, and Structures</strong></li>
+      	<p>Pointers in c language are widely used in arrays, functions, and structures. It reduces the code and improves the performance.</p></ol></div>
+
+      	<h3>Advantage of pointer :</h3>
+      	<div><ol><li> Pointer <strong>reduces the code</strong> and <strong>improves the performance</strong>, it is used to retrieving strings, trees, etc. and used with arrays, structures, and functions.</li>
+      		<li> We can <strong>return multiple values from a function</strong> using the pointer.</li>
+      		<li> It makes you able to<strong> access any memory location</strong> in the computer's memory.</li></ol></div>
+
+
+   <h3>Pointer to array :</h3>
+   <div> <br>
+				<div class="code1">
+				<code>&emsp;int arr[10];  <br>
+				&emsp;int *p[10]=&arr; // Variable p of type pointer is pointing to the address of an integer array arr.<br></code></div></div><br>
+   <h3>Pointer to a function :</h3>
+   <div class="code1">
+				<code>&emsp;void show (int);  <br>
+				&emsp;void(*p)(int) = &display; // Pointer p is pointing to the address of a function <br></code></div></div><br>
+   <h3>Pointer to structure :</h3>
+      <div class="code1">
+				<code>&emsp;struct st<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp; int i;<br>
+				&emsp;&emsp;&emsp;&emsp;float f;<br>
+				&emsp;}ref;<br>
+				&emsp;struct st *p = &ref;  
+				<br><br> </code>
+			</div>
+		</div><br>
+   
+
+	<h2>NULL Pointers in C</h2>
+	<p>It is always a good practice to assign a NULL value to a pointer variable in case you do not
+  have exact address to be assigned. This is done at the time of variable declaration. A
+  pointer that is assigned NULL is called a null pointer.</p><br><p>The NULL pointer is a constant with a value of zero defined in several standard libraries.<br>
+  Consider the following program:</p><br>
+			<div> <br>
+				<div class="code1">
+				<code>&emsp;#include <<x>stdio.h> 
+        <br><br>
+				&emsp;int main()<br>
+				&emsp;{<br>
+				&emsp;int *ptr = NULL;<br> 
+				&emsp;printf("The value of ptr is : %x\n", &ptr );<br>
+				&emsp;return 0;<br>
+				&emsp;}<br><br> </code>
+				</div></div><br>
+			  <p>When the above code is compiled and executed, it produces the following result:</p><br>
+
+     <div class="output">
+		 <code> &emsp;The value of ptr is 0<br></code></div><br>
+		 <p>On most of the operating systems, programs are not permitted to access memory at
+     address 0 because that memory is reserved by the operating system. However, the
+     memory address 0 has special significance; it signals that the pointer is not intended to
+     point to an accessible memory location. But by convention, if a pointer contains the null
+    (zero) value, it is assumed to point to nothing.</p><br><p>To check for a null pointer you can use an if statement as follows:</p><br>
+    <div>
+				<div class="code1">
+				<code>&emsp;if(ptr) /* succeeds if p is not null */<br>
+				&emsp;if(!ptr) /* succeeds if p is null */<br></code></div></div>
+
+	<div>
+		<h2>Pointer arithmetic</h2>
+		<p>As explained in main chapter, C pointer is an address, which is a numeric value. Therefore,
+    you can perform arithmetic operations on a pointer just as you can a numeric value. There
+    are four arithmetic operators that can be used on pointers: ++, --, +, and -</p><br><p>To understand pointer arithmetic, let us consider that ptr is an integer pointer which points
+    to the address 1000. Assuming 32-bit integers, let us perform the following arithmetic
+    operation on the pointer:</p>
+    <div> <br>
+				<div class="code1">
+				<code>&emsp;ptr++<br></code></div></div><br>
+    <p>Now, after the above operation, the <strong>ptr </strong>will point to the location 1004 because each time <strong>ptr </strong>is incremented, it will point to the next integer location which is 4 bytes next to the
+    current location. This operation will move the pointer to next memory location without
+    impacting actual value at the memory location. If <strong>ptr </strong> points to a character whose address
+    is 1000, then above operation will point to the location 1001 because next character will beavailable at 1001.</p>
+
+		<h2>Incrementing a Pointer</h2>
+		<p>We prefer using a pointer in our program instead of an array because the variable pointer
+    can be incremented, unlike the array name which cannot be incremented because it is a
+    constant pointer. The following program increments the variable pointer to access each
+    succeeding element of the array:</p>
+
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdio.h> 
+        <br> <br>
+        &emsp;const int MAX = 3;<br><br>
+				&emsp;int main(void)<br>
+				&emsp;{<br>
+				
+				&emsp;&emsp;&emsp;&emsp;int var[] = {10, 100, 200};<br>
+				&emsp;&emsp;&emsp;&emsp;int i, *ptr;<br><br>
+				&emsp;&emsp;&emsp;&emsp;/* let us have array address in pointer */<br>
+				&emsp;&emsp;&emsp;&emsp;ptr = var;<br>
+				&emsp;&emsp;&emsp;&emsp;for ( i = 0; i < MAX; i++)<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;printf("Address of var[%d] = %x\n", i, ptr );<br>
+				&emsp;&emsp;&emsp;&emsp;printf("Value of var[%d] = %d\n", i, *ptr );<br><br>
+				&emsp;&emsp;&emsp;&emsp;/* move to the next location */<br>
+				&emsp;&emsp;&emsp;&emsp;ptr++;<br>
+				&emsp;}<br>
+				&emsp;&emsp;return 0;<br>
+				&emsp;}<br></code>
+			</div>
+		</div><br>
+		<p>When the above code is compiled and executed, it produces the following result:</p>
+		<br>
+		<div class="output">
+		<code> Address of var[0] = bf882b30
+			 &emsp;<br>Value of var[0] = 10
+        &emsp;<br>Address of var[1] = bf882b34
+        &emsp;<br>Value of var[1] = 100
+        &emsp;<br>Address of var[2] = bf882b38
+        &emsp;<br>Value of var[2] = 200<br></code>
+      </div><br>
+      <p>So you understood what is memory address and how to access it, so base of the concept is over. Now let us see what is a pointer.</p></div>
+
+      <div>
+		<h2>Decrementing a Pointer</h2>
+		<p>We prefer using a pointer in our program instead of an array because the variable pointer
+    can be incremented, unlike the array name which cannot be incremented because it is a
+    constant pointer. The following program increments the variable pointer to access each
+    succeeding element of the array:</p>
+	
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdio.h> 
+        <br> <br>
+        &emsp;const int MAX = 3;<br><br>
+				&emsp;int main()<br>
+				&emsp;{<br>
+				
+				&emsp;&emsp;&emsp;&emsp;int var[] = {10, 100, 200};<br>
+				&emsp;&emsp;&emsp;&emsp;int i, *ptr;<br><br>
+				&emsp;&emsp;&emsp;&emsp;/* let us have array address in pointer */<br>
+				&emsp;&emsp;&emsp;&emsp;ptr = &var[MAX-1];<br>
+				&emsp;&emsp;&emsp;&emsp;for ( i = MAX; i > 0; i--)<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;printf("Address of var[%d] = %x\n", i, ptr );<br>
+				&emsp;&emsp;&emsp;&emsp;printf("Value of var[%d] = %d\n", i, *ptr );<br><br>
+				&emsp;&emsp;&emsp;&emsp;/* move to the previous location */<br>
+				&emsp;&emsp;&emsp;&emsp;ptr--;<br>
+				&emsp;}<br>
+				&emsp;&emsp;return 0;<br>
+				&emsp;}<br></code>
+			</div>
+		</div><br>
+		<p>When the above code is compiled and executed, it produces the following result:</p>
+		<br>
+		<div class="output">
+		<code> Address of var[0] = bfdbcb20
+			 &emsp;<br>Value of var[0] = 10
+        &emsp;<br>Address of var[1] = bfdbcb24
+        &emsp;<br>Value of var[1] = 100
+        &emsp;<br>Address of var[2] =bfdbcb28
+        &emsp;<br>Value of var[2] = 200<br></code>
+      </div></div>
+
+      <h2>Array of pointers</h2>
+		<p>Before we understand the concept of arrays of pointers, let us consider the following example, which makes use of an array of 3 integers:</p>
+	
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdio.h> 
+        <br> <br>
+        &emsp;const int MAX = 3;<br><br>
+				&emsp;int main()<br>
+				&emsp;{<br>
+				
+				&emsp;&emsp;&emsp;&emsp;int var[3] = {10, 100, 200};<br>
+				&emsp;&emsp;&emsp;&emsp;int i,*ptr[3];;<br><br>
+				&emsp;&emsp;&emsp;&emsp;for (i = 0; i < MAX; i++)<br>
+				&emsp;&emsp;&emsp;&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp;ptr[i] = &var[i];<br>
+				&emsp;&emsp;&emsp;&emsp;}<br>
+				&emsp;&emsp;&emsp;&emsp;for (i = 0; i < MAX; i++)<br>
+				&emsp;&emsp;&emsp;&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;&emsp; printf("Value of var[%d] = %d\n", i, *ptr[i] );<br>
+				&emsp;&emsp;&emsp;&emsp;}<br>
+				&emsp;&emsp;return 0;<br>
+				&emsp;}<br></code>
+			</div>
+		</div><br>
+		<p>When the above code is compiled and executed, it produces the following result:</p>
+		<br>
+		<div class="output">
+		<code>Value of var[0] = 10
+        &emsp;<br>Value of var[1] = 100
+        &emsp;<br>Value of var[2] = 200<br></code>
+      </div></div>
+      <h2>Pointer to Pointer</h2>
+		<p>A pointer to a pointer is a form of multiple indirection, or a chain of pointers. Normally, a pointer contains the address of a variable. When we define a pointer to a pointer, the first pointer contains the address of the second pointer, which points to the location that contains the actual value as shown below.</p><br>
+		<img src="images/ptp.png"/>
+		<p><br>A variable that is a pointer to a pointer must be declared as such. This is done by placing an additional asterisk in front of its name. For example, following is the declaration to declare a pointer to a pointer of type int:</p><br>
+		<div class="code1">
+				<code> &emsp;int **var;<br></code></div><br>
+				<p>When a target value is indirectly pointed to by a pointer to a pointer, accessing that value requires that the asterisk operator be applied twice, as is shown below in the example:</p><br>
+
+	
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdio.h> 
+        <br> <br>
+				&emsp;int main()<br>
+				&emsp;{<br>
+				
+				&emsp;&emsp;&emsp;&emsp;int var;<br>
+				&emsp;&emsp;&emsp;&emsp;int *ptr;<br><br>
+				&emsp;&emsp;&emsp;&emsp;int **pptr;<br><br>
+				&emsp;&emsp;&emsp;&emsp;var = 3000;<br>
+				&emsp;&emsp;&emsp;&emsp;/* take the address of var */<br>
+				&emsp;&emsp;&emsp;&emsp;int ptr = &<<x>>var;;<br><br>
+					&emsp;&emsp;&emsp;&emsp;/* take the address of ptr using address of operator & */<br>
+				&emsp;&emsp;&emsp;&emsp;pptr = &<<x>>ptr;<br><br>
+				&emsp;&emsp;&emsp;&emsp;/* take the value using pptr */<br>
+				&emsp;&emsp;&emsp;&emsp;printf("Value of var = %d\n", var );<br>
+				&emsp;&emsp;&emsp;&emsp;printf("Value available at *ptr = %d\n", *ptr );<br>
+				&emsp;&emsp;&emsp;&emsp;printf("Value available at **pptr = %d\n", **pptr);<br><br>
+				&emsp;&emsp;return 0;<br>
+				&emsp;}<br></code>
+			</div>
+		</div><br>
+		<p>When the above code is compiled and executed, it produces the following result:</p>
+		<br>
+		<div class="output">
+		<code>Value of var = 3000
+        &emsp;<br>Value available at *ptr = 3000
+        &emsp;<br>Value available at **pptr = 3000<br></code>
+      </div><br></div>
+      <h2>Disadvantages of Pointers:</h2>
+      <div><ul>
+       <li>Pointers are a bit difficult to understand.</li>
+       <li>Pointers can cause several errors, such as segmentation errors or unrequired memory access.</li>
+       <li>If a pointer has an incorrect value, it may corrupt the memory.</li>
+       <li>Pointers may also cause memory leakage.</li>
+       <li>The pointers are relatively slower than the variables.</li>
+</ul><br><br>
+		   
+<div class="end">
+	<p><b>Did you find this article helpful?</b></p> <br>
+	<input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+  </div>
+  <h2>Check these also:</h2>
+  <a href="9.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 9 <<"></a>
+  <br>
+  <br>
+  <a href="11.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 11 <<"></a>
+  <br>
+  <br>
+  <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+  <br>
+  <br>
+</article>
+<footer class="flex-all-center">
+	<p>CopyRight &copy Beginners Point</p>
+</footer>		
+</body>
+</html>

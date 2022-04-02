@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/6.css">
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<title>Chapter 7</title>
+</head>
+<header class="main-header">
+	<img src="images/Logo.png" class="logo-img"/>
+	<h1>Arrays</h1>
+</header>
+<body>
+    <article> <br> <br>
+		<header class="post-header">
+		   <h2>7.1 Introduction</h2>
+		   </header>
+				   <p>The variables used so far have all had a common characteristic:
+	   each variable can only be used to store a single value at a
+	   time. For example, each of the variables ch, n, and price
+	   declared in the statements
+	   <pre>char ch;
+	   int n;
+	   float price;</pre>
+	   are of different data types and each variable can only store
+	   one value of the declared data type. These types of variables
+	   are called scalar variables. A scalar variable is a single
+	   
+	   variable whose stored value is an atomic type. This means
+	   that the value cannot be further subdivided or separated into
+	   a legitimate data type.
+	   In contrast to atomic types, such as integer, floating
+	   point, and double precision data, there are aggregate types.
+	   An aggregate type, which is referred to as both a structured
+	   type and a data structure, is any type whose values can be
+	   decomposed and are related by some defined structure.
+	   Additionally, operations must be available for retrieving
+	   and updating individual values in the data structure. Such a
+	   derived data type is an array.</p>
+	   
+	   
+	   <h2> 7.2 One-Dimensional Array</h2>
+	   <p>There are several forms of an array used in C: one-dimensional
+	   or single-dimensional and multidimensional array. In this
+	   section, one-dimensional arrays will be discussed.
+	   Since the array is one dimensional, there will be a single
+	   subscript or index whose value refers to the individual array
+	   element which ranges from 0 to (n–1), where n is the total
+	   number of elements in the array.</p>
+	   
+	   <h3> 7.2.1 Declaration of a One-dimensional Array </h3>
+	   <p>To use an array variable in a program, it must be declared.
+	   When defining an array in a program, three things need to be
+	   specified.
+	   <ol><li> The type of data it can hold, i.e., int, char, double, float, etc.</li>
+	   <li> The number of values it can hold, i.e., the maximum
+	   number of elements it can hold</li>
+	   <li> A name</li></p>
+	   <p>A one-dimensional array declaration is a data type followed
+	   by an identifier with a bracketed constant integral expression.
+	   The value of the expression, which must be positive, is the
+	   size of the array. It specifies the number of elements in the
+	   array. The array subscripts can range from 0 to (size –1). The
+	   lower bound of the array subscripts is 0 and the upper bound
+	   is (size –1). Thus, the following relationships hold.
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code> int a[size]; /* memory space for a[0],a[1],..., a[size –1]
+	   
+	   allocated */<br>
+	   lower bound = 0<br>
+	   upper bound = size –1<br>
+	   size = upper bound + 1</code></div></p></br></b>
+	   The syntax for declaration of a one-dimensional array is
+	   data_type array_name [SIZE];
+	   <ol><li> All the array elements hold values of type <data type>.</li>
+	   <li> The size of the array is indicated by <SIZE>, the number of
+	   elements in the array. <SIZE> must be an int constant or a
+	   constant expression.</li>
+	   For example, to declare an array that can hold up to 10
+	   integers, the following statement has to be written.
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>int ar[10];</code></div></p></br></b>
+	   This reserves space for 10 integers. Similarly,
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>int a[100]; /* an array with 100 int elements */</code></div></p></br></b>
+	   declares an array ‘a’ that can hold 100 integers. Once declared,
+	   an array element can be referenced as
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>[array name][index]</code></div></p></br></b>
+	   where [index] is an integer constant or variable ranging
+	   from 0 to [SIZE] – 1.
+	   In the above example, the array index starts at 0, so for this
+	   array there are elements named a[0], a[1], ..., a[99]. The
+	   idea is that if there is an array variable named a, its elements
+	   can be accessed with a[0], a[1], ..., a[99]. This means
+	   that a particular element of the array can be accessed by its
+	   ‘index’, a number that specifies which element is needed.</p>
+	   
+	   
+	   
+	   <h3>7.2.2 Initializing Integer Arrays</h3>
+	   <p>Variables can be assigned values during declaration like the
+	   following example.
+	   <pre>int x = 7;</pre>
+	   Arrays can be initialized in the same manner. However, since
+	   an array has multiple elements, braces are used to denote
+	   the entire array of values and commas are used to separate
+	   the individual values assigned to the elements in the array
+	   initialization statements</p>
+	   
+	   
+	   
+	   <h3>7.2.3 Accessing Array Elements</h3>
+	   <p>Single operations, which involve entire arrays, are not
+	   permitted in C. Thus, if x and y are similar arrays (i.e., of the
+	   same data type, dimensionality, and size), then assignment
+	   operations, comparison operations, etc., involving these two
+	   arrays must be carried out on an element-by-element basis.
+	   This is usually accomplished within a loop, or within nested
+	   loops for multidimensional arrays.
+	   For initializing an individual array element, a particular
+	   array index has to be used. For example, in an array A, for
+	   initializing elements 0 and 3, the following statements are
+	   used,</p>
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>A[0] = 3;
+	   A[3] = 7;</div></br></p></b></code>
+	   <p>Subscripted variables can be used at any place where
+	   scalar variables are valid. Examples using the elements of an
+	   array named ‘numbers’ are shown here:
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>numbers [0] = 98;<br>
+	   numbers [1] = numbers [0] – 11<br>
+	   numbers [2] = 2 * (numbers [0] – 6);<br>
+	   numbers [3] = 79;<br>
+	   numbers [4] = (numbers [2] + numbers [3] – 3)/2;<br>
+	   total = numbers[0] + numbers[1] + numbers[2] +
+	   numbers[3] + numbers[4];</div></br></b></p></code>
+	   <p>One extremely important advantage of using integer
+	   expressions as subscripts is that it allows sequencing through
+	   an array using a for loop. This makes statements such as
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>total = numbers[0] + numbers[1] + numbers[2] +
+	   numbers[3] + numbers [4];</div></code></br></b></p>
+	   
+	   unnecessary. The subscript value in each of the subscripted
+	   variables in this statement can be replaced by the counter in a
+	   for loop to access each element in the array sequentially.
+	   For example, the C statements,
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>total = 0; /*initialize total to zero */<br>
+	   for(i = 0; i <5; ++i)<br>
+	   total = total + numbers[i]; /* add in a number */</div></br></code></p></b>
+	   <p>sequentially retrieve each array element and adds the element
+	   to the total. Here the variable ‘i’ is used both as the counter in
+	   the for loop and as a subscript. As ‘i’ increases by one each
+	   time through the for loop, the next element in the array is
+	   
+	   referenced. The procedure for adding the array elements within
+	   the for loop is the same as that used before.
+	   The following code
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>/* Initialization of all of the elements of the sample
+	   array to 0 */<br>
+	   for(i = 0; i < 5; i++)<br>
+	   {<br>
+	   a[i] = 0;<br>
+	   }</div></code></br></b></p>
+	   would cause all the elements of the array to be set to 0.
+	   Consider the following program that would use the above
+	   code segment.
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>#include <stdio.h><br>
+	   						#define ARRAY_SIZE 10<br>
+	   						&emsp;int main()<br>
+	   						&emsp;&emsp;{<br>
+							&emsp;&emsp;&emsp;int index, a[ARRAY_SIZE];<br>
+							&emsp;&emsp;&emsp;for(index = 0; index < ARRAY_SIZE; index++)<br>
+							&emsp;&emsp;&emsp;&emsp;{<br>
+							&emsp;&emsp;&emsp;&emsp;&emsp;a[index] = 0;<br>
+							&emsp;&emsp;&emsp;&emsp;&emsp;printf(“a[%d] = %d\n”, index, a[index]);<br>
+							&emsp;&emsp;&emsp;&emsp;}<br>
+							&emsp;&emsp;printf(“\n”);<br>
+							&emsp;return 0;<br>
+	   						}<br></div></code></br></b></p>
+	   <div class="output"> <b> <code>
+		The output from the above example is as follows: <br>
+		&emsp;a[1] = 0<br>
+		&emsp;a[0] = 0<br>
+		&emsp;a[2] = 0<br>
+		&emsp;a[3] = 0<br>
+		&emsp;a[4] = 0<br>
+		&emsp;a[5] = 0<br>
+		&emsp;a[6] = 0<br>
+		&emsp;a[7] = 0<br>
+		&emsp;a[8] = 0<br>
+		&emsp;a[9] = 0 </code></b>
+	   </div>
+	   <!-- </div></code></br></b></p> -->
+	   Arrays are a real convenience for many problems, but
+	   there is not a lot that C can do with them automatically. In
+	   particular, neither can all elements of an array be set at once
+	   nor can one array be assigned to another. Both assignments
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>a = 0; /* WRONG */<br>
+	   and<br>
+	   int b[10];<br>
+	   b = a; /* WRONG */</code></div></br></b></p>
+	   are illegal, where a is an array.
+	   So, for example, to assign values to (i.e., store values into)
+	   an array, ar[10], the following program statements may be
+	   used.
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>ar[0] = 1;<br>
+	   ar[1] = 3;<br>
+	   ar[2] = 5;<br>
+	   ...<br>
+	   ar[9] = 19;<br>
+	   Or<br>
+	   for(i = 0; i < 10; i++)<br>
+	   ar[i] = (i*2) + 1;</div></code></br></b></p>
+	   Notice how the variable i, used as a subscript, increments
+	   from 0 to ‘less than’ 10, i.e., from 0 to 9. To access values in
+	   an array, the same subscripted notation has to be utilized as
+	   shown.
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>printf(“%d”, ar[2]);<br>
+	   thirdOdd = ar[2];<br>
+	   nthOddSquared = ar[n-1] * ar[n-1];</div></p></code></br></b>
+	   
+	   
+	   
+	   <h3>7.2.4 Internal Representation of Arrays in C</h3>
+	   <p>Understanding how arrays work in C requires some
+	   understanding of how they are represented in the computer’s
+	   memory. In C, an array is implemented as a single block
+	   of memory, with element 0 occupying the first ‘slot’ in
+	   that block, that is, arrays are allocated contiguous space in
+	   memory. As a result, C subscripts are closely related to actual
+	   memory addresses and to the notion of ‘pointer’ 
+	   The possible consequences of the misuse of arrays should
+	   motivate one to pay close attention to the array indices.
+	   For a simple variable (e.g., int, double, etc.) of data type
+	   X, the compiler allocates <tt>sizeof(X)</tt> bytes to hold it. For an
+	   array of length L and data type X, the compiler allocates <tt>L*
+	   sizeof (X) bytes.</tt>
+	   Given an array like <tt>int scores[100]</tt>, the compiler allocates
+	   200 bytes starting at some location, say 64789. Given an
+	   expression like <tt>scores[5]</tt>, the compiler accesses the value
+	   stored at the memory location 64789+(5*2). In general, a[i]
+	   is located at byte: base address of <tt>a + i * sizeof</tt> (type of
+	   array).</p>
+	   
+	   
+	   <h2>Searching an element within an array</h2>
+	   <p>Consider an array of n elements, where each element is a key
+	   (e.g., a number). The task is to find a particular key in the
+	   array. The simplest method is a sequential search or linear
+	   search. The idea is to simply search the array, element by
+	   element, from the beginning until the key is found or the end
+	   of the list is reached. If found, the corresponding position
+	   in the array is printed; otherwise, a message will have to be
+	   displayed that the key is not found. Now, the implementation
+	   of the program will be
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>#include <stdio.h><br>
+	   #include <stdlib.h><br>
+	   int main()<br>
+	   {<br>
+	   int a[30],n,i,key, FOUND=0;<br>
+	   printf(“\n How many numbers”);<br>
+	   scanf(“%d”,&n);<br>
+	   if(n>30)<br>
+	   {<br>
+	   printf(“\n Too many Numbers”);<br>
+	   exit(0);<br>
+	   }<br>
+	   printf(“\n Enter the array elements \n”);<br>
+	   for(i=0 ; i<n; i++)<br>
+	   scanf(“%d”, &a[i]);<br>
+	   printf(“\n Enter the key to be searched \n”);<br>
+	   scanf(“%d”,&key);<br>
+	   for(i=0 ; i<n; i++)<br>
+	   if(a[i] == key)<br>
+	   {<br>
+	   printf(“\n Found at %d”,i);<br>
+	   FOUND=1;<br>
+	   }<br>
+	   if(FOUND = = 0)<br>
+	   printf(“\n NOT FOUND...”);<br>
+	   return 0;<br>
+	   }</code></div></br></p></b>
+	   
+	   
+	   
+	   <h2>Sorting an array</h2>
+	   <h3>Bubble sort</h3><p> A bubble sort compares adjacent array ele-
+	   ments and exchanges their values if they are out of order.
+	   In this way, the smaller values ‘bubble’ to the top of the
+	   array (towards element 0), while the larger values sink to the
+	   bottom of the array. This sort continues until no exchanges
+	   are performed in a pass. If no exchanges are made, then all
+	   pairs must be in order. For this reason, a flag named ‘sorted’
+	   is used. The way bubble sort works is that it iterates through the
+	   data set comparing two neighbouring items at a time and
+	   swapping them if the first item is larger than the second
+	   item.
+	   
+	   
+	   
+	   <h2>Binary searching</h2>
+	   <p>The drawbacks of sequential search can be eliminated if
+	   it becomes possible to eliminate large portions of the list
+	   from consideration in subsequent iterations. The binary
+	   search method does just that; it halves the size of the list
+	   to search in each iteration.
+	   Binary search can be explained simply by the analogy of
+	   searching for a page in a book. Suppose a reader is searching
+	   for page 90 in a book of 150 pages. The reader would first
+	   open the book at random towards the latter half of the book.
+	   If the page number is less than 90, the reader would open at
+	   a page to the right; if it is greater than 90, the reader would
+	   open at a page to the left, repeating the process till page 90
+	   was found. As can be seen, by the first instinctive search,
+	   the reader dramatically reduced the number of pages to be
+	   searched.
+	   Binary search requires sorted data to operate on, since the
+	   data may not be contiguous like the pages of a book. It is not
+	   possible to guess in which quarter of the data set the required
+	   item may be. So, the array is divided in the centre each time.
+	   Binary search will first be illustrated with an example
+	   before going on to formulate the algorithm and analysing it.
+	   In binary search, implement the following procedure.
+	   <ol><li> Look at the middle element of the list.</li>
+	   <li> If it is the value being searched, then the job is done.</li>
+	   <li> If the value that is being searched is smaller than the middle
+	   element, then continue with the bottom half of the list.</li>
+	   <li> If the value that is being searched is larger than the middle
+	   element, then continue with the top half of the list.</li></ol>
+	   
+	   In effect, binary search splits the array in half and then
+	   repeats the algorithm on the half that must contain the value
+	   that it is searching for, if it is there at all.</p>
+	   
+	   <h3>Example ::</h3>
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>Consider the array<br>
+	   1 2 3 4 5 6 7 8 9<br>
+	   Construct the binary search algorithm for finding the
+	   Key = 7.<br>
+				 <i>1st iteration</i><br>
+	   HIGH = 8, LOW = 0; because the array index begins with
+	   ‘0’ and ends with ‘8’<br>
+	   MID = 4, Array[4] = 5, 5<7 : TRUE<br>
+	   LOW = 5<br>
+	   New List = 6 7 8 9<br>
+				 <i>2nd iteration</i><br>
+	   HIGH = 8, LOW = 5<br>
+	   MID = 6, Array[6] = 7, 7<7 : FALSE<br>
+	   HIGH = 6<br>
+	   New List = 6 7<br>
+	   <i>3rd iteration</i><br>
+	   HIGH = 6, LOW = 5<br>
+	   MID = 5, Array[5] = 6, 6<7 : TRUE<br>
+	   LOW = 6<br>
+	   New List = 7<br>
+	   <i>4th iteration</i><br>
+	   HIGH = 6, LOW = 6<br>
+	   MID = 6, Array [MID] = Array [6] = 7 == Key<br>
+	   then Found = TRUE</div></code></br></p></b>
+	   
+	   
+	   <h3>Note ::</h3>
+	   <p>Single operations, which involve entire arrays, are not
+	   permitted in C.
+	   <ol><li> Neither can all elements of an array be set at once nor
+	   can one array be assigned to another.</li>
+	   <li> For an array of length L and data type X, the compiler
+	   allocates L* sizeof (X) bytes of contiguous space in
+	   memory.</li>
+	   <li> It is not possible to declare an array using a variable for the
+	   size.</li></ol>
+	   
+	   
+	   
+	   
+	   <h2> 7.3 Multidimensional Arrays</h2>
+	   <p>Arrays with more than one dimension are called
+	   multidimensional arrays. Although humans cannot easily
+	   visualize objects with more than three dimensions,
+	   representing multidimensional arrays presents no problem to
+	   computers.</p>
+	   
+	   
+	   <h3>7.3.1 Declaration of a Two-dimensional Array</h3>
+	   An array of two dimensions can be declared as follows:
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>data_type array_name[size1][size2];</code></div></br></b></p>
+	   Here, data_type is the name of some type of data, such as
+	   int. Also, size1 and size2 are the sizes of the array’s first
+	   and second dimensions, respectively.
+	   Here is an example of defining an eight-by-eight array of
+	   integers, similar to a chessboard. Remember, because C arrays
+	   are zero-based, the indices on each side of the chessboard
+	   array run from zero through seven, rather than one through
+	   eight. The effect is the same. However, it is a two-dimensional
+	   array of 64 elements which has the following declaration
+	   statement.
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>int arr[8][8];</code></div></br></b></p>
+					
+	   
+	   
+	   
+	   <h3>7.3.2 Declaration of a Three-dimensional Array</h3>
+	   <p>A three-dimensional array, such as a cube, can be declared
+	   as follows:
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>data_type array_name[size1][size2][size3]</code></div></br></p></b>
+	   Arrays do not have to be shaped like squares and cubes;
+	   each dimension of the array can be given a different size, as
+	   follows:
+	   <p><div> <br><b>
+					   <div class="code1">
+					   <code>int non_cube[2][6][8];</code></div></br></p></b>
+	   Three-dimensional arrays, and higher, are stored in the same
+	   basic way as are two-dimensional ones. They are kept in
+	   computer memory as a linear sequence of variables, and the
+	   last index is always the one that varies the fastest (then the
+	   next-to-last, and so on).</p>
+	   
+	   
+	   
+	   <h2>Note ::</h2>
+	   <ol><li> Multidimensional arrays are kept in computer memory as
+	   a linear sequence of variables.</li>
+	   <li> The elements of a multidimensional array are stored
+	   contiguously in a block of computer memory.</li>
+	   <li> The number of subscripts determines the dimensionality
+	   of an array.</li>
+	   <li> The separation of initial values into rows in the declaration
+	   statement is not necessary.</li>
+	   <li> If unsized arrays are declared, the C compiler automatically
+	   creates an array big enough to hold all the initializers.</li></ol>
+	   
+	   
+	   
+	   
+	   
+	   <h2>Why do array subscripts start at 0 instead of 1?</h2>
+	   <p>It can make array subscripting somewhat faster. Two facts are known
+	   about an array. First, an array name say arr always designates the
+	   base address of the array. Second, address of ith element of arr is given
+	   by &arr[i], which is eventually (arr + i). The base address is the
+	   address of the first element which is the address of the first element
+	   &a[0]. This means that both arr and &a[0] hold the same value which
+	   is the address of the first element of the array. To carry the expression
+	   (arr+i), same equivalence for all the elements of the array, the subscript
+	   of the first element must be 0. Having the subscript to start at 0 simplifies
+	   scaling a bit for the compiler.</p>
+	   <br> <h3>Sort an array LIST of size N and find the position of the target value
+	   T.</h3> <br>
+	   <p>
+		<div class="output"> <b> <code>
+	   Algorithm: The algorithm determines the position of T in the LIST.<br>
+	   1. START<br>
+	   2. PRINT “ENTER THE NO. OF ELEMENTS in THE ARRAY”<br>
+	   3. INPUT N<br>
+	   4. I=0<br>
+	   5. PRINT “ENTER ARRAY ELEMENT IN ASCENDING ORDER”<br>
+	   6. INPUT LIST(I)<br>
+	   7. I=I+1<br>
+	   8. IF I<N THEN GOTO STEP 5<br>
+	   9. PRINT “ENTER THE ELEMENT TO SEARCH”<br>
+	   10. INPUT T<br>
+	   11. HIGH = N - 1<br>
+	   12. LOW = 0<br>
+	   13. FOUND = 0<br>
+	   14. MID = (HIGH + LOW)/ 2<br>
+	   15. IF T = LIST [MID]<br>
+	   FOUND = 1<br>
+	   ELSE IF T < LIST[MID]<br>
+	   HIGH = MID-1<br>
+	   ELSE<br>
+	   LOW = MID+1<br>
+	   16. IF (FOUND =0) and (HIGH > = LOW) THEN GOTO STEP
+	   14<br>
+	   17. IF FOUND =0 THEN PRINT “NOT FOUND”<br>
+	   18. ELSE PRINT “FOUND AT”, MID.<br>
+	   19. STOP<br></code></b>
+		   </div> <br>
+		    <h3>The C program for this algorithm is as follows:</h3>
+		   <div> <br>
+			<div class="code1"> <code><b>
+	   
+	   #include <stdio.h><br>
+	   #include <stdlib.h><br>
+	   &emsp;int main()<br>
+	   &emsp;&emsp;{<br>
+		&emsp;&emsp;&emsp;int a[30],n,i,t,low,mid,high,found=0;<br>
+		&emsp;&emsp;&emsp;printf(“\n Enter the NO. of elements in the array:”);<br>
+		&emsp;&emsp;&emsp;scanf(“%d”,&n);<br>
+		&emsp;&emsp;&emsp;&emsp;if(n>30)<br>
+		&emsp;&emsp;&emsp;&emsp;&emsp; {<br>
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; printf(“\n Too many Numbers”);<br>
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;exit(0);<br>
+		&emsp;&emsp;&emsp;&emsp;&emsp;}<br>
+		&emsp;&emsp;printf(“\n Enter the elements of the array:”);<br>
+		&emsp;&emsp;for(i=0 ; i< n; i++)<br>
+		&emsp;&emsp;&emsp;scanf(“%d”, &a[i]);<br>
+		&emsp;&emsp;&emsp;printf(“\n Enter the element to search :”);<br>
+		&emsp;&emsp;&emsp; scanf(“%d”,&t);<br>
+		&emsp;&emsp;low = 0;<br>
+		&emsp;&emsp;high = n - 1;<br>
+		&emsp;&emsp;&emsp;while(high >= low)<br>
+		&emsp;&emsp;&emsp;&emsp;{<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp; mid = (low + high) / 2;<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp;if(a[mid] == t)<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{<br>
+	   
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;found = 1;<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;break;<br>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;}<br>
+			&emsp;&emsp;else if (t < a[mid])<br>
+			&emsp;&emsp;&emsp;high = mid - 1;<br>
+	   
+			&emsp;&emsp;else<br>
+	   
+			&emsp;&emsp;&emsp;low = mid + 1;<br>
+	   
+			&emsp;&emsp;}<br>
+			&emsp;&emsp;&emsp;if(found==0)<br>
+			&emsp;&emsp;&emsp;&emsp;printf(“\n NOT FOUND”);<br>
+			&emsp;&emsp;&emsp;else<br>
+			&emsp;&emsp;&emsp;&emsp;printf(“\n FOUND AT %d”,mid);<br>
+			&emsp;&emsp;return 0;<br>
+			&emsp;}</br> </code></b>
+	</div></p> <br>
+	   <div class="output"> <b> <code>
+	   Output<br>
+	   Enter the number of elements in the array: 9<br>
+	   Enter the elements of the array:<br>
+	   1<br>
+	   2<br>
+	   3<br>
+	   4<br>
+	   5<br>
+	   6<br>
+	   7<br>
+	   8<br>
+	   9<br>
+	   Enter the element to search: 7<br>
+	   FOUND AT 6<br>
+	   Enter the number of elements in the array 9<br>
+	   Enter the elements of the array:<br>
+	   1<br>
+	   2<br>
+	   3<br>
+	   4<br>
+	   5<br>
+	   6<br>
+	   7<br>
+	   8<br>
+	   9<br>
+	   Enter the element to search: 11<br>
+	   NOT FOUND </code></b>
+	</div>
+	
+		 <br>
+                        <div class="end">
+                            <p><b>Did you find this article helpful?</b></p> <br>
+                            <input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+                          </div>
+                          <h2>Check these also:</h2>
+                          <a href="6.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 6 <<"></a>
+                          <br>
+                          <br>
+                          <a href="8.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 8 <<"></a>
+                          <br>
+                          <br>
+                          <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+                          <br>
+                          <br>
+                    </div>
+                </main>
+    <footer class="flex-all-center">
+        <p>CopyRight &copy Beginners Point 2021</p>
+    </footer>
+</body>
+</html>

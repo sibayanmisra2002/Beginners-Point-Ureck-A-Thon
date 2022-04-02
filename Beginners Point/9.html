@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<link href="css/9.css" rel="stylesheet" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<title>Chapter 9</title>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=GKB2vif-GRJPxxKu4xzSMoo6tCk3zRlffhntNGuU8nbweYsBVwAMmVGxWMhaiS-_yB-ldyc3mY-hG5h9nadKxh2yurhBQcbcbwMpxe9wgvpqKONYj8coQnOuur41r8eFoA8anC3qW4Vd1TO9RQGY5iC0D2XMeHtpZCOD8vO8I6FL_wvrxdFKAIUidzgQUyFNQQGblaSvrQB5Z_pkoqag1EFeAG0XIwXpefzvIVMX2ZeA_5T12q66mF3mP7gT0gs4zmhdjzuuiye2TTIChGsoaEaR2km4gN9VHjoqxf7Q_0DyoASkNlcDKeMe54UXCXGKE23blLjuhlzJ4LcgWzNGa6n6tvMGJA7zKj_yXQoIzsm83z2Rwv6atzzl-smRsl-L7-xjoex-fCboTdpnzhJJXP3d7bUbSXifApHuRxOmd__HhpFITNcSs-8oezxK7JwsL-VvcA5iHYEuFbPSvZVwDw" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9kb2MtMGstMmstZG9jcy5nb29nbGV1c2VyY29udGVudC5jb20vZG9jcy9zZWN1cmVzYy9kMGs2Y2M5bDlkNmk4dG5oM2EwcjYycnU0MmlwcjlybC9wNWE1YmlwcW00MG1sODRwdDZ2dmtkMHJ1bDB2ZHNrcS8xNjMyNzE3MDAwMDAwLzE4MzMzNzE4MTExOTI2NTkyMzIxLzE3NzcyNTE1NTg4MjQwNDk0NTczLzFxR0ZDTnBqa3NqaTdyc2JrMElxNmE3aVFVcG95TjFjaT9lPWRvd25sb2FkJmF1dGh1c2VyPTEmbm9uY2U9dmR2dHFmaHNnamZ1aSZ1c2VyPTE3NzcyNTE1NTg4MjQwNDk0NTczJmhhc2g9OTdlOTQzaWxtZTJudDZyOGU1Y2k4b2hmMjRqNjdlYjc"/></head>
+
+<body>
+<header class="main-header">
+	<img src="images/Logo.png"
+	class="logo-img"/>
+	<h1>The C Preprocessor</h1>
+</header>
+<br>
+<article>
+	<header class="post-header">
+	<h2>C Preprocessor Directives</h2>   
+		</header>
+		<p>The C preprocessor is a micro processor that is used by compiler to transform your code before compilation. It is called micro preprocessor because it allows us to add macros.</p>
+		 <div> 
+				<div class="note">
+				<p>&#128221; Note:
+				Preprocessor directives are executed before compilation.</p> 
+			</div>
+			</div>
+			<h2>Working of Preprocessor</h2>
+			<img alt="wp" class="wp" src="images/wp.jpg"> 
+			<p>All preprocessor commands begin with a hash symbol (#). It must be the first nonblank character, and for readability, a preprocessor directive should begin in the first column.</p>
+
+	       <div class="box-container">
+	       	<h2>List of preprocessor directives and their descriptions</h2><br>
+
+     <table class="table1">
+     <tr class="tr1">
+    <th>No.</th>
+    <th>Directive & Description</th>
+    
+  </tr>
+  <tr class="tr1">
+    <td>1.</td>
+    <td><strong>#define</strong>
+    	<br>
+    	<br>Substitutes a preprocessor macro.</td>
+    
+  </tr>
+  <tr class="tr1">
+    <td>2.</td>
+    <td><strong>#include</strong>
+    <br>
+    	<br>Inserts a particular header from another file.</td>
+  </tr>
+  <tr class="tr1">
+    <td>3.</td>
+    <td><strong>#undef</strong>
+    <br>
+    	<br>Undefines a preprocessor macro.</td>
+  </tr>
+  <tr class="tr1">
+    <td>4.</td>
+    <td><strong>#ifdef</strong>
+    <br>
+    	<br>Returns true if this macro is defined.</td>
+  </tr>
+  <tr class="tr1">
+    <td>5.</td>
+    <td><strong>#ifndef</strong>
+    <br>
+    	<br>Returns true if this macro is not defined.</td> 
+  </tr>
+  <tr class="tr1">
+    <td>6.</td>
+    <td><strong>#if</strong>
+    <br>
+    	<br>Tests if a compile time condition is true.</td> 
+  </tr>
+  <tr class="tr1">
+    <td>7.</td>
+    <td><strong>#else</strong>
+    <br>
+    	<br>The alternative for #if.</td> 
+  </tr>
+  <tr class="tr1">
+    <td>8.</td>
+    <td><strong>#elif</strong>
+    <br>
+    	<br>#else and #if in one statement.</td> 
+  </tr>
+  <tr class="tr1">
+    <td>9.</td>
+    <td><strong>#endif</strong>
+    <br>
+    	<br>Ends preprocessor conditional.</td> 
+  </tr>
+  <tr class="tr1">
+    <td>10.</td>
+    <td><strong>#error</strong>
+    <br>
+    	<br>Prints error message on stderr.</td> 
+  </tr>
+</table>
+
+			<h2>Preprocessors Examples</h2>
+			<p>Analyze the following examples to understand various directives.</p>
+	
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;
+				#define MAX_ARRAY_LENGTH 20 &emsp;
+			</code>
+			 <br>
+			 </div>
+		  </div><br>
+			<p>This directive tells the CPP to replace instances of MAX_ARRAY_LENGTH with 20. Use #define for constants to increase readability.</p>
+			
+			<div> <br>
+				<div class="code1">
+				<code> &emsp; #include <<x>stdio.h> <br> &emsp;
+				#include "myheader.h" <br></code>
+				</div></div><br>
+			<p>These directives tell the CPP to get stdio.h from System Libraries and add the text to the current source file. The next line tells CPP to get myheader.h from the local directory and add the content to the current source file.</p>
+
+			<div> <br>
+				<div class="code1">
+				<code> &emsp; #undef  FILE_SIZE <br> &emsp;
+				#define FILE_SIZE 42 <br> </code></div><br></div><br>
+			<p>It tells the CPP to undefine existing FILE_SIZE and define it as 42.</p>
+			
+			<div> <br>
+				<div class="code1">
+				<code> &emsp; #ifndef MESSAGE <br> &emsp;
+				&emsp;&emsp;#define MESSAGE "You wish!"
+				 &emsp;<br> &emsp;&emsp;#endif <br> </code>
+				 </div>
+		</div><br>
+			<p>It tells the CPP to define MESSAGE only if MESSAGE isn't already defined.</p>
+		
+			<div> <br>
+				<div class="code1">
+				<code> &emsp; #ifdef DEBUG <br> &emsp;
+				&emsp;&emsp;/* Your debugging statements here */
+				 &emsp;<br> &emsp;&emsp;#endif  </code></div></div><br>
+
+			<p>It tells the CPP to process the statements enclosed if DEBUG is defined. This is useful if you pass the -DDEBUG flag to the gcc compiler at the time of compilation. This will define DEBUG, so you can turn debugging on and off on the fly during compilation.</p>
+			
+		<div>
+		<h2>C Macros</h2>
+		<p>A macro is a segment of code which is replaced by the value of macro. Macro is defined by #define directive. There are two types of macros:</p>
+		<ol>
+			<li>Object-like Macros</li>
+			<li>Function-like Macros</li>
+		</ol>
+		<h3>Object-like Macros</h3><br>
+		<p>The object-like macro is an identifier that is replaced by value. It is widely used to represent numeric constants. For example:</p>
+		
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;
+				#define PI 3.14 <br> &emsp;</code> <br>
+			</div></div><br>
+			<p>Here, PI is the macro name which will be replaced by the value 3.14.</p><br>
+
+	<h3>Function-like Macros</h3>
+	<p>The function-like macro looks like function call. For example:</p>
+	
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;
+				#define MIN(a,b) ((a)<(b)?(a):(b))    <br> &emsp;
+			</code> <br></div></div><br>
+			<p>Here, MIN is the macro name.</p></div>
+	<div>
+		<h2>Predefined Macros</h2>
+		<p>ANSI C defines a number of macros. Although each one is available for use in programming, the predefined macros should not be directly modified.</p><br>
+
+<table class="table2">
+  <tr class="tr2">
+    <th>No.</th>
+    <th>Macro & Description</th>
+    
+  </tr>
+  <tr class="tr2">
+    <td>1.</td>
+    <td><strong>__DATE__</strong>
+    	<br>
+    	<br>The current date as a character literal in "MMM DD YYYY" format.</td>
+    
+  </tr>
+  <tr class="tr2">
+    <td>2.</td>
+    <td><strong>__TIME__</strong>
+    <br>
+    	<br>The current time as a character literal in "HH:MM:SS" format.</td>
+  </tr>
+  <tr class="tr2">
+    <td>3.</td>
+    <td><strong>__FILE__</strong>
+    <br>
+    	<br>This contains the current filename as a string literal.</td>
+  </tr>
+  <tr class="tr2">
+    <td>4.</td>
+    <td><strong>__LINE__</strong>
+    <br>
+    	<br>This contains the current line number as a decimal constant.</td>
+  </tr>
+  <tr class="tr2">
+    <td>5.</td>
+    <td><strong>__STDC__</strong>
+    <br>
+    	<br>Defined as 1 when the compiler complies with the ANSI standard.</td> 
+  </tr>
+</table>
+	</div>
+
+	<div>
+		<h3>C predefined macros example</h3>
+		   <em>File: simple.c</em>
+			<div> <br>
+				<div class="code1">
+				<code>
+				&emsp;#include <<x>stdio.h>  <br>
+				&emsp;int main()<br>
+				&emsp;{ <br> 
+
+                &emsp;printf("File :%s\n", __FILE__ );   <br> 
+                &emsp;printf("Date :%s\n", __DATE__ ); <br>   
+                &emsp;printf("Time :%s\n", __TIME__ );   <br>    
+                &emsp;printf("Line :%d\n", __LINE__ ); <br>      
+                &emsp;printf("STDC :%d\n", __STDC__ );  <br>       
+                &emsp;return 0;  <br>   
+                &emsp;}    <br> 
+			</code> <br>
+		</div><br>
+			<div class="output">
+				<code>
+					<br>Output:<br><br>
+					&emsp;File :simple.c<br>
+                    &emsp;Date :Dec 6 2015<br>
+                    &emsp;Time :12:28:46<br>
+                    &emsp;Line :6<br>
+                    &emsp;STDC :1<br>
+                </code><br>		
+		</div>
+	<div>
+		<h2>Preprocessor Operators</h2>
+		<p>The C preprocessor offers following operators to help you in creating macros:</p>
+		<h3>Macro Continuation (\)</h3>
+		<p>A macro usually must be contained on a single line. The macro continuation operator is
+    used to continue a macro that is too long for a single line. For example:</p>
+
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;#define message_for(a, b) \
+        <br> &emsp;
+				&emsp;&emsp;printf(#a " and " #b ": We love you!\n")
+				<br> </code></div></div>
+	
+	<h3>Stringize (#)</h3>
+		<p>The stringize or number-sign operator ('#'), when used within a macro definition, converts
+    a macro parameter into a string constant. This operator may be used only in a macro that
+    has a specified argument or parameter list. For example:</p>
+
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdio.h> 
+        <br> &emsp;<br>
+				&emsp;#define message_for(a, b) \
+        <br> &emsp;
+				&emsp;&emsp;printf(#a " and " #b ": We love you!\n")<br>
+				&emsp;int main(void)<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;message_for(Carole, Debra);<br>
+				&emsp;&emsp;&emsp;&emsp;return 0;<br>
+				&emsp;}<br>
+			 </code></div></div><br>
+		<p>When the above code is compiled and executed, it produces the following result:</p><br>
+		<div class="output">
+		<code> &emsp;<br>Carole and Debra: We love you!
+        <br> &emsp;<br></code></div><br>
+
+	<h3>Token Pasting (##)</h3>
+		<p>The token-pasting operator (##) within a macro definition combines two arguments. It
+    permits two separate tokens in the macro definition to be joined into a single token. For
+    example:</p>
+
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdio.h> 
+        <br> &emsp;<br>
+				&emsp;#define tokenpaster(n) printf ("token" #n " = %d", token##n)
+        <br> &emsp;
+				&emsp;&emsp;printf(#a " and " #b ": We love you!\n")<br>
+				&emsp;int main(void)<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;int token34 = 40;<br><br>
+				&emsp;&emsp;&emsp;&emsp;tokenpaster(34);<br>
+				&emsp;&emsp;&emsp;&emsp;return 0;<br>
+				&emsp;}<br>
+				</code>
+			</div></div><br>
+		<p>When the above code is compiled and executed, it produces the following result:</p><br>
+		<div class="output">
+		<code> &emsp;<br>token34 = 40
+        <br> &emsp;<br></code></div><br>
+        <p>How it happened, because this example results in the following actual output from the
+        preprocessor:</p><br>
+        <div class="output">
+		<code> &emsp;<br>printf ("token34 = %d", token34);<br><br></code>
+      </div><br>
+        <p>This example shows the concatenation of <strong>token##n</strong> into token34 and here we have used
+        both stringize and token-pasting.</p><br>
+
+	<h3>The defined() Operator</h3>
+		<p>The preprocessor defined operator is used in constant expressions to determine if an
+    identifier is defined using #define. If the specified identifier is defined, the value is true
+    (non-zero). If the symbol is not defined, the value is false (zero). The defined operator is
+    specified as follows:</p>
+
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdio.h> 
+        <br> &emsp;<br>
+				&emsp;#if !defined (MESSAGE)
+        <br> &emsp;
+				&emsp;&emsp;#define MESSAGE "You wish!"<br>
+				&emsp;#endif<br>
+				&emsp;{<br>
+				&emsp;int main(void)<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;printf("Here is the message: %s\n", MESSAGE);<br>
+				&emsp;&emsp;&emsp;&emsp;return 0;<br>
+				&emsp;}<br>
+				<br><br> </code>
+			</div>
+		</div><br>
+		<p>When the above code is compiled and executed, it produces the following result:</p><br>
+		<div class="output">
+		<code> <br>&emsp;Here is the message: You wish!
+        <br> &emsp;<br></code></div>
+ <h2>Parameterized Macros</h2>
+		<p>One of the powerful functions of the CPP is the ability to simulate functions using
+    parameterized macros. For example, we might have some code to square a number as
+    follows:</p><br>
+    <section>
+    	<div class="code1"><code> &emsp;int square(int x)
+      &emsp; { <br> 
+				&emsp;return x * x;
+        <br>} &emsp;<br>
+        &emsp;<br></code></section><br>
+        <p>We can rewrite above code using a macro as follows:</p><br>
+        <section><div class="code1"><code><br> &emsp;#define square(x) ((x) * (x))
+        <br> &emsp;<br></code></div></section><br>
+        <p>Macros with arguments must be defined using the #define directive before they can be
+        used. The argument list is enclosed in parentheses and must immediately follow the macro
+        name. Spaces are not allowed between and macro name and open parenthesis. For
+        example:</p><br>
+
+			<div> <br>
+				<div class="code1">
+				<code> &emsp;#include <<x>stdio.h> 
+        <br> &emsp;<br>
+				&emsp;#define MAX(x,y) ((x) > (y) ? (x) : (y))
+        <br> &emsp;
+				&emsp;int main(void)<br>
+				&emsp;{<br>
+				&emsp;&emsp;&emsp;&emsp;printf("Max between 20 and 10 is %d\n", MAX(10, 20));<br>
+				&emsp;&emsp;&emsp;&emsp;return 0;<br>
+				&emsp;}<br>
+				<br><br> </code>
+			</div></div><br>
+		<p>When the above code is compiled and executed, it produces the following result:</p><br>
+		<div class="output">
+		<code> <br>&emsp;Max between 20 and 10 is 20
+        <br> &emsp;<br></code>
+      </div><br><br><br>
+
+      <div class="end">
+		<p><b>Did you find this article helpful?</b></p> <br>
+		<input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+	  </div>
+	  <h2>Check these also:</h2>
+	  <a href="8.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 8 <<"></a>
+	  <br>
+	  <br>
+	  <a href="10.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 10 <<"></a>
+	  <br>
+	  <br>
+	  <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+	  <br>
+	  <br>
+</article>
+<footer class="flex-all-center">
+	<p>CopyRight &copy Beginners Point</p>
+</footer>	
+</body>
+</html>

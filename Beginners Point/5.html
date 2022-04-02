@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/4.css">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<title>Chapter 5</title>
+</head>
+<header class="main-header">
+	<img src="images/Logo.png" class="logo-img"/>
+	<h1>Functions and Program Structure</h1>
+</header>
+<body>
+    <main> <br> <br>
+        <p>A function is a ``black box'' that we've locked
+            part of our program into.
+            The idea behind a function is that it <dfn> <b>compartmentalizes</b> </dfn>
+            part of the program,
+            and in particular,
+            that the code within the function has some useful properties:
+            </p> <br>
+            <ol><li>It performs some well-defined task,
+                which will be useful to other parts of the program.
+                </li> 
+<br><li>It might be useful to other programs as well;
+                that is,
+                we might be able to reuse it
+                (and without having to rewrite it).
+                </li> 
+<br><li>The rest of the program doesn't have to know the details of how
+                the function is implemented.
+                This can make the rest of the program easier to think about.
+                </li> 
+<br><li>The function performs its task <em>well</em>.
+                It may be written to do a little more than is required by the
+                first program that calls it,
+                with the anticipation that the calling program
+                (or some other program)
+                may later need the extra functionality or improved performance.
+                (It's important that a finished function do its job well,
+                otherwise there might be a reluctance to call it,
+                and it therefore might not achieve the goal of reusability.)
+                </li> 
+<br><li>By placing the code to perform the useful task into a function,
+                and simply calling the function in the other parts of the
+                program where the task must be performed,
+                the rest of the program becomes clearer:
+                rather than having some large, complicated,
+                difficult-to-understand piece of code repeated wherever the
+                task is being performed,
+                we have a single simple function call,
+                and the name of the function reminds us which task is being
+                performed.
+                </li> 
+<br><li>Since the rest of the program doesn't have to know the details of how
+                the function is implemented,
+                the rest of the program doesn't care if the function is
+                reimplemented later,
+                in some different way
+                (as long as it continues to perform its same task, of course!).
+                This means that one part of the program can be rewritten,
+                to improve performance or add a new feature
+                (or simply to fix a bug),
+                without having to rewrite the rest of the program.
+                </li> 
+<br></ol>
+                <p>Functions are probably the most important weapon
+                    in our battle against software complexity.
+                    You'll want to learn when it's appropriate
+                    to break processing out into functions
+                    (and also when it's not),
+                    and <em>how</em> to set up function interfaces
+                    to best achieve the qualities mentioned above:
+                    reuseability,
+                    information hiding,
+                    clarity,
+                    and
+                    maintainability.
+                    </p>                   
+                    <h2>5.1 Function Basics</h2>
+                        
+                        <p>So what defines a function?
+                        It has a <em>name</em> that you call it by,
+                        and a list of zero or more <dfn> <b>arguments</b> </dfn> or
+                        <dfn> <b>parameters</b> </dfn> that you hand to it for it to act on or
+                        to direct its work;
+                        it has a <dfn> <b>body</b> </dfn>
+                        containing the actual instructions
+                        (statements)
+                        for carrying out the task the function is supposed to perform;
+                        and it may give you back a <dfn> <b>return value</b> </dfn>,
+                        of a particular type.
+                        </p> <br><p>Here is a very simple function,
+                        which accepts one argument, multiplies it by 2, and hands that
+                        value back:
+                        </p> <br><div class="code"><code>int multbytwo(int x)<br>
+                            {<br>
+                                &emsp;&emsp;int retval;<br>
+                                &emsp;&emsp;retval = x * 2;<br>
+                                &emsp;&emsp;return retval;<br>
+                            }
+      </code></p> <br></div>
+                        On the first line we see the return type of the function (<tt>int</tt>),
+                        the name of the function (<tt>multbytwo</tt>),
+                        and a list of the function's arguments, enclosed in parentheses.
+                        Each argument has both a name and a type;
+                        <tt>multbytwo</tt> accepts one argument,
+                        of type <tt>int</tt>,
+                        named <tt>x</tt>.
+                        The name <tt>x</tt> is arbitrary, and is used only within the
+                        definition of <tt>multbytwo</tt>.
+                        The caller of this function only needs to know that a single
+                        argument of type <tt>int</tt> is expected;
+                        the caller does not need to know what name the function will
+                        use internally to refer to that argument.
+                        
+                        (In particular,
+                        the caller does not have to pass the value of a variable
+                        named <tt>x</tt>.)
+                        <p></p> <br><p>Next we see, surrounded by the familiar braces,
+                        the body of the function itself.
+                        This function consists of one declaration
+                        (of a local variable <tt>retval</tt>)
+                        and two statements.
+                        The first statement is a conventional expression statement,
+                        which computes and assigns a value to <tt>retval</tt>,
+                        and the second statement is a <tt>return</tt> statement, which
+                        causes the function to return to its caller, and also
+                        specifies the value which the function returns to its caller.
+                        </p> <br><p>The <tt>return</tt> statement can return the value of any
+                        expression, so we don't really need the local <tt>retval</tt>
+                        variable;
+                        the function could be collapsed to
+                        </p> <br><div class="code">
+                            <code>	int multbytwo(int x)<br>
+                            {<br>
+                               &emsp;&emsp; return x * 2;<br>
+                            }
+                        </code></p> <br></div>
+                        <p></p> <br><p>How do we call a function?
+                        We've been doing so informally since day one,
+                        
+                        but now we have a chance to call one that we've written, in
+                        full detail.
+                        Here is a tiny skeletal program to call <tt>multby2</tt>:
+                        </p> <br><div class="code">
+                            <code>	#include &lt;stdio.h&gt;<br><br>
+                        
+                            extern int multbytwo(int);<br><br>
+                        
+                            int main()<br><br>
+                            {<br>
+                               &emsp;&emsp; int i, j;<br>
+                               &emsp;&emsp; i = 3;<br>
+                               &emsp;&emsp; j = multbytwo(i);<br>
+                               &emsp;&emsp; printf("%d\n", j);<br>
+                               &emsp;&emsp; return 0;<br>
+                            }<br>
+                        </code></div>
+                        This looks much like our other test programs, with the
+                        exception of the new line
+                        <div class="code">
+                            <code>	extern int multbytwo(int);
+                        </code></div>
+                        This is an <dfn> <b>external function prototype declaration</b> </dfn>.
+                        It is an external declaration, in that it declares something which is
+                        defined somewhere else.
+                        (We've already seen the defining instance of the function
+                        <tt>multbytwo</tt>, but maybe the compiler hasn't seen it yet.)
+                        The function prototype declaration contains the three
+                        pieces of information about the function
+                        that a caller needs to know:
+                        the function's name,
+                        return type, and argument type(s).
+                        Since we don't care what name
+                        the <tt>multbytwo</tt> function will use to refer to its first argument,
+                        we don't need to mention it.
+                        (On the other hand, if a function takes several arguments,
+                        giving them names in the prototype
+                        may make it easier to remember which is
+                        which, so names may optionally be used in function prototype
+                        declarations.)
+                        Finally, to remind us that this is an external declaration and not a
+                        defining instance,
+                        the prototype is preceded by the keyword <tt>extern</tt>.
+                        <p></p> <br><p>The presence of the function prototype declaration lets the
+                        compiler know that we intend to call this function, <tt>multbytwo</tt>.
+                        The information in the prototype lets the compiler generate the
+                        correct code for calling the function,
+                        and also enables the compiler to check up on our code
+                        (by making sure, for example, that we pass the correct number
+                        of arguments to each function we call).
+                        </p> <br><p>Down in the body of main, the action of the function call
+                        should be obvious:
+                        the line
+                        </p> <br><div class="code">
+                            <code>	j = multbytwo(i);
+                        </code></div>
+                        calls <tt>multbytwo</tt>, passing it the value of <tt>i</tt> as its
+                        argument.
+                        When <tt>multbytwo</tt> returns,
+                        the return value is assigned to the variable <tt>j</tt>.
+                        
+                        (Notice that the value of
+                        <tt>main</tt>'s local variable <tt>i</tt>
+                        will become the value of
+                        <tt>multbytwo</tt>'s parameter <tt>x</tt>;
+                        this is absolutely not a problem,
+                        and is a normal sort of affair.)
+                        <p></p> <br><p>This example is written out in ``longhand,'' to make
+                        each step equivalent.
+                        The variable <tt>i</tt> isn't really needed, since we could just
+                        as well call
+                        </p> <br><div class="code">
+                            <code>	j = multbytwo(3);
+                        </code></div>
+                        And the variable <tt>j</tt> isn't really needed,
+                        either, since we could just
+                        as well call
+                        <div class="code">
+                            <code>	printf("%d\n", multbytwo(3));
+                        </code></div>
+                        Here, the call to <tt>multbytwo</tt> is a subexpression which
+                        serves as the second argument to <tt>printf</tt>.
+                        The value returned by <tt>multbytwo</tt> is passed immediately
+                        to <tt>printf</tt>.
+                        
+                        (Here,
+                        as in general,
+                        we see the flexibility
+                        and generality
+                        
+                        of expressions in C.
+                        An argument passed to a function
+                        may be an arbitrarily complex subexpression,
+                        and a function call is itself an expression
+                        which may be embedded as a subexpression
+                        within arbitrarily complicated
+                        surrounding
+                        expressions.)
+                        <p></p> <br><p>
+                        We should say a little more about the mechanism by which an
+                        argument is passed down from a caller into a function.
+                        Formally, C is <dfn> <b>call by value</b> </dfn>,
+                        which means that a function receives <em>copies</em>
+                        of the values of its arguments.
+                        We can illustrate this with an example.
+                        Suppose, in our implementation of <tt>multbytwo</tt>,
+                        we had gotten rid of the unnecessary <tt>retval</tt>
+                        variable like this:
+                        </p> <br><div class="code">
+                            <code>	int multbytwo(int x)<br>
+                            {<br>
+                               &emsp;&emsp; x = x * 2;<br>
+                                &emsp;&emsp;return x;<br>
+                            }<br>
+                        </code></div>
+                        We might wonder,
+                        if we wrote it this way,
+                        what would happen to the value of the variable <tt>i</tt>
+                        when we called
+                        <div class="code">
+                            <code>	j = multbytwo(i);
+                        </code></div>
+                        When our implementation of <tt>multbytwo</tt> changes the
+                        value of <tt>x</tt>, does that change the value of
+                        <tt>i</tt> up in the caller?
+                        The answer is no.
+                        <tt>x</tt> receives a copy of <tt>i</tt>'s value,
+                        so when we change <tt>x</tt> we don't change <tt>i</tt>.
+                        <p></p> <br><p>However, there is an exception to this rule.
+                        When the argument you pass to a function is not a single variable,
+                        but is rather an array,
+                        the function does <em>not</em> receive a copy of the array,
+                        and it therefore <em>can</em> modify the array in the caller.
+                        The reason is that it might be too expensive to copy the entire array,
+                        and furthermore,
+                        it can be useful for the function to write into the caller's array,
+                        as a way of handing back more data
+                        than would fit in the function's single return value.
+                        We'll see an example of an array argument
+                        (which the function deliberately writes into)
+                        in the next chapter.
+                        </p>                       
+                            <h2>5.2 Function Prototypes</h2>
+                            
+                            <p>In modern C programming,
+                            it is considered good practice to use prototype declarations
+                            for all functions that you call.
+                            As we mentioned, these prototypes help to ensure that the 
+                            compiler can generate correct code for calling the functions,
+                            as well as allowing the compiler to catch certain mistakes you 
+                            might make.
+                            </p> <br><p>Strictly speaking, however, prototypes are optional.
+                            If you call a function for which the compiler has not seen a 
+                            prototype,
+                            the compiler will do the best it can,
+                            assuming that you're calling the function correctly.
+                            </p> <br><p>If prototypes are a good idea,
+                            and if we're going to get in the habit of writing
+                            function prototype declarations for
+                            functions we call that we've written (such as <tt>multbytwo</tt>),
+                            what happens for library functions such as <tt>printf</tt>?
+                            Where are their prototypes?
+                            The answer is in that boilerplate line
+                            </p> <br><div class="code">
+                                <code>	#include &lt;stdio.h&gt;
+                            </code></div>
+                            we've been including at the top of all of our programs.
+                            <tt>stdio.h</tt> is conceptually a file full of
+                            external declarations and other information
+                            pertaining to the ``Standard I/O''
+                            library functions, including <tt>printf</tt>.
+                            The <tt>#include</tt> directive
+                            (which we'll meet formally in a later chapter)
+                            arranges that all of the declarations within <tt>stdio.h</tt>
+                            are considered
+                            
+                            by the compiler,
+                            rather as if we'd typed them all in ourselves.
+                            Somewhere within these declarations
+                            is an external function prototype declaration for <tt>printf</tt>,
+                            which satisfies the rule that there should be a prototype
+                            for each function we call.
+                            (For other standard library functions we call,
+                            there will be other ``header files'' to include.)
+                            Finally, one more thing about external function prototype declarations.
+                            We've said that the distinction between external declarations and
+                            defining instances of normal variables
+                            hinges on the presence or absence of the keyword <tt>extern</tt>.
+                            The situation is a little bit different for functions.
+                            The ``defining instance'' of a function is the function,
+                            including its body (that is, the brace-enclosed list of
+                            declarations and statements implementing the function).
+                            An external declaration of a function, even without the keyword
+                            <tt>extern</tt>, looks nothing like a function declaration.
+                            Therefore, the keyword <tt>extern</tt> is optional in
+                            function prototype declarations.
+                            If you wish,
+                            you can write
+                            <div class="code">
+                                <code>	int multbytwo(int);
+                            </code></div>
+                            and this is just as good an external function prototype
+                            declaration as
+                            <div class="code">
+                                <code>	extern int multbytwo(int);
+                            </code></div>
+                            (In the first form,
+                            without the <tt>extern</tt>,
+                            as soon as the compiler sees the semicolon, it knows it's not
+                            going to see a function body, so the declaration can't be a definition.)
+                            You may want to stay in the habit of using <tt>extern</tt>
+                            in all external declarations, including function declarations,
+                            since ``<tt>extern</tt> = external declaration''
+                            is an easier rule to remember.
+                        </p>
+                        
+                        
+                            <h2>5.3 Function Philosophy</h2>
+                            
+                            <p>What makes a good
+                            function?
+                            The most important aspect of a good ``building block''
+                            is that have a single, well-defined task to perform.
+                            
+                            When you find that a program is hard to manage,
+                            it's often because it has not been designed
+                            and broken up into functions cleanly.
+                            Two obvious reasons for moving code down into a function are
+                            because:
+                            </p> <br><p>1.
+                            It appeared in the main program several times,
+                            such that by making it a function,
+                            it can be written just once,
+                            and the several places where it used to appear
+                            can be
+                            replaced with calls to the new function.
+                            </p> <br><p>2.
+                            The main program was getting too big,
+                            so it could be made (presumably) smaller and more manageable by
+                            lopping part of it off and making it a function.
+                            </p> <br><p>These two reasons are important,
+                            and they represent significant benefits of well-chosen functions,
+                            but they are not sufficient to automatically identify
+                            a good function.
+                            As we've been suggesting,
+                            a
+                            good function has at least these two additional attributes:
+                            </p> <br><p>3.
+                            It does just one well-defined task, and does it well.
+                            </p> <br><p>4.
+                            Its interface to the rest of the program is clean and narrow.
+                            </p> <br><p>Attribute 3 is just a restatement of
+                            two things
+                            we said above.
+                            Attribute 4 says that you shouldn't have to keep track of too many things
+                            when calling a function.
+                            If you know what a function is supposed to do,
+                            and if its task is simple and well-defined,
+                            there should be just a few pieces of information
+                            you have to give it to act upon,
+                            and one or just a few pieces of information
+                            which
+                            it returns to you when it's done.
+                            If you find yourself having to pass lots and lots of
+                            information to a function,
+                            or remember details of its internal implementation to make sure
+                            that it will work properly this time,
+                            it's often a sign that the function is not sufficiently well-defined.
+                            (A poorly-defined function
+                            may be an arbitrary chunk of code that was ripped out of a
+                            main program
+                            that was getting too big,
+                            such that it essentially has to have access to
+                            all of that main function's local variables.)
+                            </p> <br><p>The whole point of breaking a program up into functions
+                            is so that you don't have to think about the entire program at once;
+                            ideally, you can think about just one function at a time.
+                            We say that a good function is a ``black box,''
+                            which is supposed to suggest
+                            that the ``container'' it's in is
+                            opaque--callers can't see inside it
+                            (and the function inside
+                            can't see out).
+                            When you call a function,
+                            you only have to know what it does,
+                            not how it does it.
+                            When you're <em>writing</em> a function,
+                            you only have to know what it's supposed to do,
+                            and you don't have to know why or under what circumstances
+                            its caller will be calling it.
+                            (When designing a function,
+                            we should perhaps think about the callers just enough to
+                            ensure that the function we're designing will be easy to call,
+                            and that
+                            we aren't accidentally setting things up
+                            so that callers will have to think about any internal details.)
+                            </p> <br><p>Some functions may be hard to write
+                            (if they have a hard job to do,
+                            or if it's hard to make them do it truly well),
+                            but that difficulty should be compartmentalized along with the
+                            function itself.
+                            Once you've written a ``hard'' function,
+                            you should be able to sit back and relax
+                            and watch it do that hard work on call from the rest of your program.
+                            It should be pleasant to notice
+                            (in the ideal case)
+                            how much easier the rest of the program is to write,
+                            now that the hard work can be deferred to this
+                            workhorse
+                            
+                            function.
+                            </p> <br><p>(In fact,
+                            if a difficult-to-write function's interface is well-defined,
+                            you may be able to get away with writing a quick-and-dirty
+                            version of the function first,
+                            so that you can begin testing the rest of the program,
+                            and then go back later and rewrite the function to do the hard parts.
+                            As long as the function's original interface anticipated the hard parts,
+                            you won't have to rewrite the rest of the program when you fix the function.)
+                            </p> <br><p>What I've been trying to say in the preceding few paragraphs
+                            is that functions are important
+                            for
+                            far
+                            more important reasons
+                            than just saving typing.
+                            Sometimes,
+                            we'll write a function which we only call once,
+                            just because breaking it out into a function
+                            makes things clearer and easier.
+                            </p> <br><p>If you find that difficulties pervade a program,
+                            that the hard parts can't be buried inside black-box functions
+                            and then forgotten about;
+                            if you find that there are hard parts which involve complicated
+                            interactions among multiple functions,
+                            then the program probably needs redesigning.
+                            </p> <br><p>For the purposes of explanation,
+                            we've been seeming to talk so far only about ``main programs''
+                            and the functions they call and the rationale behind moving
+                            some piece of code down out of a ``main program'' into a function.
+                            But in reality,
+                            there's obviously no need to restrict ourselves to a two-tier
+                            scheme.
+                            Any function we find ourself writing
+                            will often be appropriately written
+                            in terms of sub-functions, sub-sub-functions, etc.
+                            (Furthermore,
+                            the ``main program,'' <tt>main()</tt>,
+                            is itself just a function.)
+                            </p>
+                            
+                            
+                                <h2>5.4 Separate Compilation--Logistics</h2>
+                                
+                                <p>When a program consists of many functions, it can be convenient
+                                to split them up into several source files.
+                                Among other things, this means that when a change is made, only
+                                the source file containing the change has to be recompiled, not
+                                the whole program.
+                                </p> <br><p>The job of putting the pieces of a program together and
+                                producing the final executable falls to a tool called the
+                                <dfn> <b>linker</b> </dfn>.
+                                (We may or may not need to invoke the linker explicitly;
+                                a compiler often invokes it
+                                automatically,
+                                as needed.)
+                                The linker looks through all of the pieces making up the
+                                program, sorting out the external declarations and
+                                defining instances.
+                                The compiler has noted the definitions made by each source file,
+                                as well as the declarations of things used by each source file
+                                but (presumably) defined elsewhere.
+                                For each thing (global variable or function) used but not
+                                defined by one piece of the program,
+                                the linker looks for another piece which
+                                does define that thing.
+                                </p> <br><p>The logistics of writing a program in several source files,
+                                and then compiling and linking all of the source files together,
+                                depend on the programming environment you're using.
+                                We'll cover two possibilities,
+                                depending on whether you're using a traditional command-line compiler
+                                or a newer integrated development environment (IDE)
+                                or other graphical user interface (GUI) compiler.
+                                
+                                </p> <br><p>When using a command-line compiler,
+                                there are usually two main steps involved
+                                in building an executable program
+                                from one or more source files.
+                                First,
+                                each source file is compiled,
+                                resulting in an <dfn> <b>object file</b> </dfn>
+                                containing the machine instructions
+                                (generated by the compiler)
+                                corresponding to just the code in that source file.
+                                Second,
+                                the various object files are <dfn> <b>linked</b> </dfn> together,
+                                with each other and with <dfn> <b>libraries</b> </dfn>
+                                containing code for functions which you did not write
+                                
+                                (such as <tt>printf</tt>),
+                                to produce a final, executable program.
+                                </p> <br><p>Under Unix, the <tt>cc</tt>
+                                command can perform one or both steps.
+                                So far, we've been using extremely simple invocations of
+                                <tt>cc</tt> such as
+                                </p> <br><div class="code">
+                                    <code>	cc -o hello hello.c
+  </code></div>
+                                This invocation compiles a single source file,
+                                <tt>hello.c</tt>,
+                                links it,
+                                and places the executable
+                                in a file named <tt>hello</tt>.
+                                <p></p> <br><p>Suppose we have a program which we're trying to build
+                                from three separate source files,
+                                <tt>x.c</tt>, <tt>y.c</tt>, and <tt>z.c</tt>.
+                                We could compile all three of them,
+                                and link them together,
+                                all at once,
+                                with the command
+                                </p> <br><div class="code">
+                                    <code>	cc -o myprog x.c y.c z.c
+                                </code></div>
+                                Alternatively,
+                                we could compile them separately:
+                                the <tt>-c</tt> option to <tt>cc</tt> tells it to compile only,
+                                but not to link.
+                                Instead of building an executable,
+                                it merely creates an object file,
+                                with a name ending in <tt>.o</tt>,
+                                for each source file compiled.
+                                So the three commands
+                                <div class="code">
+                                    <code>	cc -c x.c<br>
+                                    cc -c y.c<br>
+                                    cc -c y.c<br>
+                                </code></div>
+                                would compile <tt>x.c</tt>, <tt>y.c</tt>, and <tt>z.c</tt>
+                                and create object files <tt>x.o</tt>, <tt>y.o</tt>, and <tt>z.o</tt>.
+                                Then, the three object files could be linked together using
+                                <div class="code">
+                                    <code>	cc -o myprog x.o y.o z.o
+                                </code></div>
+                                When the <tt>cc</tt> command is given an <tt>.o</tt> file,
+                                it
+                                
+                                knows that it does not have to compile it
+                                (it's an object file, already compiled);
+                                it just sends it through to the link process.
+                                <p></p> <br><p>Above we mentioned that the second,
+                                linking step also involves pulling in library functions.
+                                Normally, the functions from the Standard C library are linked
+                                in automatically.
+                                Occasionally, you must request a library manually;
+                                one common situation under Unix
+                                is that the math functions tend to be in a separate math library,
+                                which is requested by using <tt>-lm</tt> on the command line.
+                                Since the libraries must typically be searched <em>after</em>
+                                your program's own object files are linked
+                                (so that the linker knows which library functions your program uses),
+                                any <tt>-l</tt> option must appear
+                                <em>after</em> the names of your files on the command line.
+                                For example,
+                                to link the object file <tt>mymath.o</tt>
+                                (previously compiled with <tt>cc -c mymath.c</tt>)
+                                together with the math library,
+                                you might use
+                                </p> <br><div class="code">
+                                    <code>	cc -o mymathprog mymath.o -lm
+                                </code></div>
+                                (The <tt>l</tt> in the <tt>-l</tt> option
+                                is the lower case ell,
+                                for <b>l</b>ibrary;
+                                it is <em>not</em> the digit <tt>1</tt>.)
+                                <p></p> <br><p>Everything
+                                we've said about <tt>cc</tt>
+                                also applies to most other Unix C compilers.
+                                (Many of you will be using
+                                <tt>gcc</tt>,
+                                the FSF's GNU C Compiler.)
+                                </p> <br><p>There are command-line compilers for MS-DOS systems which work similarly.
+                                For example, the Microsoft C compiler comes with a <tt>CL</tt>
+                                (``compile and link'') command,
+                                which works almost the same as Unix <tt>cc</tt>.
+                                You can compile and link in one step:
+                                </p> <br><div class="code">
+                                    <code>	cl hello.c
+                                </code></div>
+                                or you can compile only:
+                                <div class="code">	
+                                    <code>cl /c hello.c
+                                </code></div>
+                                creating an object file named <tt>hello.obj</tt> which you can link later.
+                                
+                                <p></p> <br><p>The preceding has all been about command-line compilers.
+                                If you're using some kind of integrated development environment,
+                                such as
+                                Borland's Turbo C
+                                or
+                                the Microsoft Programmer's Workbench
+                                or
+                                Visual C
+                                or
+                                Think C
+                                or
+                                Codewarrior,
+                                most of the mechanical details are taken care of for you.
+                                (There's also less I can say here about these environments,
+                                because they're all different.)
+                                Typically you define a ``project,''
+                                and there's a way to specify the list of files (modules)
+                                which make up your project.
+                                The modules might be source files which you typed in or
+                                obtained elsewhere,
+                                or they might be source files which you created within the
+                                environment (perhaps by requesting a ``New source file,''
+                                and typing it in).
+                                Typically,
+                                the programming environment has
+                                a single ``build'' button which does whatever's required
+                                to build (and perhaps even execute) your program.
+                                There may also be configuration windows in which you can
+                                specify compiler options
+                                (such as whether you'd like it to accept C or C++).
+                                ``See your manual for details.''
+                                </p> <br>
+                                <div class="end">
+                                    <p><b>Did you find this article helpful?</b></p> <br>
+                                    <input type="submit" id="end_bt" value="Yes">  <input type="submit" id="end_bt" value="No">
+                                  </div>
+                                  <h2>Check these also:</h2>
+                                  <a href="4.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 4 <<"></a>
+                                  <br>
+                                  <br>
+                                  <a href="6.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Chapter 6 <<"></a>
+                                  <br>
+                                  <br>
+                                  <a href="index.html"><input style="background: linear-gradient(315deg, rgba(245,251,250,1) 0%, rgba(5,110,89,1) 43%, rgba(1,1,0,1) 100%);" type="submit" id="ret_hmp" value=">> Homepage <<"></a>
+                                  <br>
+                                  <br>
+                            </div>
+    </main>
+    <footer class="flex-all-center">
+        <p>CopyRight &copy Beginners Point 2021</p>
+    </footer>
+</body>
+</html>
