@@ -13,5 +13,5 @@ We have made our website completely responsive for seamless experience across al
 
 
 Our website is hosted through webhost hostinger and all the codes are provided here in my github account. Hope you all liked our project. Check it out in the link provided below :)
-### https://beginnerspointuemk.000webhostapp.com/index.html
+##### https://beginnerspointuemk.000webhostapp.com/index.html
 #### Thank you Ureck-A-thon and Ureckon coding team for letting us showcase our innovative project.
