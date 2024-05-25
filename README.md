@@ -2,16 +2,12 @@
 
 ### Hello there! Greetings from Team - UMANG!
 
-This is our e-Learning website project that we have created for the Ureck-A-thon competition. we have included all the basic chapters of C Programming language, which will definitely help users to gain in depth knowledge, through high quality content, collected and provided by us in the website. 
+We are excited to introduce our e-Learning website project, created for the Ureck-A-thon competition. Our platform features comprehensive chapters on the C Programming language, designed to help users gain in-depth knowledge through high-quality content curated by us.
 
+Unlike many websites that require subscriptions to access full notes and resources, our mission is to provide free knowledge for all. Therefore, we do not charge any subscription fees. To enhance the learning experience, we have integrated a free compiler, allowing users to practice coding while they learn.
 
-Mostly in websites users have to take subscription for accessing full notes and all, but our motto is free knowledge for all hence we are never going to take any subscription fees for this website. Here, we have integrated a free compiler as well so that users can practice coding, while learning.
+We have prioritized user experience by designing an intuitive and easy-to-use interface. One of the standout features of our website is its completely ad-free environment, minimizing distractions and enhancing focus. Additionally, our website is fully responsive, ensuring a seamless experience across all devices.
 
-
-We have made the User Interface very easy to use. Our website’s most notable feature is that it’s completely ad-free, making it less annoying and distractive.
-We have made our website completely responsive for seamless experience across all devices.
-
-
-Our website is hosted through webhost hostinger and all the codes are provided here in my github account. Hope you all liked our project. Check it out in the link provided below :)
+The website is hosted on Hostinger, and all the code is available on my GitHub account. We hope you enjoy exploring our project. Check it out at the link provided below!
 ##### https://beginnerspointuemk.000webhostapp.com/index.html
 #### Thank you Ureck-A-thon and Ureckon coding team for letting us showcase our innovative project.
